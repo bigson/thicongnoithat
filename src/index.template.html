@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <title>{{ title }}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <link rel="apple-touch-icon" sizes="180x180" href="/public/favicon_package/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/public/favicon_package/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/public/favicon_package/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/public/favicon_package/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/public/favicon_package/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="google-site-verification" content="G7PggguQ669hveGKTEC5Yv6Ps3JweeeN0PE6M9dHQ9w" />
+    {{{ meta }}}
+    <style>{{{style}}}</style>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PKF3Z52');</script>
+    <!-- End Google Tag Manager -->
+</head>
+<body class="{{bodyClasses.join(' ')}}">
+    <!--vue-ssr-outlet-->
+    <link rel="stylesheet" type="text/css" href="/dist/style.css">
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "url": "https://thicongtot.com",
+        "logo": "https://thicongtot.com/public/images/logo.svg"
+    }
+    </script>
+</body>
+</html>

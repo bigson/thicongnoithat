@@ -1,0 +1,171 @@
+.radio-show-popup{
+    display: none;
+    &:checked + .popup{
+        display: block
+    }
+}
+.popup{
+    // display: none;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top:0;
+    left: 0;
+    z-index: 100;
+    .popup-area{
+        display:flex;
+        flex-direction: column;
+        z-index: 100;
+        // background: #fff;
+        // min-width: 600px;
+        max-height: 90%;
+        // min-height: 500px;
+        position: absolute;
+        left: 8px;
+        right: 8px;
+        transform: translate(0, -50%);
+        top: 50%;
+        // bottom: 8px;
+        .popup-header{
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            height: 55px;
+            background: #36b04a;
+            line-height: 55px;
+            padding-top: 0;
+            padding-bottom: 0;
+            .title{
+                font-size: 15px;
+                font-family: arial;
+                text-transform: uppercase;
+                color: #fff;
+                display: inline-block;
+            }
+            .btn-close{
+                width: 23px;
+                height: 23px;
+                border-radius: 50%;
+                text-align: center;
+                line-height: 23px;
+                color: #fff;
+                z-index: 1;
+                cursor: pointer;
+                border: 1px solid #fff;
+                font-size: 11px;
+                margin-top: 14px;
+                float: right;
+
+                &:hover{
+                }
+            }
+        }
+
+        .popup-content{
+            background: #fff;
+            overflow-y: auto;
+
+            display: flex;
+            flex-direction: column;
+
+            label{
+                font-family: arial;
+                text-transform: uppercase;
+                font-size: 12px;
+                font-weight: bold;
+                color: #666;
+
+                span{
+                    color: #ec0000;
+                    font-family: inherit;
+                    font-size: 10px;
+                    font-weight: normal;
+                    text-transform: none;
+                }
+            }
+
+            label + input{
+                margin-top: 5px;
+            }
+
+            input + label{
+                margin-top: 15px;
+            }
+
+            input, textarea{
+                border-radius: 3px;
+                padding: 10px 20px;
+                border: 1px solid #dadada;
+            }
+
+            input{
+                height: 20px;
+            }
+
+            textarea{
+                min-height: 80px;
+                resize: vertical;
+            }
+
+            input:invalid, textarea:invalid {
+                border-color: red;
+            }
+
+            .submit{
+                width: 130px;
+                height: 40px;
+                text-align: center;
+                color: #fff;
+                background: #36b04a;
+                border: none;
+                border-radius: 5px;
+                margin: 0 auto;
+                margin-top: 15px;
+                cursor: pointer;
+            }
+        }
+
+        .success{
+            text-align: center;
+            .icon-success{
+                border: 2px solid green;
+                border-radius: 50%;
+                display: inline-block;
+                color: green;
+                font-size: 30px;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                line-height: 47px;
+                margin: 30px 10px;
+            }
+        }
+    }
+    .overlay{
+        // z-index: 100;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+    }
+}
+
+@media (max-width: 320px) {
+}
+@media (min-width: 768px) {
+    .popup{
+        .popup-area{
+            transform: translate(-50%, -50%);
+            min-width: 600px;
+            top: 50%;
+            left: 50%;
+            right: unset;
+            bottom: unset;
+        }
+    }
+}
+@media (min-width: 992px) {
+}
+@media (min-width: 1200px) {
+}

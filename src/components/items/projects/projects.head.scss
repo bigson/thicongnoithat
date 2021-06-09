@@ -1,0 +1,291 @@
+.item-projects{
+	display: flex;
+    flex-wrap: wrap;
+    &.thumb{
+        // display: flex;
+        // flex-wrap: wrap;
+        // margin: -4px;
+    }
+    .item{
+        display: flex;
+        overflow: hidden;
+        // padding: 0 10px 10px;
+        // align-items: center;
+        align-items: flex-start;
+        align-content: space-between;
+        flex-wrap: wrap;
+        border: 1px solid #e6e6e6;
+        flex: 1 1 90%;
+
+        &.visibility-hidden{
+            display: none;
+        }
+
+        .title{
+            font-size: 14px;
+            color: #38404e;
+            margin: 0;
+            margin-bottom: 5px;
+            text-decoration: unset;
+            font-weight: bold;
+            // display:none;
+        }
+
+        // .item-info{
+        //     flex: 1 1 100%;
+        //     margin: 0;
+        //     padding-left: 0;
+        //     padding-right: 0;
+
+            /* .info-project{
+                // clear: both;
+                .is-title{
+                    font-size: 14px;
+                    color: #38404e;
+                    margin: 0;
+                    text-decoration: unset;
+                    font-weight: bold;
+                    // display:none;
+                }
+                .is-address{
+                    color: #1b7eac; //#2fa7de;
+                    font-size: 12px;
+                    padding-top: 10px;
+                    &:before{
+                        content: '';
+                        background: url("/public/icons/icon-address.svg") center no-repeat;
+                        width: 15px;
+                        height: 15px;
+                        display: block;
+                        vertical-align: middle;
+                        margin-right: 5px;
+                        float: left;
+                    }
+                }
+                .is-description{
+                    font-size: 13px;
+                    color: #58595b;
+                    text-align: justify;
+                    // height: 42px;
+                    overflow: hidden;
+                    // word-break: break-all;
+                }
+            } */
+            .info-vendor{
+                display: flex;
+                flex-wrap: wrap;
+
+                .iv-logo{
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    float: left;
+                    margin-right: 10px;
+                    box-shadow: 0 0 1px 0;
+                    position: relative;
+                    flex-shrink: 0;
+                    // margin-left: 1px;
+
+                    img{
+                        max-width: 100%;
+                        max-height: 100%;
+                        position: absolute;
+                        transform: translate(-50%, -50%);
+                        top: 50%;
+                        left: 50%;
+                    }
+
+                    .avatar-holder{
+                        width: 100%;
+                        height: 100%;
+                        text-align: center;
+                        font-size: 24px;
+                        // line-height: 80px;
+                    }
+                }
+                .iv-name{
+                    display: flex;
+                    overflow: hidden;
+                    align-items: center;
+                    // width: 100px;
+                    flex: 1;
+                    flex-wrap: wrap;
+                    // font-weight: 300;
+                    font-size: 13px;
+                    // line-height: 20px;
+                    a{
+                        flex: 1 1 100%;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+
+                    .rating{
+                        flex: 1 1 100%;
+                        font-size: 16px;
+                        line-height: 18px;
+                        color: #6b9023;
+                    }
+                }
+                .iv-address{
+                    font-style: italic;
+                    color: #999;
+                    font-size: 0.9rem;
+                }
+            }
+        // }
+        .item-imgs, .item-imgs[data-group]{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            flex: 1 1 100%;
+            // margin-right: -15px;
+            margin: -17px;
+            margin-bottom: 5px;
+
+
+            &[data-group="1"]{
+                .wrap-img{
+                    width: 100%;
+
+                    &:before{
+                        content: '';
+                        display: block;
+                        margin-bottom: 100%;
+                    }
+                }
+            }
+            &[data-group="2"]{
+                .wrap-img{
+                    flex: 1 1 100%;
+                    // height: 50%;
+
+                    &:before{
+                        content: '';
+                        display: block;
+                        margin-bottom: 50%;
+                    }
+                }
+            }
+            &[data-group="3"]{
+                .wrap-img:nth-child(1){
+                    flex: 1 1 100%;
+
+                    &:before{
+                        content: '';
+                        display: block;
+                        margin-bottom: 66.66666%;
+                    }
+                }
+
+                .wrap-img{
+                    flex: 1 1 45%;
+
+                    &:before{
+                        content: '';
+                        display: block;
+                        margin-bottom: 66.66666%;
+                    }
+                }
+
+            }
+            &[data-group="4"]{
+                .wrap-img:nth-child(1){
+                    flex: 1 1 100%;
+                    height: 66%;
+
+                    &:before{
+                        content: '';
+                        display: block;
+                        margin-bottom: 66.66666%;
+                    }
+                }
+
+                .wrap-img{
+                    flex: 1 1 30%;
+
+                    &:before{
+                        content: '';
+                        display: block;
+                        margin-bottom: 100%;
+                    }
+                }
+            }
+
+            .wrap-img{
+                z-index: 1;
+                position: relative;
+                overflow: hidden;
+                margin: 1px;
+                background: #f3f3f3 url(https://thicongtot.com/public/images/placeholder.svg) no-repeat center;
+
+                img{
+                    min-width: 100%;
+                    min-height: 100%;
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    top: 50%;
+                    left: 50%;
+                }
+
+                &.more{
+                    &:after{
+                        pointer-events: none;
+                        content: attr(data-length) "+";
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 80px;
+                        height: 80px;
+                        background: rgba(0,0,0,.5);
+                        font-size: 40px;
+                        line-height: 80px;
+                        color: #fff;
+                        text-align: center;
+                        border-radius: 50%;
+                        margin-top: -40px;
+                        margin-left: -40px;
+                        // line-height:
+                    }
+
+                    &:hover:after{
+                        width: 200px;
+                        height: 200px;
+                        margin-top: -100px;
+                        margin-left: -100px;
+                        line-height: 200px;
+                    }
+                }
+
+                &:hover{
+                    animation: changeZIndex 1s forwards;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .item-projects{
+        .item{
+            flex: 1 1 45%;
+
+            &.visibility-hidden{
+                display: block;
+            }
+        }
+    }
+}
+@media (min-width: 992px) {
+    .item-projects{
+        .item{
+            flex: 1 1 40%;
+
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+
+}

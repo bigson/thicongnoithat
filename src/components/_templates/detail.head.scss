@@ -1,0 +1,471 @@
+.detail{
+    .main-left.avatar{
+        padding: 0;
+        order: 2;
+        width: 150px;
+        flex: unset;
+        font-size: 0;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: -75px;
+        border-radius: 50%;
+        overflow:hidden;
+        // background: #fff url(https://thicongtot.com/public/images/placeholder.svg) no-repeat center;
+
+        &:before{
+            content: '';
+            margin-bottom: 100%;
+            display:block;
+        }
+        img{
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            max-width: 100%;
+            max-height: 100%;
+            background: #fff;
+
+            &.lazyload{
+                min-width: 100%;
+                // min-height: 100%;
+            }
+        }
+
+        .avatar-holder{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            font-size: 100px;
+            text-align: center;
+            line-height: 150px;
+        }
+    }
+    .main-center.cover{
+        flex: 1 1 100%;
+        padding: 0;
+        order: 1;
+        font-size: 0;
+        // background: #fff url(https://thicongtot.com/public/images/placeholder.svg) no-repeat center;
+
+        img{
+            width: 100%;
+
+            &.lazyload{
+                min-width: 100%;
+                // min-height: 100%;
+            }
+        }
+
+        .placeholder{
+            height: 300px;
+        }
+    }
+    .main-left.vendor-info{
+        background: none !important;
+        padding-top: 0;
+        padding-left: 0;
+        // padding-right: 32px;
+
+        .info{
+            & > * {
+                padding: 10px 0;
+            }
+            .name{
+                padding-top: 0;
+                text-align: center;
+                h2{
+                    color: #373f4d;
+                }
+            }
+            .rating{
+                font-size: 30px;
+                color: #6b9023; //#599400;
+                text-align: center;
+            }
+            .phone{
+                &:before{
+                    content: '';
+                    background: url("/public/icons/icon-phone.svg") center no-repeat;
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+            }
+            .address{
+                &:before{
+                    content: '';
+                    background: url("/public/icons/icon-address.svg") center no-repeat;
+                    width: 20px;
+                    height: 20px;
+                    display: block;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                    float: left;
+                }
+                // để địa chỉ căn dọc đều nên phải thêm thẻ div
+                div{
+                    padding-left: 30px;
+                }
+            }
+            .email{
+                &:before{
+                    content: '';
+                    background: url("/public/icons/icon-email.svg") center no-repeat;
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+                a{
+                    width: 200px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+
+            }
+            .website{
+                &:before{
+                    content: '';
+                    background: url("/public/icons/icon-website.svg") center no-repeat;
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+                a{
+                    width: 200px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+            }
+        }
+
+    }
+    .main-center.service-detail, .main-center.vendor-detail{
+        background: none !important;
+        padding: 0 0 4px 0;
+        display: flex;
+        flex-wrap: wrap;
+
+        #cb_vendor_nav:checked + .vendor-nav .btn-more .childs{
+            display: block;
+        }
+
+        .vendor-nav{
+            flex: 1 1 100%;
+            background: #fff;
+            display: flex;
+            flex: 1 1;
+            height: 50px;
+            align-items: stretch;
+            justify-content: space-between;
+            padding: 0 16px;
+            & > li{
+
+                &.btn-more{
+                    width: 40px;
+                    height: 40px;
+                    border: 1px solid #909090;
+                    border-radius: 5px;
+                    line-height: 40px;
+                    background: #f1f1f1;
+                    color: #676767;
+                    text-align: center;
+                    vertical-align: middle;
+                    margin: 4px;
+                    position: relative;
+
+                    label{
+                        display: block;
+                    }
+
+                    .childs {
+                        display: none;
+                        width: 100px;
+                        z-index: 999;
+                        position: absolute;
+                        background: #fff;
+                        right: 0;
+                        top: 46px;
+                        border: 1px solid #909090;
+                        border-radius: 5px;
+                        padding: 0 10px;
+
+                        li + li{
+                            border-top: 1px solid #909090
+                        }
+
+                        &:after, &:before {
+                            // bottom: 100%;
+                            // left: 50%;
+                            top: -10px;
+                            right: 10px;
+                            border: solid transparent;
+                            content: " ";
+                            height: 0;
+                            width: 0;
+                            position: absolute;
+                            pointer-events: none;
+                        }
+
+                        &:after {
+                            border-color: rgba(255, 255, 255, 0);
+                            border-bottom-color: #fff;
+                            border-width: 5px;
+                            margin-left: -5px;
+                        }
+                        &:before {
+                            top: -11px;
+                            border-color: rgba(144, 144, 144, 0);
+                            border-bottom-color: #909090;
+                            border-width: 5px;
+                            margin-left: -6px;
+                        }
+                    }
+                }
+
+                &.more{
+                    right: 0;
+                    top: 0;
+                    position: absolute;
+                    display: none;
+                }
+                & > a{
+                    display: block;
+                    line-height: 47px;
+                    padding: 0 20px;
+                    // border-bottom: 3px solid #2d9b00;
+                    font-weight: bold;
+                    color: #373f4d;
+
+                    &.router-link-exact-active{
+                        border-bottom: 3px solid #2d9b00;
+                    }
+                }
+
+
+            }
+        }
+
+        .service-info, .vendor-detail{
+            // margin-top: 8px;
+            padding: 8px;
+            background: #fff;
+
+        }
+
+        .vendor-explain{
+            flex: 1 1 100%;
+            background: #fff;
+            margin-top: 10px;
+            padding: 8px;
+
+            h2{
+                margin: 20px 0;
+                font-weight: normal;
+                text-decoration: underline;
+            }
+
+            .item-services{
+                .item{
+                    .is-title{
+                        a{
+                            color: #2d9b00;
+                            text-transform: uppercase;
+                        }
+                    }
+                }
+            }
+
+            .vendor-service{
+                display: flex;
+                flex-wrap: wrap;
+
+                .vs{
+                    flex: 1 1 95%;
+                    // background: #ebebeb;
+                    color: #666;
+                    text-align: justify;
+                    border: 3px dotted #2d9b00;
+
+                    h3{
+                        padding-bottom: 12px;
+                        a{
+                            color: #333;
+                            font-weight: normal;
+                            font-size: 18px;
+                            // text-decoration: underline;
+                        }
+                    }
+                    a{
+                        color: #268500;
+                        // text-decoration: underline;
+                    }
+                }
+            }
+
+            .link-more{
+                display: block;
+                width: 200px;
+                margin: 10px auto 0;
+                padding: 10px;
+                text-align: center;
+                background: #2d9b00;
+                color: #fff;
+                border-radius: 5px;
+            }
+        }
+
+        .service-info{
+
+            .si-gallery{
+                display: flex;
+                flex-wrap: wrap;
+                margin: -4px;
+
+                .si-img{
+                    margin: 4px;
+                    flex: 1 1 45%;
+                    img{
+                        width: 100%;
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 320px) {
+}
+@media (min-width: 768px) {
+    .detail{
+        .main-center.service-detail, .main-center.vendor-detail{
+            .vendor-explain{
+                .vendor-service{
+                    .vs{
+                        flex: 1 1 40%;
+                    }
+                }
+            }
+        }
+    }
+}
+@media (min-width: 992px) {
+    .detail.main{
+        .avatar-cover{
+            align-items: stretch !important;
+            margin-bottom: 0;
+        }
+        .main-wrap + .main-wrap{
+            margin-top: 0;
+        }
+        .main-left.avatar{
+            order: 1;
+            width: 230px;
+            flex: 0 0 230px;
+
+            padding: 16px;
+            margin: 4px;
+            border-radius: unset;
+
+            .avatar-holder{
+                font-size: 150px;
+                line-height: 260px;
+            }
+        }
+        .main-left.vendor-info{
+            width: 262px;
+            flex: 0 0 262px;
+            padding-right: 0;
+        }
+        .main-center.cover{
+            order: 2;
+            position: relative;
+            overflow: hidden;
+
+            padding: 16px;
+            margin: 4px;
+
+            img{
+                position:absolute;
+                transform: translate(-50%, -50%);
+                top: 50%;
+                left: 50%;
+            }
+        }
+        .main-left.vendor-info{
+            .info{
+                .name{
+                    text-align: left;
+                }
+            }
+        }
+        .main-center.service-detail{
+            padding-bottom: 8px;
+        }
+    }
+    .detail.main{
+        .main-left.avatar{
+            margin: 8px;
+        }
+        .main-center.cover{
+            margin: 8px;
+        }
+
+        .main-center.service-detail, .main-center.vendor-detail{
+            .service-info{
+                // margin-top: 16px;
+            }
+
+            .vendor-nav{
+                & > li{
+
+                    &.btn-more{
+                        display: none;
+                    }
+                    &.more{
+                        display: inline-block;
+                        position: unset;
+                    }
+                }
+
+            }
+
+            .service-info, .vendor-detail{
+                // margin-top: 8px;
+                padding: 16px;
+                background: #fff;
+            }
+
+            .vendor-explain{
+                // margin-top: 16px;
+                // padding: 16px;
+            }
+
+            .service-info{
+
+                .si-gallery{
+                    margin: -8px;
+                    .si-img{
+                        margin: 8px;
+                    }
+                }
+            }
+        }
+    }
+}
+@media (min-width: 1200px) {
+}
