@@ -9,7 +9,7 @@ import {
     ACTION_GET_VENDOR_GALLERY,
     ACTION_GET_VENDOR_PROJECTS,
     ACTION_GET_VENDOR_RATING,
-} from '@/store/actions.js'
+} from '@/store/const/actions.js'
 
 import {
     GETTER_SERVICE,
@@ -18,7 +18,7 @@ import {
     GETTER_VENDOR_GALLERY,
     GETTER_VENDOR_PROJECTS,
     GETTER_VENDOR_RATING,
-} from '@/store/getters.js'
+} from '@/store/const/getters.js'
 
 import {
     MUTATION_SET_SERVICE,
@@ -27,7 +27,7 @@ import {
     MUTATION_SET_VENDOR_GALLERY,
     MUTATION_SET_VENDOR_PROJECTS,
     MUTATION_SET_VENDOR_RATING,
-} from '@/store/mutations.js'
+} from '@/store/const/mutations.js'
 
 // initial state
 const state = {
@@ -120,8 +120,7 @@ const actions = {
     },
 }
 
-export default {
-    namespaced: true,
+export default defineStore({
     state,
     getters,
     actions,

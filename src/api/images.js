@@ -1,9 +1,9 @@
 import request from '@/utils/request';
 const api = '/api/v1/images';
 
-export default async function (data, callback){
-    return await request({
+export default function (data){
+    return request({
         params : data.params,
-        url    : (data.api) ? (api + '/' + data.api) : api,
-    })
+        url    : api,
+    });
 }

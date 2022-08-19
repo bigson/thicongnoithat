@@ -7,7 +7,7 @@ import {
     ACTION_POST_LOGIN,
     ACTION_POST_CHANGE_PASSWORD,
     ACTION_POST_CREATE_ACCOUNT,
-} from '@/store/actions.js'
+} from '@/store/const/actions.js'
 
 import {
     GETTER_DETAIL,
@@ -15,7 +15,7 @@ import {
     GETTER_STATUS_CHANGE_PASSWORD,
     GETTER_STATUS_CREATE_ACCOUNT,
     GETTER_STATUS_LOGIN
-} from '@/store/getters.js'
+} from '@/store/const/getters.js'
 
 import {
     MUTATION_SET_DETAIL,
@@ -23,7 +23,7 @@ import {
     MUTATION_SET_STATUS_CHANGE_PASSWORD,
     MUTATION_SET_STATUS_CREATE_ACCOUNT,
     MUTATION_SET_STATUS_LOGIN
-} from '@/store/mutations.js'
+} from '@/store/const/mutations.js'
 
 const state = {
     user      : {},
@@ -122,8 +122,7 @@ const actions = {
     },
 }
 
-export default {
-    namespaced: true,
+export default defineStore({
     state,
     getters,
     actions,

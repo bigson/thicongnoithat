@@ -1,49 +1,32 @@
-const config      = require('@/config')
-const utils       = require('./index')
-const axios       = require('axios')
-const querystring = require('querystring')
+const config      = require('@/config')('product');
+const utils       = require('./index');
+const axios       = require('axios');
 
-export default async function (data, callback){
+export default function (data){
     let defaultConfig = {
-            baseURL : config.host,
+        baseURL : config.host,
 
-            auth : {
-                username : 'admin',
-                password : '123456',
-            },
+        auth : {
+            username : 'admin',
+            password : '123456',
+        },
+    };
 
-            // proxy: {
-            //     host: '127.0.0.1',
-            //     port: 8888,
-            //     auth: {
-            //         username: 'mikeymike',
-            //         password: 'rapunz3l'
-            //     }
-            // },
-        }
-
-    defaultConfig = utils.mergeDeep(defaultConfig, data)
-
-    if(!data.method){
-        defaultConfig.method = 'get'
-        if(data.data){
-            defaultConfig.method = 'post'
-        }
-    }
+    defaultConfig = utils.mergeDeep(defaultConfig, data);
 
     if(data.data){
-        defaultConfig.data   = querystring.stringify(data.data)
-    }
-    // console.log('request', defaultConfig, data)
-    if(callback){
-        axios(defaultConfig)
-        .then(function(response){
-            callback(response)
-        })
-        .catch(function (error) {
-            if (error.response) {}
-        });
+        defaultConfig.method = 'post';
     }else{
-        return await axios(defaultConfig)
+        defaultConfig.method = 'get';
     }
+
+    // console.log(defaultConfig, data);
+
+    return axios(defaultConfig)
+        // .then(function(response){
+        //     callback(response);
+        // })
+        .catch(function (error) {
+            if (error.response) {console.error('request error', error)}
+        });
 }

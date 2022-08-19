@@ -9,7 +9,7 @@ import {
     ACTION_SERVICES_RELATED,
     ACTION_PRODUCTS_CATEGORY,
     ACTION_PRODUCTS_RELATED,
-} from '@/store/actions.js'
+} from '@/store/const/actions.js'
 
 import {
     GETTER_NEWS,
@@ -20,7 +20,7 @@ import {
     GETTER_SERVICES_RELATED,
     GETTER_PRODUCTS_CATEGORY,
     GETTER_PRODUCTS_RELATED,
-} from '@/store/getters.js'
+} from '@/store/const/getters.js'
 
 import {
     MUTATION_SET_NEWS,
@@ -31,7 +31,7 @@ import {
     MUTATION_SERVICES_RELATED,
     MUTATION_PRODUCTS_CATEGORY,
     MUTATION_PRODUCTS_RELATED,
-} from '@/store/mutations.js'
+} from '@/store/const/mutations.js'
 
 // initial state
 const state = {
@@ -128,8 +128,7 @@ const actions = {
     },
 }
 
-export default {
-    namespaced: true,
+export default defineStore({
     state,
     getters,
     actions,

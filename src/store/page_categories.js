@@ -4,14 +4,14 @@ import apiLOCATIONS from '@/api/locations'
 import {
     ACTION_GET_SERVICES,
     ACTION_GET_LOCATION
-} from '@/store/actions.js'
+} from '@/store/const/actions.js'
 
 import {
     GETTER_SERVICES,
     GETTER_SERVICES_META,
     GETTER_LOCATION,
     GETTER_LOADED
-} from '@/store/getters.js'
+} from '@/store/const/getters.js'
 
 import {
     MUTATION_SET_SERVICES,
@@ -19,7 +19,7 @@ import {
     MUTATION_REFRESH,
     MUTATION_SET_LOCATION,
     MUTATION_SET_LOADED
-} from '@/store/mutations.js'
+} from '@/store/const/mutations.js'
 
 // initial state
 const state = {
@@ -103,8 +103,7 @@ const actions = {
     },
 }
 
-export default {
-    namespaced: true,
+export default defineStore({
     state,
     getters,
     actions,

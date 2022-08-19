@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import glob from 'glob'
 const fs = require('fs')
+import htmlPlugin from './build/htmlPlugin'
 
 var all = glob.sync('./src/**/*.scss'),
     style = [],
@@ -19,35 +20,8 @@ all.forEach(function(e, i){
     }
 })
 
-const htmlPlugin = () => {
-    return {
-        name: 'html-transform',
-        transformIndexHtml: async function(html, {bundle}){
-            // console.log(context, process.argv)
 
-            html = html.replace(
-                        /<title>(.*?)<\/title>/,
-                        `<title>bigson</title>`)
-
-            // Nếu mà build thì mới gắn CSS vào file index
-            if(process.argv.includes('build')){
-                let bundles = Object.values(bundle),
-                head = bundles.find(x => x.name == 'src/assets/head.scss')
-                if(head){
-                    // let css = await fs.readFile(path.resolve(__dirname, 'dist/assets/'), 'utf8')
-                    html = html.replace(
-                      '</head>',
-                      `<style>\t${head.source}\t\t</style>\n</head>`
-                    )
-                }
-            }
-
-            return html
-        }
-    }
-}
-
-console.log(head, style, import.meta, path.resolve(__dirname, "src/assets/head.scss"), 'xxx')
+console.log(head, style)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -81,7 +55,7 @@ export default defineConfig({
         preprocessorOptions: {
             scss: {
                 additionalData: `
-                @import "@/views/_variables.scss";
+                @import "@/assets/variables.scss";
                 `
             }
         }

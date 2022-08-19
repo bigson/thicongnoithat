@@ -4,19 +4,19 @@ import apiImages from '@/api/images'
 import {
     ACTION_GET_IMAGES,
     ACTION_GET_IMAGE
-} from '@/store/actions.js'
+} from '@/store/const/actions.js'
 
 import {
     GETTER_IMAGES,
     GETTER_IMAGES_META,
     GETTER_IMAGE
-} from '@/store/getters.js'
+} from '@/store/const/getters.js'
 
 import {
     MUTATION_SET_IMAGES,
     MUTATION_SET_IMAGES_META,
     MUTATION_SET_IMAGE
-} from '@/store/mutations.js'
+} from '@/store/const/mutations.js'
 
 // initial state
 const state = {
@@ -71,8 +71,7 @@ const actions = {
     },
 }
 
-export default {
-    namespaced: true,
+export default defineStore({
     state,
     getters,
     actions,

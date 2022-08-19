@@ -1,0 +1,7 @@
+export const CATEGORIES = 'categories'
+export const IDEAS      = 'ideas'
+export const IMAGES     = 'images'
+export const PRODUCTS   = 'products'
+export const SERVICES   = 'services'
+export const VENDORS    = 'vendors'
+export const USERS      = 'users'

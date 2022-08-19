@@ -1,0 +1,188 @@
+.items{
+
+}
+.item-services{
+    .item{
+        display: flex;
+        padding: 10px;
+        align-items: center;
+
+        .item-info{
+            flex: 0 0 40%;
+            .ii-logo{
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                overflow: hidden;
+                float: left;
+                margin-right: 10px;
+                box-shadow: 0 0 1px 0;
+
+                img{
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+            .ii-name{
+                font-weight: 300;
+                font-size: 1.1rem;
+                line-height: 20px;
+            }
+            .ii-address{
+                font-style: italic;
+                color: #999;
+                font-size: 0.9rem;
+            }
+        }
+        .item-imgs{
+            display: flex;
+            justify-content: flex-end;
+            flex: 1 1 auto;
+            margin-right: -15px;
+
+            &.item-imgs2{
+                li{
+                    flex: 1 1 50%;
+                }
+            }
+
+            li{
+                flex: 0 1 33%;
+                overflow: hidden;
+                position: relative;
+                border-radius: 3px;
+                margin: 0 5px;
+
+                &:before{
+                    content: '';
+                    display: block;
+                    padding-top: 100%;
+                }
+
+                img{
+                    min-width: 150%;
+                    min-height: 150%;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+
+                &:nth-of-type(3){
+                    display: none;
+                }
+            }
+        }
+
+        & + .item{
+            // margin-top: 8px;
+            // padding-top: 8px;
+            border-top: 1px solid #e6e6e6;
+        }
+    }
+}
+
+.item-paging{
+    text-align: center;
+
+    .paging{
+        border-radius: 3px;
+        overflow:hidden;
+        display: inline-block;
+
+        li{
+            display: inline-block;
+            border: 1px solid #ddd;
+            border-left-width: 0;
+            border-right-width: 0;
+
+            &:hover{
+                background: #eee;
+                a{
+                    color: #4dbc15;
+                }
+            }
+
+            &:first-of-type{
+                border-left-width: 1px;
+                border-bottom-left-radius: 3px;
+                border-top-left-radius: 3px;
+            }
+            &:last-of-type{
+                border-right-width: 1px;
+                border-bottom-right-radius: 3px;
+                border-top-right-radius: 3px;
+                background: #4dbc15;
+                border-color: #4dbc15;
+
+                a{
+                    color: #fff;
+                }
+            }
+
+            a, span{
+                display: block;
+                padding: 4px 12px;
+            }
+
+            &.current{
+                background: #5b5b5b;
+                border-color: #5b5b5b;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.item-images{
+    display: flex;
+    flex-wrap:wrap;
+    margin: 0 -8px;
+    .item{
+        flex: 1 1 29%;
+        margin: 8px;
+        max-width: 32%;
+
+        .item-image{
+            position: relative;
+            overflow: hidden;
+            cursor: zoom-in;
+
+            &:before{
+                content: '';
+                display: block;
+                padding-top: 100%;
+            }
+
+            img{
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    }
+}
+
+@media (max-width: 320px) {
+
+}
+
+@media (min-width: 768px) {
+    .item-services{
+        .item{
+            .item-imgs{
+                li:nth-of-type(3){
+                    display: block;
+                }
+            }
+        }
+    }
+}
+@media (min-width: 992px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}

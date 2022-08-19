@@ -3,20 +3,12 @@ import {
     MUTATION_ADD_IMAGE,
     MUTATION_REMOVE_IMAGE,
     MUTATION_CLEAR_ALL_IMAGE,
-} from '@/store/mutations.js'
+} from '@/store/const/mutations.js'
 
 const {pictureSource} = require('@/utils/index.js')
 
 // initial state
-const state = {
-    options : {
-              root: null,
-              rootMargin: "0px",
-              threshold: [0.01, 0.75, 1]
-            },
-    observer : {},
-    count    : 0,
-}
+const state =
 
 const getters = {}
 // mutations
@@ -127,9 +119,18 @@ const actions = {
 //       });
 //     }
 
-export default {
-    namespaced: true,
-    state,
+export default defineStore({
+    state : () => {
+        return {
+            options : {
+                      root: null,
+                      rootMargin: "0px",
+                      threshold: [0.01, 0.75, 1]
+                    },
+            observer : {},
+            count    : 0,
+        }
+    },
     getters,
     actions,
     mutations

@@ -1,5 +1,5 @@
 import apiServices from '@/api/services'
-import {GETTER_TYPE} from '@/store/getters.js'
+import {GET_TYPE} from '@/store/const/getters.js'
 
 // initial state
 const state = {
@@ -23,7 +23,7 @@ const state = {
 
 // getters
 const getters = {
-    [GETTER_TYPE](state) {
+    [GET_TYPE]() {
         return state.TYPE;
     }
 }
@@ -37,8 +37,7 @@ const actions = {
 
 }
 
-export default {
-    namespaced: true,
+export default defineStore({
     state,
     getters,
     actions,
