@@ -1,0 +1,12 @@
+export const PAGE_HOME       = 'page_home'
+export const PAGE_CATEGORIES = 'page_categories'
+export const PAGE_IDEAS      = 'page_ideas'
+export const PAGE_SERVICE    = 'page_service'
+export const PAGE_VENDOR     = 'page_vendor'
+export const PAGE_AUTHEN     = 'page_authen'
+export const PAGE_NEWS       = 'page_news'
+
+export const PAGE_POSTS_SERVICE       = 'page_posts_service'
+export const PAGE_POSTS_SEARCH_VENDOR = 'page_posts_search_vendor'
+export const PAGE_POSTS_PRODUCT       = 'page_posts_product'
+export const PAGE_POSTS_REPORT        = 'page_posts_report'

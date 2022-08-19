@@ -1,0 +1,150 @@
+// UPLOAD IMAGE
+// .upload-images{
+//     // padding: 15px;
+//     display: flex;
+//     flex-wrap: wrap;
+//     align-content: flex-start;
+
+//     .box-input{
+//         .box__file{
+//             width: 100%;
+//         }
+//         .box__dragndrop{
+
+//         }
+//     }
+
+//     .wrap{
+//         flex: 1 1 90%;
+//         margin: 4px;
+//         position: relative;
+
+//         img{
+//             width: 100%;
+//         }
+
+//         .btn-remove{
+//             position: absolute;
+//             right: 10px;
+//             top: 10px;
+//             width: 20px;
+//             height: 20px;
+//             text-align: center;
+//             background-color: #ffffff80;
+//             border-radius: 50%;
+//             cursor: pointer;
+//             line-height: 20px;
+//         }
+
+//         .img-progress{
+//             background: #36b04a;
+//             background: -moz-linear-gradient(left, #36b04a 1%, #12aba2 50%, #29a5de 100%);
+//             background: -webkit-linear-gradient(left, #36b04a 1%,#12aba2 50%,#29a5de 100%);
+//             background: linear-gradient(to right, #36b04a 1%,#12aba2 50%,#29a5de 100%);
+//             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36b04a', endColorstr='#29a5de',GradientType=1 );
+
+//             transition: width 0.2s;
+//             position: absolute;
+//             left: 0;
+//             right: 0;
+//             bottom: 6px;
+//             height: 5px;
+//         }
+//     }
+// }
+
+// EDITABLE
+$pell-actionbar-color: #FFF !default;
+$pell-border-color: rgba(10, 10, 10, 0.1) !default;
+$pell-border-style: solid !default;
+$pell-border-width: 1px !default;
+$pell-button-height: 30px !default;
+$pell-button-selected-color: #F0F0F0 !default;
+$pell-button-width: 30px !default;
+$pell-content-height: 300px !default;
+$pell-content-padding: 10px !default;
+
+.pell {
+    border: $pell-border-width $pell-border-style $pell-border-color;
+    box-sizing: border-box;
+}
+
+.pell-content {
+    box-sizing: border-box;
+    height: $pell-content-height;
+    outline: 0;
+    overflow-y: auto;
+    padding: $pell-content-padding;
+    font-family: Roboto Mono,monospace;
+    font-size: 16px;
+
+    a{
+        color: #2121f0;
+        text-decoration: underline;
+    }
+
+    pre{
+        white-space: inherit;
+    }
+
+    blockquote{
+        padding-left: 10px;
+        border-left: 5px solid #ddd;
+    }
+}
+
+.pell-actionbar {
+    background-color: $pell-actionbar-color;
+    border-bottom: $pell-border-width $pell-border-style $pell-border-color;
+}
+
+.pell-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    height: $pell-button-height;
+    outline: 0;
+    width: $pell-button-width;
+    vertical-align: bottom;
+
+    &.bold{
+        font-weight: bold;
+    }
+    &.italic{
+        font-style: italic;
+    }
+    &.underline{
+        text-decoration: underline;
+    }
+    &.strike{
+        // text-decoration: strike;
+        text-decoration:line-through;
+    }
+
+    &.link:disabled, &.image:disabled{
+        opacity: 0.5
+    }
+}
+
+.pell-button-selected {
+    background-color: $pell-button-selected-color;
+}
+
+
+@media (max-width: 320px) {
+}
+
+@media (min-width: 768px) {
+}
+@media (min-width: 992px) {
+    .upload-images{
+
+        .wrap{
+            flex: 1 1 40%;
+
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+}
