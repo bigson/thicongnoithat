@@ -24,35 +24,6 @@ import {
     MUTATION_SET_SERVICE,
 } from '@/store/const/mutations.js'
 
-// initial state
-const state = {
-    city    : [],
-    address : {},
-    service : {}
-}
-
-// getters
-const getters = {
-    [GETTER_CITY](state) {
-        return state.city;
-    },
-    [GETTER_DISTRICT](state, citId) {
-        let c = state.city.filter(x => x.id == citId)
-
-        if(!c.length){
-            return []
-        }
-        console.log(c, state, citId)
-        return c[0].childs;
-    },
-    [GETTER_ADDRESS](state) {
-        return state.address;
-    },
-    [GETTER_SERVICE](state) {
-        return state.service;
-    },
-}
-
 // mutations
 const mutations = {
     [MUTATION_SET_CITY](state, city) {
@@ -83,35 +54,56 @@ const mutations = {
     },
 }
 
-// actions
-const actions = {
-    async [ACTION_GET_CITY]({ commit, state }, options) {
-        return await apiLOCATIONS(options).then(function(response) {
-                commit(MUTATION_SET_CITY, response.data.data);
-            })
-    },
-    async [ACTION_GET_DISTRICT]({ commit, state }, citId) {
-        return await apiLOCATIONS({
-                api : '/api/v1/locations/' + citId,
-            }).then(function(response) {
-                commit(MUTATION_SET_DISTRICT, response.data.data);
-            })
-    },
-    async [ACTION_SEARCH_ADDRESS]({ commit, state }, options) {
-        return await apiLOCATIONS(options).then(function(response) {
-                commit(MUTATION_SET_ADDRESS, response.data.data);
-            })
-    },
-    async [ACTION_POST_SERVICE]({ commit, state }, options) {
-        return await apiSERVICES(options).then(function(response) {
-                commit(MUTATION_SET_SERVICE, response.data.data);
-            })
-    },
-}
-
 export default defineStore({
-    state,
-    getters,
-    actions,
-    mutations
+    state : () => {
+        return {
+                city    : [],
+                address : {},
+                service : {}
+            }
+    },
+    getters : {
+        [GETTER_CITY](state) {
+            return state.city;
+        },
+        [GETTER_DISTRICT](state, citId) {
+            let c = state.city.filter(x => x.id == citId)
+
+            if(!c.length){
+                return []
+            }
+            console.log(c, state, citId)
+            return c[0].childs;
+        },
+        [GETTER_ADDRESS](state) {
+            return state.address;
+        },
+        [GETTER_SERVICE](state) {
+            return state.service;
+        },
+    },
+    actions : {
+        async [ACTION_GET_CITY]({ commit, state }, options) {
+            return await apiLOCATIONS(options).then(function(response) {
+                    commit(MUTATION_SET_CITY, response.data.data);
+                })
+        },
+        async [ACTION_GET_DISTRICT]({ commit, state }, citId) {
+            return await apiLOCATIONS({
+                    api : '/api/v1/locations/' + citId,
+                }).then(function(response) {
+                    commit(MUTATION_SET_DISTRICT, response.data.data);
+                })
+        },
+        async [ACTION_SEARCH_ADDRESS]({ commit, state }, options) {
+            return await apiLOCATIONS(options).then(function(response) {
+                    commit(MUTATION_SET_ADDRESS, response.data.data);
+                })
+        },
+        async [ACTION_POST_SERVICE]({ commit, state }, options) {
+            return await apiSERVICES(options).then(function(response) {
+                    commit(MUTATION_SET_SERVICE, response.data.data);
+                })
+        },
+    }
 }

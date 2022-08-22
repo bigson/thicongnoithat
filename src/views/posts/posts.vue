@@ -63,17 +63,17 @@
                 PAGE_POSTS_SERVICE_GETTER_DISTRICT,
                 PAGE_POSTS_SERVICE_GETTER_ADDRESS,
                 PAGE_POSTS_SERVICE_GETTER_SERVICE
-            } from '@/store/getters.js'
+            } from '@/store/const/getters.js'
     import {
                 PAGE_POSTS_SERVICE_ACTION_GET_CITY,
                 PAGE_POSTS_SERVICE_ACTION_GET_DISTRICT,
                 PAGE_POSTS_SERVICE_ACTION_SEARCH_ADDRESS,
                 PAGE_POSTS_SERVICE_ACTION_POST_SERVICE
-            } from '@/store/actions.js'
+            } from '@/store/const/actions.js'
     import {
                 PAGE_POSTS_SERVICE_SET_CITY_SELECTED,
                 PAGE_POSTS_SERVICE_SET_CITY_UNSELECTED
-            } from '@/store/mutations.js'
+            } from '@/store/const/mutations.js'
     import editable from '@/components/html/editable.vue'
     import uploadImages from '@/components/html/upload_images.vue'
 

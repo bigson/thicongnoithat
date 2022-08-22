@@ -1,11 +1,15 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
+//////////////////////////////////////
+// SHARED BETWEEN SERVER AND CLIENT //
+//////////////////////////////////////
+
+import { createSSRApp } from 'vue'
+import { renderToString } from 'vue/server-renderer'
+
 import App from '@/views/layouts/index.vue'
-import { createRouter } from '@/router'
-import { createStore } from '@/store'
-import { CATEGORIES_GET_ALL } from '@/store/getters.js'
-import { CATEGORIES_ACT_API_ALL } from '@/store/actions.js'
+import { initRouter } from '@/router'
+import { piniaStore } from '@/store'
+import { CATEGORIES_GET_ALL } from '@/store/const/getters.js'
+import { CATEGORIES_ACT_API_ALL } from '@/store/const/actions.js'
 
 // component for add routers
 import pageCategory from '@/views/category/category.vue'
@@ -13,20 +17,13 @@ import page404 from '@/views/404/404.vue'
 
 
 export function createApp(context) {
-    Vue.config.productionTip = false
 
-    const router = createRouter()
-    const store  = createStore()
+    const router = initRouter()
 
-    const app = new Vue({
-        el: '#app',
-        router,
-        store,
-        // components: { App },
-        // template: '<App/>',
-        methods: {},
-        render: h => h(App)
-    })
+    const app = createSSRApp(App)
+
+    app.use(router)
+    app.use(piniaStore)
 
 
     // add dynamic router from category
@@ -63,7 +60,7 @@ export function createApp(context) {
     //     });
     // }
 
-    return {app, router, store}
+    return {app, router, piniaStore}
     // return new Vue({
     //     data: {
     //         url: context.url

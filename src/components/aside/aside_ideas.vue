@@ -19,8 +19,8 @@
     </div>
 </template>
 <script>
-    import {IDEAS_GET_ALL, IDEAS_GET_PARENT_CHILDS} from '@/store/getters.js'
-    import {IDEAS_ACT_API_ALL} from '@/store/actions.js'
+    import {IDEAS_GET_ALL, IDEAS_GET_PARENT_CHILDS} from '@/store/const/getters.js'
+    import {IDEAS_ACT_API_ALL} from '@/store/const/actions.js'
 
     export default {
         name : 'aside_ideas',

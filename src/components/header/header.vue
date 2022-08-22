@@ -45,7 +45,7 @@
 </template>
 <script>
     // import { mapGetters } from 'vuex'
-    import {CATEGORIES_GET_PARENT_CHILDS} from '@/store/getters.js'
+    import {CATEGORIES_GET_PARENT_CHILDS} from '@/store/const/getters.js'
     export default {
         name: 'header-page',
         computed: {

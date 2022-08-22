@@ -63,7 +63,7 @@
     </div>
 </template>
 <script>
-import { CATEGORIES_GET_ALL } from '@/store/getters.js'
+import { CATEGORIES_GET_ALL } from '@/store/const/getters.js'
 import apiServices from '@/api/services'
 import apiImages from '@/api/images'
 

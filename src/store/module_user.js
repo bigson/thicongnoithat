@@ -25,33 +25,6 @@ import {
     MUTATION_SET_STATUS_LOGIN
 } from '@/store/const/mutations.js'
 
-const state = {
-    user      : {},
-    login_status: {},
-    forgot_pass: [],
-    change_password: [],
-    create_account: [],
-}
-
-const getters = {
-    [GETTER_DETAIL] : (state) => {
-        return state.user
-    },
-
-    [GETTER_STATUS_LOGIN] : (state) => {
-        return state.login_status
-    },
-
-    [GETTER_STATUS_FORGOT_PASSWORD](state) {
-        return state.forgot_pass;
-    },
-    [GETTER_STATUS_CHANGE_PASSWORD](state) {
-        return state.change_password;
-    },
-    [GETTER_STATUS_CREATE_ACCOUNT](state) {
-        return state.create_account;
-    },
-}
 
 // mutations
 const mutations = {
@@ -77,54 +50,79 @@ const mutations = {
 }
 
 // actions
-const actions = {
-    async [ACTION_DETAIL]({ commit, state }, cookies) {
-        let c = [];
-        for(let k in cookies){
-            c.push(k + '=' + cookies[k])
-        }
-        return await apiUser({
-            headers:{
-                Cookie: c.join('; ')
-            },
-            withCredentials: true
-        }).then(function(response) {
-                if(response.data.data){
-                	commit(MUTATION_SET_DETAIL, response.data.data);
-                }else{
-                	commit(MUTATION_SET_DETAIL, false);
-                }
-            })
-    },
-
-    async [ACTION_POST_FORGOT_PASSWORD] ({commit, state}, options) {
-        return await apiAuthen(options).then(function (response) {
-            commit(MUTATION_SET_STATUS_FORGOT_PASSWORD, response.data);
-        })
-    },
-    async [ACTION_POST_LOGIN] ({commit, state}, options) {
-        return await apiAuthen(options).then(function (response) {
-            commit(MUTATION_SET_STATUS_LOGIN,  response.data);
-            if(response.data.code == 1){
-                commit(MUTATION_SET_DETAIL, response.data.data);
-            }
-        })
-      },
-    async [ACTION_POST_CHANGE_PASSWORD] ({commit, state}, options) {
-        return await apiAuthen(options).then(function (response) {
-            commit(MUTATION_SET_STATUS_CHANGE_PASSWORD, response.data);
-        })
-    },
-    async [ACTION_POST_CREATE_ACCOUNT] ({commit, state}, options) {
-        return await apiAuthen(options).then(function (response) {
-            commit(MUTATION_SET_STATUS_CREATE_ACCOUNT, response.data);
-        })
-    },
+const actions = ,
 }
 
 export default defineStore({
-    state,
-    getters,
-    actions,
-    mutations
+    state : () => {
+        return {
+            user      : {},
+            login_status: {},
+            forgot_pass: [],
+            change_password: [],
+            create_account: [],
+        }
+    },
+    getters : {
+        [GETTER_DETAIL] : (state) => {
+            return state.user
+        },
+
+        [GETTER_STATUS_LOGIN] : (state) => {
+            return state.login_status
+        },
+
+        [GETTER_STATUS_FORGOT_PASSWORD](state) {
+            return state.forgot_pass;
+        },
+        [GETTER_STATUS_CHANGE_PASSWORD](state) {
+            return state.change_password;
+        },
+        [GETTER_STATUS_CREATE_ACCOUNT](state) {
+            return state.create_account;
+        },
+    },
+    actions : {
+        async [ACTION_DETAIL]({ commit, state }, cookies) {
+            let c = [];
+            for(let k in cookies){
+                c.push(k + '=' + cookies[k])
+            }
+            return await apiUser({
+                headers:{
+                    Cookie: c.join('; ')
+                },
+                withCredentials: true
+            }).then(function(response) {
+                    if(response.data.data){
+                        commit(MUTATION_SET_DETAIL, response.data.data);
+                    }else{
+                        commit(MUTATION_SET_DETAIL, false);
+                    }
+                })
+        },
+
+        async [ACTION_POST_FORGOT_PASSWORD] ({commit, state}, options) {
+            return await apiAuthen(options).then(function (response) {
+                commit(MUTATION_SET_STATUS_FORGOT_PASSWORD, response.data);
+            })
+        },
+        async [ACTION_POST_LOGIN] ({commit, state}, options) {
+            return await apiAuthen(options).then(function (response) {
+                commit(MUTATION_SET_STATUS_LOGIN,  response.data);
+                if(response.data.code == 1){
+                    commit(MUTATION_SET_DETAIL, response.data.data);
+                }
+            })
+          },
+        async [ACTION_POST_CHANGE_PASSWORD] ({commit, state}, options) {
+            return await apiAuthen(options).then(function (response) {
+                commit(MUTATION_SET_STATUS_CHANGE_PASSWORD, response.data);
+            })
+        },
+        async [ACTION_POST_CREATE_ACCOUNT] ({commit, state}, options) {
+            return await apiAuthen(options).then(function (response) {
+                commit(MUTATION_SET_STATUS_CREATE_ACCOUNT, response.data);
+            })
+        }
 }

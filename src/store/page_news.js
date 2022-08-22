@@ -33,46 +33,6 @@ import {
     MUTATION_PRODUCTS_RELATED,
 } from '@/store/const/mutations.js'
 
-// initial state
-const state = {
-    news               : {},
-    news_related       : [],
-    news_recommend     : [],
-    news_table_content : {},
-    services_category  : [],
-    services_related   : [],
-    products_category  : [],
-    products_related   : [],
-}
-
-// getters
-const getters = {
-    [GETTER_NEWS](state) {
-        return state.news
-    },
-    [GETTER_NEWS_RELATED](state) {
-        return state.news_related
-    },
-    [GETTER_NEWS_RECOMMEND](state) {
-        return state.news_recommend
-    },
-    [GETTER_NEWS_TABLE_CONTENT](state) {
-        return state.news_table_content
-    },
-    [GETTER_SERVICES_CATEGORY](state){
-        return state.services_category
-    },
-    [GETTER_SERVICES_RELATED](state){
-        return state.services_related
-    },
-    [GETTER_PRODUCTS_CATEGORY](state){
-        return state.products_category
-    },
-    [GETTER_PRODUCTS_RELATED](state){
-        return state.products_related
-    },
-}
-
 // mutations
 const mutations = {
     [MUTATION_SET_NEWS](state, news) {
@@ -106,31 +66,63 @@ const mutations = {
     },
 }
 
-// actions
-const actions = {
-    async [ACTION_GET_NEWS]({ commit, state }, options) {
-        return await apiNews(options).then(function(response) {
-                commit(MUTATION_SET_NEWS, response.data.data)
-            })
-    },
-    async [ACTION_GET_PAGE]({ commit, state }, options) {
-        return Promise.all([
-                apiNews(options.news_related).then(function(response) {
-                    commit(MUTATION_SET_NEWS_RELATED, response.data.data)
-                }),
-                apiNews(options.news_recommend).then(function(response) {
-                    commit(MUTATION_SET_NEWS_RECOMMEND, response.data.data)
-                }),
-                apiServices(options.services_category).then(function(response){
-                    commit(MUTATION_SERVICES_CATEGORY, response.data.data)
-                })
-            ])
-    },
-}
-
 export default defineStore({
-    state,
-    getters,
-    actions,
-    mutations
+    state : () => {
+        return {
+                news               : {},
+                news_related       : [],
+                news_recommend     : [],
+                news_table_content : {},
+                services_category  : [],
+                services_related   : [],
+                products_category  : [],
+                products_related   : [],
+            }
+    },
+    getters : {
+        [GETTER_NEWS](state) {
+            return state.news
+        },
+        [GETTER_NEWS_RELATED](state) {
+            return state.news_related
+        },
+        [GETTER_NEWS_RECOMMEND](state) {
+            return state.news_recommend
+        },
+        [GETTER_NEWS_TABLE_CONTENT](state) {
+            return state.news_table_content
+        },
+        [GETTER_SERVICES_CATEGORY](state){
+            return state.services_category
+        },
+        [GETTER_SERVICES_RELATED](state){
+            return state.services_related
+        },
+        [GETTER_PRODUCTS_CATEGORY](state){
+            return state.products_category
+        },
+        [GETTER_PRODUCTS_RELATED](state){
+            return state.products_related
+        },
+    },
+    actions : {
+        async [ACTION_GET_NEWS]({ commit, state }, options) {
+            return await apiNews(options).then(function(response) {
+                    commit(MUTATION_SET_NEWS, response.data.data)
+                })
+        },
+        async [ACTION_GET_PAGE]({ commit, state }, options) {
+            return Promise.all([
+                    apiNews(options.news_related).then(function(response) {
+                        commit(MUTATION_SET_NEWS_RELATED, response.data.data)
+                    }),
+                    apiNews(options.news_recommend).then(function(response) {
+                        commit(MUTATION_SET_NEWS_RECOMMEND, response.data.data)
+                    }),
+                    apiServices(options.services_category).then(function(response){
+                        commit(MUTATION_SERVICES_CATEGORY, response.data.data)
+                    })
+                ])
+        },
+    }
 }

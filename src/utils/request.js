@@ -1,18 +1,19 @@
-const config      = require('@/config')('product');
-const utils       = require('./index');
-const axios       = require('axios');
+import config from '@/config'
+import {mergeDeep}  from './index'
+import axios  from 'axios'
 
 export default function (data){
-    let defaultConfig = {
-        baseURL : config.host,
+    let conf = config('product'),
+        defaultConfig = {
+            baseURL : config.host,
 
-        auth : {
-            username : 'admin',
-            password : '123456',
-        },
-    };
+            auth : {
+                username : 'admin',
+                password : '123456',
+            },
+        };
 
-    defaultConfig = utils.mergeDeep(defaultConfig, data);
+    defaultConfig = mergeDeep(defaultConfig, data);
 
     if(data.data){
         defaultConfig.method = 'post';

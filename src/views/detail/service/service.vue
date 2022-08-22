@@ -25,7 +25,7 @@
                 PAGE_SERVICE_GETTER_VENDOR_GALLERY,
                 PAGE_SERVICE_GETTER_VENDOR_PROJECTS,
                 PAGE_SERVICE_GETTER_VENDOR_RATING,
-            } from '@/store/getters.js'
+            } from '@/store/const/getters.js'
     import {
                 PAGE_SERVICE_ACTION_GET_SERVICE,
                 PAGE_SERVICE_ACTION_GET_VENDOR_SERVICES,
@@ -33,7 +33,7 @@
                 PAGE_SERVICE_ACTION_GET_VENDOR_GALLERY,
                 PAGE_SERVICE_ACTION_GET_VENDOR_PROJECTS,
                 PAGE_SERVICE_ACTION_GET_VENDOR_RATING,
-            } from '@/store/actions.js'
+            } from '@/store/const/actions.js'
 
     import detail from '@/views/detail/detail.vue'
 

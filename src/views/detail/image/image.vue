@@ -30,15 +30,15 @@
         PAGE_IDEAS_GETTER_IMAGES,
         PAGE_IDEAS_GETTER_IMAGES_META,
         PAGE_IDEAS_GETTER_IMAGE,
-    } from '@/store/getters.js'
+    } from '@/store/const/getters.js'
 
     import {
         IDEAS_ACTION_API_ALL,
         PAGE_IDEAS_ACTION_GET_IMAGES,
         PAGE_IDEAS_ACTION_GET_IMAGE,
-    } from '@/store/actions.js'
+    } from '@/store/const/actions.js'
 
-    import {PAGE_IDEAS_MUTATION_SET_IMAGE} from '@/store/mutations.js'
+    import {PAGE_IDEAS_MUTATION_SET_IMAGE} from '@/store/const/mutations.js'
 
     import asideIdeas from '@/components/aside/aside_ideas.vue'
     import images from '@/components/items/images/images.vue'

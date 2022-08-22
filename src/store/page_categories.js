@@ -21,30 +21,6 @@ import {
     MUTATION_SET_LOADED
 } from '@/store/const/mutations.js'
 
-// initial state
-const state = {
-    services      : [],
-    services_meta : {},
-    location      : {},
-    loaded        : false,
-}
-
-// getters
-const getters = {
-    [GETTER_SERVICES] : (state) => {
-        return state.services;
-    },
-    [GETTER_SERVICES_META] : (state) => {
-        return state.services_meta;
-    },
-    [GETTER_LOCATION] : (state) => {
-        return state.location;
-    },
-    [GETTER_LOADED] : (state) => {
-        return state.loaded;
-    },
-}
-
 // mutations
 const mutations = {
     [MUTATION_REFRESH](state){
@@ -88,24 +64,45 @@ const actions = {
 
     //     return Promise.all(loadData)
     // },
-    async [ACTION_GET_SERVICES]({ commit, state }, options) {
-        return await apiSERVICES(options).then(function(response) {
-                commit(MUTATION_SET_SERVICES, response.data.data)
-                commit(MUTATION_SET_SERVICES_META, response.data.meta)
-                commit(MUTATION_SET_LOADED, true)
-            })
-    },
-    async [ACTION_GET_LOCATION]({ commit, state }, options) {
-        return await apiLOCATIONS(options).then(function(response) {
-                commit(MUTATION_SET_LOCATION, response.data.data)
-                commit(MUTATION_SET_LOADED, true)
-            })
-    },
+
 }
 
 export default defineStore({
-    state,
-    getters,
-    actions,
-    mutations
+    state : () => {
+        return {
+            services      : [],
+            services_meta : {},
+            location      : {},
+            loaded        : false,
+        }
+    },
+    getters : {
+        [GETTER_SERVICES] : (state) => {
+            return state.services;
+        },
+        [GETTER_SERVICES_META] : (state) => {
+            return state.services_meta;
+        },
+        [GETTER_LOCATION] : (state) => {
+            return state.location;
+        },
+        [GETTER_LOADED] : (state) => {
+            return state.loaded;
+        },
+    },
+    actions : {
+        async [ACTION_GET_SERVICES]({ commit, state }, options) {
+            return await apiSERVICES(options).then(function(response) {
+                    commit(MUTATION_SET_SERVICES, response.data.data)
+                    commit(MUTATION_SET_SERVICES_META, response.data.meta)
+                    commit(MUTATION_SET_LOADED, true)
+                })
+        },
+        async [ACTION_GET_LOCATION]({ commit, state }, options) {
+            return await apiLOCATIONS(options).then(function(response) {
+                    commit(MUTATION_SET_LOCATION, response.data.data)
+                    commit(MUTATION_SET_LOADED, true)
+                })
+        },
+    },
 }

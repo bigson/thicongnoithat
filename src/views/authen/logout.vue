@@ -5,11 +5,11 @@
 <script>
     import {
         USER_GETTER_DETAIL,
-    } from '@/store/getters.js'
+    } from '@/store/const/getters.js'
 
     import {
         USER_MUTATION_SET_DETAIL,
-    } from '@/store/mutations.js'
+    } from '@/store/const/mutations.js'
 
     import config from '@/config'
     import titleMixin from '@/mixins/title-mixin'

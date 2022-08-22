@@ -30,35 +30,11 @@ import {
 } from '@/store/const/mutations.js'
 
 // initial state
-const state = {
-    service         : {},
-    vendor_services : { data : [], meta : {}},
-    vendor_news     : { data : [], meta : {}},
-    vendor_gallery  : { data : [], meta : {}},
-    vendor_projects : { data : [], meta : {}},
-    vendor_rating   : { data : [], meta : {}},
-}
+const state =
 
 // getters
 const getters = {
-    [GETTER_SERVICE](state) {
-        return state.service;
-    },
-    [GETTER_VENDOR_SERVICES](state) {
-        return state.vendor_services;
-    },
-    [GETTER_VENDOR_NEWS](state) {
-        return state.vendor_news;
-    },
-    [GETTER_VENDOR_GALLERY](state) {
-        return state.vendor_gallery;
-    },
-    [GETTER_VENDOR_PROJECTS](state) {
-        return state.vendor_projects;
-    },
-    [GETTER_VENDOR_RATING](state) {
-        return state.vendor_rating;
-    },
+
 }
 
 // mutations
@@ -85,44 +61,73 @@ const mutations = {
 
 // actions
 const actions = {
-    async [ACTION_GET_SERVICE]({ commit, state }, options) {
-        return await apiServices(options).then(function(response) {
-                commit(MUTATION_SET_SERVICE, response.data.data);
-            })
-    },
-    async [ACTION_GET_VENDOR_SERVICES]({ commit, state }) {
-        return await apiVendors({api : state.service.vendor.id + '/services'}).then(function(response) {
-                commit(MUTATION_SET_VENDOR_SERVICES, response.data);
-            })
-    },
-    async [ACTION_GET_VENDOR_NEWS]({ commit, state }) {
-        return await apiVendors({api : state.service.vendor.id + '/news'}).then(function(response) {
-                commit(MUTATION_SET_VENDOR_NEWS, response.data);
-            })
-    },
-    async [ACTION_GET_VENDOR_GALLERY]({ commit, state }) {
-        return await apiVendors({api : state.service.vendor.id + '/gallery'}).then(function(response) {
-                commit(MUTATION_SET_VENDOR_GALLERY, response.data);
-            })
-    },
-    async [ACTION_GET_VENDOR_PROJECTS]({ commit, state }) {
-        return await apiVendors({api : state.service.vendor.id + '/projects'}).then(function(response) {
-                commit(MUTATION_SET_VENDOR_PROJECTS, response.data);
-            })
-    },
-    async [ACTION_GET_VENDOR_RATING]({ commit, state }) {
-        return await apiRating({
-                api    : 'vendor/' + state.service.vendor.id ,
-                params : {meta : 1},
-            }).then(function(response) {
-                commit(MUTATION_SET_VENDOR_RATING, response.data);
-            })
-    },
+
 }
 
 export default defineStore({
-    state,
-    getters,
-    actions,
-    mutations
+    state : () => {
+        return {
+                service         : {},
+                vendor_services : { data : [], meta : {}},
+                vendor_news     : { data : [], meta : {}},
+                vendor_gallery  : { data : [], meta : {}},
+                vendor_projects : { data : [], meta : {}},
+                vendor_rating   : { data : [], meta : {}},
+            }
+    },
+    getters : {
+        [GETTER_SERVICE](state) {
+            return state.service;
+        },
+        [GETTER_VENDOR_SERVICES](state) {
+            return state.vendor_services;
+        },
+        [GETTER_VENDOR_NEWS](state) {
+            return state.vendor_news;
+        },
+        [GETTER_VENDOR_GALLERY](state) {
+            return state.vendor_gallery;
+        },
+        [GETTER_VENDOR_PROJECTS](state) {
+            return state.vendor_projects;
+        },
+        [GETTER_VENDOR_RATING](state) {
+            return state.vendor_rating;
+        },
+    },
+    actions : {
+        async [ACTION_GET_SERVICE]({ commit, state }, options) {
+            return await apiServices(options).then(function(response) {
+                    commit(MUTATION_SET_SERVICE, response.data.data);
+                })
+        },
+        async [ACTION_GET_VENDOR_SERVICES]({ commit, state }) {
+            return await apiVendors({api : state.service.vendor.id + '/services'}).then(function(response) {
+                    commit(MUTATION_SET_VENDOR_SERVICES, response.data);
+                })
+        },
+        async [ACTION_GET_VENDOR_NEWS]({ commit, state }) {
+            return await apiVendors({api : state.service.vendor.id + '/news'}).then(function(response) {
+                    commit(MUTATION_SET_VENDOR_NEWS, response.data);
+                })
+        },
+        async [ACTION_GET_VENDOR_GALLERY]({ commit, state }) {
+            return await apiVendors({api : state.service.vendor.id + '/gallery'}).then(function(response) {
+                    commit(MUTATION_SET_VENDOR_GALLERY, response.data);
+                })
+        },
+        async [ACTION_GET_VENDOR_PROJECTS]({ commit, state }) {
+            return await apiVendors({api : state.service.vendor.id + '/projects'}).then(function(response) {
+                    commit(MUTATION_SET_VENDOR_PROJECTS, response.data);
+                })
+        },
+        async [ACTION_GET_VENDOR_RATING]({ commit, state }) {
+            return await apiRating({
+                    api    : 'vendor/' + state.service.vendor.id ,
+                    params : {meta : 1},
+                }).then(function(response) {
+                    commit(MUTATION_SET_VENDOR_RATING, response.data);
+                })
+        },
+    }
 }

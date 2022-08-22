@@ -53,16 +53,16 @@
 
     import {
         USER_ACTION_POST_CREATE_ACCOUNT,
-    } from '@/store/actions.js'
+    } from '@/store/const/actions.js'
 
     import {
         USER_MUTATION_SET_STATUS_CREATE_ACCOUNT,
-    } from '@/store/mutations.js'
+    } from '@/store/const/mutations.js'
 
     import {
         USER_GETTER_STATUS_CREATE_ACCOUNT,
         USER_GETTER_DETAIL,
-    } from '@/store/getters.js'
+    } from '@/store/const/getters.js'
 
 
     import config from '@/config'

@@ -1,4 +1,4 @@
-config = {
+const config = {
     'dev' : {
         host : 'http://thicongnoithat.bs'
     },
@@ -6,7 +6,8 @@ config = {
         host : 'http://apithicong.nhadathay.com',
     }
 }
-module.exports = function (env) {
+
+export default function (env) {
     if(config[env]){
         return config[env];
     }

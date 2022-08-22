@@ -1,10 +1,10 @@
 import { fileURLToPath, URL } from 'node:url'
-const path               = require('path')
+import path from 'path'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import glob from 'glob'
-const fs = require('fs')
+import fs from 'fs'
 import htmlPlugin from './build/htmlPlugin'
 
 var all = glob.sync('./src/**/*.scss'),
@@ -25,7 +25,7 @@ console.log(head, style)
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), htmlPlugin ()],
+    plugins: [vue(), htmlPlugin()],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url))

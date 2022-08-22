@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import home from '@/views/home/home.vue'
 import ideas from '@/views/ideas/ideas.vue'
 import pageCategory from '@/views/category/category.vue'
@@ -9,12 +8,10 @@ import pageVendor from '@/views/vendor/vendor.vue'
 
 import page404 from '@/views/404/404.vue'
 
-Vue.use(Router)
-
 // router.push('/settings/emails')
-export function createRouter () {
-    return new Router({
-        mode: 'history',
+export function initRouter () {
+    return createRouter({
+        history: createWebHistory(),
         routes: [{
                     path: '/',
                     name: 'home',

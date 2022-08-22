@@ -24,32 +24,6 @@ import {
     MUTATION_SET_NEWS
 } from '@/store/const/mutations.js'
 
-// initial state
-const state = {
-    ideas    : [],
-    services : [],
-    news     : [],
-    loaded   : false,
-}
-
-// getters
-const getters = {
-    [GETTER_IDEAS] : (state) => {
-        return state.ideas
-    },
-    [GETTER_SERVICES] : (state) => {
-        // console.log('get services')
-        return state.services
-    },
-    [GETTER_SERVICES] : (state) => {
-        // console.log('get services')
-        return state.services
-    },
-    [GETTER_NEWS] : (state) => {
-        // console.log('get services')
-        return state.news
-    },
-}
 
 // mutations
 const mutations = {
@@ -67,43 +41,62 @@ const mutations = {
     },
 }
 
-// actions
-const actions = {
-    async [ACTION_GET_PAGE]({ commit, state }, options) {
-        return Promise.all([
-                apiImages(options.ideas).then(function(response) {
+export default defineStore({
+    state : () => {
+        return {
+            ideas    : [],
+            services : [],
+            news     : [],
+            loaded   : false,
+        }
+    },
+    getters : {
+        [GETTER_IDEAS] : (state) => {
+            return state.ideas
+        },
+        [GETTER_SERVICES] : (state) => {
+            // console.log('get services')
+            return state.services
+        },
+        [GETTER_SERVICES] : (state) => {
+            // console.log('get services')
+            return state.services
+        },
+        [GETTER_NEWS] : (state) => {
+            // console.log('get services')
+            return state.news
+        },
+    },
+    actions : {
+        async [ACTION_GET_PAGE]({ commit, state }, options) {
+            return Promise.all([
+                    apiImages(options.ideas).then(function(response) {
+                        commit(MUTATION_SET_IDEAS, response.data.data)
+                    }),
+                    apiServices(options.services).then(function(response) {
+                        commit(MUTATION_SET_SERVICES, response.data.data)
+                    }),
+                    apiNews(options.news).then(function(response) {
+                        commit(MUTATION_SET_NEWS, response.data.data)
+                    })
+                ])
+        },
+        async [ACTION_GET_IDEAS]({ commit, state }, options) {
+            return await apiImages(options).then(function(response) {
                     commit(MUTATION_SET_IDEAS, response.data.data)
-                }),
-                apiServices(options.services).then(function(response) {
+                })
+        },
+        async [ACTION_GET_SERVICES]({ commit, state }, options) {
+            // console.log('actions act get services')
+            return await apiServices(options).then(function(response) {
                     commit(MUTATION_SET_SERVICES, response.data.data)
-                }),
-                apiNews(options.news).then(function(response) {
+                })
+        },
+        async [ACTION_GET_NEWS]({ commit, state }, options) {
+            // console.log('actions act get services')
+            return await apiNews(options).then(function(response) {
                     commit(MUTATION_SET_NEWS, response.data.data)
                 })
-            ])
-    },
-    async [ACTION_GET_IDEAS]({ commit, state }, options) {
-        return await apiImages(options).then(function(response) {
-                commit(MUTATION_SET_IDEAS, response.data.data)
-            })
-    },
-    async [ACTION_GET_SERVICES]({ commit, state }, options) {
-        // console.log('actions act get services')
-        return await apiServices(options).then(function(response) {
-                commit(MUTATION_SET_SERVICES, response.data.data)
-            })
-    },
-    async [ACTION_GET_NEWS]({ commit, state }, options) {
-        // console.log('actions act get services')
-        return await apiNews(options).then(function(response) {
-                commit(MUTATION_SET_NEWS, response.data.data)
-            })
-    },
-}
-
-export default defineStore({
-    state,
-    getters,
-    actions,
-    mutations
+        },
+    }
 }

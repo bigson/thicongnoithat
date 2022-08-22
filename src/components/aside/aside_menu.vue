@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-    import {CATEGORIES_GET_PARENT_CHILDS} from '@/store/getters.js'
+    import {CATEGORIES_GET_PARENT_CHILDS} from '@/store/const/getters.js'
     export default {
         name: 'aside_menu',
         computed :{

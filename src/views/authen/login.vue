@@ -42,16 +42,16 @@
 
     import {
         USER_ACTION_POST_LOGIN,
-    } from '@/store/actions.js'
+    } from '@/store/const/actions.js'
 
     import {
         USER_MUTATION_SET_STATUS_LOGIN,
-    } from '@/store/mutations.js'
+    } from '@/store/const/mutations.js'
 
     import {
         USER_GETTER_STATUS_LOGIN,
         USER_GETTER_DETAIL,
-    } from '@/store/getters.js'
+    } from '@/store/const/getters.js'
 
 
     import config from '@/config'
