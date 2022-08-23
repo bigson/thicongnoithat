@@ -7,11 +7,13 @@ import { fileURLToPath } from 'node:url'
 
 const server = express();
 const PORT   = 3000
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 let root = process.cwd(),
 	vite = await (await import('vite'))
 		.createServer({
-            base: '/test/',
+            // base: '/test/',
             root,
             logLevel: isTest ? 'error' : 'info',
             server: {
