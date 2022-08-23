@@ -1,7 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 import path from 'path'
 import { resolve } from 'path'
-import { minifyHtml } from "vite-plugin-html"
+import { createHtmlPlugin } from "vite-plugin-html"
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
@@ -44,7 +44,7 @@ import htmlPlugin from './build/htmlPlugin'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), htmlPlugin(), minifyHtml()],
+    plugins: [vue(), htmlPlugin(), createHtmlPlugin ()],
     resolve: {
         alias: {
             '@': resolve(__dirname, 'src')

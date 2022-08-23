@@ -1,6 +1,6 @@
 const config = {
     dev : {
-        host : 'http://localhost:91'
+        host : 'http://thicongnoithat.bs'
     },
     product : {
         host : 'http://apithicong.nhadathay.com',

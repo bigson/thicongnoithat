@@ -1,23 +1,31 @@
-import express from 'express'
-import { renderToString } from 'vue/server-renderer'
-import { createApp } from './src/app.js'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import express from 'express'
+import { renderToString } from 'vue/server-renderer'
+// import { createPageRenderer } from 'vite-plugin-ssr'
+import * as vite from 'vite'
+import htmlEntryServer from './src/entry-server.js'
 
 const server = express();
 const PORT   = 3000
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD;
+const isProduction = process.env.NODE_ENV === 'production'
 
 let root = process.cwd(),
-	vite = await (await import('vite'))
-		.createServer({
+    viteDevServer = await vite.createServer({
             // base: '/test/',
+            resolve: {
+                alias: {
+                    '@': path.resolve(__dirname, '/src'),
+                },
+            },
             root,
             logLevel: isTest ? 'error' : 'info',
             server: {
-                middlewareMode: true,
+                middlewareMode: 'ssr',
                 watch: {
                     // During tests we edit the files too fast and sometimes chokidar
                     // misses change events, so enforce polling for consistency
@@ -29,12 +37,14 @@ let root = process.cwd(),
                 // }
             },
             appType: 'custom'
-    	})
+        })
 
-server.get('/', (req, res) => {
-  const app = createApp();
+// const renderPage = createPageRenderer({ viteDevServer, isProduction, root })
 
-  renderToString(app).then((html) => {
+server.get('*', async (req, res) => {
+
+    const html = htmlEntryServer(req);
+
     res.send(`
     <!DOCTYPE html>
     <html>
@@ -54,7 +64,6 @@ server.get('/', (req, res) => {
       </body>
     </html>
     `);
-  });
 });
 
 // use vite's connect instance as middleware
