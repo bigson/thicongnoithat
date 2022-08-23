@@ -35,7 +35,7 @@ const mutations = {
     },
 }
 
-export default defineStore({
+export const usePageIdeasStore = defineStore('pageIdeas', {
     state : () => {
         return {
             images      : [],

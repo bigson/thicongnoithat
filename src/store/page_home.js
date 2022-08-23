@@ -41,7 +41,7 @@ const mutations = {
     },
 }
 
-export default defineStore({
+export const usePageHomeStore = defineStore('pageHome', {
     state : () => {
         return {
             ideas    : [],

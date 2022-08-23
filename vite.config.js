@@ -7,12 +7,12 @@ import glob from 'glob'
 import fs from 'fs'
 import htmlPlugin from './build/htmlPlugin'
 
-var all = glob.sync('./src/**/*.scss'),
+var all = glob.sync('./src/(views|components)/**/*.scss'),
     style = [],
     head = []
 
 all.forEach(function(e, i){
-    // console.log(e)
+    console.log(e)
     if(e.match((/.*\.head\.scss/))){
         head.push(path.resolve(__dirname, e))
     }else{
@@ -20,9 +20,25 @@ all.forEach(function(e, i){
     }
 })
 
+await fs.truncate('./src/assets/head.scss', 0, function(){console.log('head clear done')})
+await fs.appendFile('./src/assets/head.scss', head.map(e => {
+                                                                let arr = e.split('src'),
+                                                                    fileName = arr.length == 2 ? arr[1] : arr.splice(1).join(',')
+                                                                return `@import "@${fileName}"`
+                                                            }).join('\n'), () => {console.log('append done 1')});
 
-console.log(head, style)
 
+await fs.truncate('./src/assets/style.scss', 0, function(){console.log('style clear done')})
+await fs.appendFile('./src/assets/style.scss', style.map(e => {
+                                                                let arr = e.split('src'),
+                                                                    fileName = arr.length == 2 ? arr[1] : arr.splice(1).join(',')
+                                                                return `@import "@${fileName}"`
+                                                            }).join('\n'), () => {console.log('append done 2')});
+console.log(style.map(e => {
+                            let arr = e.split('src'),
+                                fileName = arr.length == 2 ? arr[1] : arr.splice(1).join(',')
+                            return `@import "@${fileName}"`
+                        }).join('\n'))
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [vue(), htmlPlugin()],

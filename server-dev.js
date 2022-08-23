@@ -57,6 +57,7 @@ server.get('/', (req, res) => {
 
 // use vite's connect instance as middleware
 server.use(vite.middlewares)
+server.use('/static', express.static(path.resolve(__dirname, './public')));
 
 server.listen(3000, () => {
   console.log('ready');

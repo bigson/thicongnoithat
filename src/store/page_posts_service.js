@@ -54,7 +54,7 @@ const mutations = {
     },
 }
 
-export default defineStore({
+export const usePagePSStore = defineStore('pagePostsService', {
     state : () => {
         return {
                 city    : [],

@@ -39,7 +39,7 @@ const actions = {
 }
 
 import { defineStore } from 'pinia'
-export default defineStore({
+export const useIp2locationStore = defineStore('ip2location', {
     state : () => {
         return {
                     ip       : '',

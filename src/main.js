@@ -8,8 +8,8 @@ import { renderToString } from 'vue/server-renderer'
 import Layout from '@/views/layouts/index.vue'
 import { initRouter } from '@/router'
 import { piniaStore } from '@/store'
-import { CATEGORIES_GET_ALL } from '@/store/const/getters.js'
-import { CATEGORIES_ACT_API_ALL } from '@/store/const/actions.js'
+import { GET_ALL } from '@/store/const/getters.js'
+import { ACT_API_ALL } from '@/store/const/actions.js'
 
 // component for add routers
 import pageCategory from '@/views/category/category.vue'

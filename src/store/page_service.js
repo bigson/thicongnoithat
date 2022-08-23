@@ -64,7 +64,7 @@ const actions = {
 
 }
 
-export default defineStore({
+export const usePageService = defineStore('pageService', {
     state : () => {
         return {
                 service         : {},

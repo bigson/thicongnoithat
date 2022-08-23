@@ -4,7 +4,7 @@ import {GET_ALL, GET_PARENT_CHILDS, GET_DETAIL} from '@/store/const/getters.js'
 import {SET_ALL} from '@/store/const/mutations.js'
 import { defineStore } from 'pinia'
 
-export default defineStore({
+export const useIdeasStore = defineStore('ideas', {
     state : () => {
         return {
                 all      : [],

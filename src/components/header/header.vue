@@ -44,16 +44,19 @@
     </div>
 </template>
 <script>
-    // import { mapGetters } from 'vuex'
-    import {CATEGORIES_GET_PARENT_CHILDS} from '@/store/const/getters.js'
+    import { mapState } from 'pinia'
+    import {GET_PARENT_CHILDS} from '@/store/const/getters.js'
+    import { useCategoriesStore } from '@/store/module_categories'
+
     export default {
         name: 'header-page',
         computed: {
+            ...mapState(useCategoriesStore, [GET_PARENT_CHILDS]),
             categories(){
-                let pc = Object.assign({}, this.$store.getters[CATEGORIES_GET_PARENT_CHILDS]);
+                let pc = this.GET_PARENT_CHILDS
 
                 // xoa danh muc do noi that
-                if(pc[20000]) delete(pc[20000]);
+                // if(pc[20000]) delete(pc[20000]);
 
                 // them link toi y tuong
                 pc[1] = {

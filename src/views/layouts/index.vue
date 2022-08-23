@@ -8,6 +8,9 @@
     </div>
 </template>
 <script>
+    import '@/assets/head.scss'
+    import '@/assets/style.scss'
+
     import headerPage from '@/components/header/header.vue'
     import footerPage from '@/components/footer/footer.vue'
 

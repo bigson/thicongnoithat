@@ -3,16 +3,16 @@ import {mergeDeep}  from './index'
 import axios  from 'axios'
 
 export default function (data){
-    let conf = config('product'),
+    let conf = config('dev'),
         defaultConfig = {
-            baseURL : config.host,
+            baseURL : conf.host,
 
             auth : {
                 username : 'admin',
                 password : '123456',
             },
         };
-
+        console.log(conf, defaultConfig)
     defaultConfig = mergeDeep(defaultConfig, data);
 
     if(data.data){

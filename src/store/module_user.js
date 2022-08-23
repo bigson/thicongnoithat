@@ -49,11 +49,7 @@ const mutations = {
     }
 }
 
-// actions
-const actions = ,
-}
-
-export default defineStore({
+export const useUserStore = defineStore('user', {
     state : () => {
         return {
             user      : {},

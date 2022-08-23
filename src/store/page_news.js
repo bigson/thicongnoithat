@@ -66,7 +66,7 @@ const mutations = {
     },
 }
 
-export default defineStore({
+export const usePageNewsStore = defineStore('pageNews', {
     state : () => {
         return {
                 news               : {},

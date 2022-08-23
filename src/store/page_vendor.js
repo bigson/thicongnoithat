@@ -53,7 +53,7 @@ const mutations = {
 }
 
 
-export default defineStore({
+export const usePageVendorStore = defineStore('pageVendor', {
     state : () => {
         return {
             vendor          : {},

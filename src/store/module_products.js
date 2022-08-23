@@ -1,6 +1,6 @@
 import shop from '@/api/products'
 
-export default defineStore({
+export const useProductsStore = defineStore('products', {
     state : () => {
         return {
             all: []

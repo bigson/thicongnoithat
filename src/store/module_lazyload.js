@@ -7,7 +7,7 @@ import {
 
 const {pictureSource} = require('@/utils/index.js')
 
-export default defineStore({
+export const useLazyloadStore = defineStore('lazyload', {
     state : () => {
         return {
             options : {

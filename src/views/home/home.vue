@@ -63,7 +63,9 @@
     </div>
 </template>
 <script>
-import { CATEGORIES_GET_ALL } from '@/store/const/getters.js'
+import { mapState } from 'pinia'
+import { useCategoriesStore } from '@/store/module_categories'
+import { GET_ALL } from '@/store/const/getters.js'
 import apiServices from '@/api/services'
 import apiImages from '@/api/images'
 
@@ -83,8 +85,9 @@ export default {
         }
     },
     computed: {
+        ...mapState(useCategoriesStore, [GET_ALL]),
         categories() {
-            let cat = this.$store.getters[CATEGORIES_GET_ALL],
+            let cat = this.GET_ALL,
                 categories = [];
 
             // console.log('cat', cat);

@@ -67,7 +67,7 @@ const actions = {
 
 }
 
-export default defineStore({
+export const usePageCategoryStore = defineStore('pageCategory', {
     state : () => {
         return {
             services      : [],

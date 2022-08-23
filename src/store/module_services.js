@@ -1,7 +1,7 @@
 import apiServices from '@/api/services'
 import {GET_TYPE} from '@/store/const/getters.js'
 
-export default defineStore({
+export const useServicesStore = defineStore('services', {
     state : () => {
         return {
                 TYPE : {

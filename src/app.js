@@ -3,7 +3,6 @@
 //////////////////////////////////////
 
 import { createSSRApp } from 'vue'
-import { renderToString } from 'vue/server-renderer'
 
 import App from '@/views/layouts/index.vue'
 import { initRouter } from '@/router'
@@ -24,6 +23,8 @@ export function createApp(context) {
 
     app.use(router)
     app.use(piniaStore)
+    app.config.devtools = true
+    app.config.performance = true;
 
 
     // add dynamic router from category
