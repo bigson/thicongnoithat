@@ -2,8 +2,7 @@ import { createApp } from '@/app'
 import { renderToString } from 'vue/server-renderer'
 import serialize from 'serialize-javascript'
 
-export default async (context = {}) => {
-    console.log(context);
+export async function render (context = {}){
 
     const { app, router, piniaStore } = createApp()
 
@@ -11,13 +10,13 @@ export default async (context = {}) => {
 
     await router.isReady()
 
-    const matchedComponents = router.getMatchedComponents()
-    console.log('matchedComponents',matchedComponents);
-    // no matched routes, reject with 404
-    if (!matchedComponents.length) {
-        throw '404 Not found'
-        return reject({ code: 404 })
-    }
+    // const matchedComponents = router.getMatchedComponents()
+    // console.log('matchedComponents',matchedComponents);
+    // // no matched routes, reject with 404
+    // if (!matchedComponents.length) {
+    //     throw '404 Not found'
+    //     return reject({ code: 404 })
+    // }
 
     context.rendered = () => {
         // After the app is rendered, our store is now
@@ -29,5 +28,5 @@ export default async (context = {}) => {
     }
 
     return await renderToString(app, context)
-    
+
 }

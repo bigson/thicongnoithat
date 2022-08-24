@@ -5,7 +5,8 @@ import express from 'express'
 import { renderToString } from 'vue/server-renderer'
 // import { createPageRenderer } from 'vite-plugin-ssr'
 import * as vite from 'vite'
-import htmlEntryServer from './src/entry-server.js'
+import vue from '@vitejs/plugin-vue'
+// import htmlEntryServer from './src/entry-server.js'
 
 const server = express();
 const PORT   = 3000
@@ -16,16 +17,10 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 let root = process.cwd(),
     viteDevServer = await vite.createServer({
-            // base: '/test/',
-            resolve: {
-                alias: {
-                    '@': path.resolve(__dirname, '/src'),
-                },
-            },
             root,
             logLevel: isTest ? 'error' : 'info',
             server: {
-                middlewareMode: 'ssr',
+                middlewareMode: true,
                 watch: {
                     // During tests we edit the files too fast and sometimes chokidar
                     // misses change events, so enforce polling for consistency
@@ -41,34 +36,31 @@ let root = process.cwd(),
 
 // const renderPage = createPageRenderer({ viteDevServer, isProduction, root })
 
+// use vite's connect instance as middleware
+server.use(viteDevServer.middlewares)
+server.use('/static', express.static(path.resolve(__dirname, './public')));
+
 server.get('*', async (req, res) => {
+try {
+    const url = req.originalUrl
+    // always read fresh template in dev
+    let template = fs.readFileSync(path.resolve('index.html'), 'utf-8')
 
-    const html = htmlEntryServer(req);
+    template = await viteDevServer.transformIndexHtml(url, template)
 
-    res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>Vue SSR Example</title>
-        <script type="importmap">
-          {
-            "imports": {
-              "vue": "https://unpkg.com/vue@3/dist/vue.esm-browser.js"
-            }
-          }
-        </script>
-        <script type="module" src="/client.js"></script>
-      </head>
-      <body>
-        <div id="app">${html}</div>
-      </body>
-    </html>
-    `);
+    const entryServer = await viteDevServer.ssrLoadModule('/src/entry-server.js')
+    const appHtml = await entryServer.render(req)
+    const html = template.replace(`<!--app-html-->`, appHtml)
+
+    res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+
+} catch (e) {
+    // vite && vite.ssrFixStacktrace(e)
+    console.log(e)
+    res.status(500).end(e.stack)
+}
 });
 
-// use vite's connect instance as middleware
-server.use(vite.middlewares)
-server.use('/static', express.static(path.resolve(__dirname, './public')));
 
 server.listen(3000, () => {
   console.log('ready');

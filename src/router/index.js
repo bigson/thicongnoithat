@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
 import home from '@/views/home/home.vue'
 import ideas from '@/views/ideas/ideas.vue'
 import pageCategory from '@/views/category/category.vue'
@@ -10,8 +10,9 @@ import page404 from '@/views/404/404.vue'
 
 // router.push('/settings/emails')
 export function initRouter () {
+    const history = import.meta.env.SSR ? createMemoryHistory() : createWebHistory()
     return createRouter({
-        history: createWebHistory(),
+        history: history,
         routes: [{
                     path: '/',
                     name: 'home',

@@ -20,14 +20,10 @@ import page404 from '@/views/404/404.vue'
 // Vue.config.productionTip = false
 const router = initRouter()
 
-const app = createSSRApp({
-    el: '#app',
-    router,
-    piniaStore,
-    components: { Layout },
-    template: '<Layout/>',
-    methods: {}
-})
+const app = createSSRApp(Layout)
+
+app.use(router)
+app.use(piniaStore)
 
 renderToString(app).then((html) => {
   console.log(html)

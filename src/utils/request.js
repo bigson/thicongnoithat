@@ -12,7 +12,7 @@ export default function (data){
                 password : '123456',
             },
         };
-        console.log(conf, defaultConfig)
+
     defaultConfig = mergeDeep(defaultConfig, data);
 
     if(data.data){
