@@ -106,54 +106,42 @@ export default {
 
     methods: {
         getSlides() {
-            return new Promise((resolve, reject) => {
-                apiImages({
+            const response = apiImages({
                     params: {
                         properties: 1001, // biet thu
                         search: 'album',
                         limit: 5,
                     }
-                }, function(response) {
-                    resolve(response);
-                });
-            }).then((response) => {
-                this.slides = response.data.data;
-            });
+                })
+            this.slides = response.data.data
         },
-        getIdeas() {
-            return new Promise((resolve, reject) => {
-                apiImages({
-                    params: {
-                        properties: 1002, // chung cu
-                        search: 'album',
-                        limit: 9,
-                        includes: 'vendor',
-                    }
-                }, function(response) {
-                    resolve(response);
-                });
-            }).then((response) => {
-                this.ideas = response.data.data;
-            });
+        async getIdeas() {
+            const response = await apiImages({
+                                    params: {
+                                        properties: 1002, // chung cu
+                                        search: 'album',
+                                        limit: 9,
+                                        includes: 'vendor',
+                                    }
+                                })
+
+            this.ideas = response.data.data
         },
-        getServices() {
-            return new Promise((resolve, reject) => {
-                apiServices({
-                    params: {
-                        cat_id: 10202, // thi coong noi that tron goi
-                        includes: 'vendor,category',
-                        limit: 10,
-                    }
-                }, function(response) {
-                    resolve(response);
-                });
-            }).then((response) => {
-                this.services = response.data.data;
-            });
+        async getServices() {
+            const response = await apiServices({
+                                params: {
+                                    cat_id: 10202, // thi coong noi that tron goi
+                                    includes: 'vendor,category',
+                                    limit: 10,
+                                }
+                            })
+
+            this.services = response.data.data
         }
     },
     // Server-side only
     serverPrefetch() {
+        console.log('serverPrefetch')
         // return the Promise from the action
         // so that the component waits before rendering
 

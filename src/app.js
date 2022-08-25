@@ -13,6 +13,7 @@ import { CATEGORIES_ACT_API_ALL } from '@/store/const/actions.js'
 // component for add routers
 import pageCategory from '@/views/category/category.vue'
 import page404 from '@/views/404/404.vue'
+import pictureSource from '@/mixins/picture-source-mixin.js'
 
 
 export function createApp(context) {
@@ -23,6 +24,7 @@ export function createApp(context) {
 
     app.use(router)
     app.use(piniaStore)
+    app.mixin(pictureSource)
     app.config.devtools = true
     app.config.performance = true;
 
