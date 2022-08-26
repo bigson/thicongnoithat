@@ -1,33 +1,21 @@
+import { defineStore } from 'pinia'
 import apiServices from '@/api/services'
 import apiVendors from '@/api/vendors'
 import apiRating from '@/api/rating'
 
-import {
-    ACTION_GET_VENDOR,
-    ACTION_GET_VENDOR_SERVICES,
-    ACTION_GET_VENDOR_NEWS,
-    ACTION_GET_VENDOR_GALLERY,
-    ACTION_GET_VENDOR_PROJECTS,
-    ACTION_GET_VENDOR_RATING,
-} from '@/store/const/actions.js'
 
-import {
-    GETTER_VENDOR,
-    GETTER_VENDOR_SERVICES,
-    GETTER_VENDOR_NEWS,
-    GETTER_VENDOR_GALLERY,
-    GETTER_VENDOR_PROJECTS,
-    GETTER_VENDOR_RATING,
-} from '@/store/const/getters.js'
-
-import {
-    MUTATION_SET_VENDOR,
-    MUTATION_SET_VENDOR_SERVICES,
-    MUTATION_SET_VENDOR_NEWS,
-    MUTATION_SET_VENDOR_GALLERY,
-    MUTATION_SET_VENDOR_PROJECTS,
-    MUTATION_SET_VENDOR_RATING,
-} from '@/store/const/mutations.js'
+export const PAGE_VENDOR_GETTER_VENDOR              = 'PAGE_VENDOR_GETTER_VENDOR'
+export const PAGE_VENDOR_GETTER_VENDOR_SERVICES     = 'PAGE_VENDOR_GETTER_VENDOR_SERVICES'
+export const PAGE_VENDOR_GETTER_VENDOR_NEWS         = 'PAGE_VENDOR_GETTER_VENDOR_NEWS'
+export const PAGE_VENDOR_GETTER_VENDOR_GALLERY      = 'PAGE_VENDOR_GETTER_VENDOR_GALLERY'
+export const PAGE_VENDOR_GETTER_VENDOR_PROJECTS     = 'PAGE_VENDOR_GETTER_VENDOR_PROJECTS'
+export const PAGE_VENDOR_GETTER_VENDOR_RATING       = 'PAGE_VENDOR_GETTER_VENDOR_RATING'
+export const PAGE_VENDOR_ACTION_GET_VENDOR          = 'PAGE_VENDOR_ACTION_GET_VENDOR'
+export const PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES = 'PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES'
+export const PAGE_VENDOR_ACTION_GET_VENDOR_NEWS     = 'PAGE_VENDOR_ACTION_GET_VENDOR_NEWS'
+export const PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY  = 'PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY'
+export const PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS = 'PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS'
+export const PAGE_VENDOR_ACTION_GET_VENDOR_RATING   = 'PAGE_VENDOR_ACTION_GET_VENDOR_RATING'
 
 
 // mutations
@@ -65,33 +53,33 @@ export const usePageVendorStore = defineStore('pageVendor', {
         }
     },
     getters : {
-        [GETTER_VENDOR](state) {
+        [PAGE_VENDOR_GETTER_VENDOR](state) {
             return state.vendor;
         },
-        [GETTER_VENDOR_SERVICES](state) {
+        [PAGE_VENDOR_GETTER_VENDOR_SERVICES](state) {
             return state.vendor_services;
         },
-        [GETTER_VENDOR_NEWS](state) {
+        [PAGE_VENDOR_GETTER_VENDOR_NEWS](state) {
             return state.vendor_news;
         },
-        [GETTER_VENDOR_GALLERY](state) {
+        [PAGE_VENDOR_GETTER_VENDOR_GALLERY](state) {
             return state.vendor_gallery;
         },
-        [GETTER_VENDOR_PROJECTS](state) {
+        [PAGE_VENDOR_GETTER_VENDOR_PROJECTS](state) {
             return state.vendor_projects;
         },
-        [GETTER_VENDOR_RATING](state) {
+        [PAGE_VENDOR_GETTER_VENDOR_RATING](state) {
             return state.vendor_rating;
         },
     },
     actions : {
-        async [ACTION_GET_VENDOR]({ commit, state }, options) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR]({ commit, state }, options) {
             commit(MUTATION_SET_VENDOR, {})
             return await apiVendors(options).then(function(response) {
                     commit(MUTATION_SET_VENDOR, response.data.data)
                 })
         },
-        async [ACTION_GET_VENDOR_SERVICES]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES]({ commit, state }) {
             commit(MUTATION_SET_VENDOR_SERVICES, {data : [], meta : {}})
             return await apiVendors({
                     api    : state.vendor.id + '/services',
@@ -100,7 +88,7 @@ export const usePageVendorStore = defineStore('pageVendor', {
                     commit(MUTATION_SET_VENDOR_SERVICES, response.data)
                 })
         },
-        async [ACTION_GET_VENDOR_NEWS]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_NEWS]({ commit, state }) {
             commit(MUTATION_SET_VENDOR_NEWS, {data : [], meta : {}})
             return await apiVendors({
                     api    : state.vendor.id + '/news',
@@ -109,7 +97,7 @@ export const usePageVendorStore = defineStore('pageVendor', {
                     commit(MUTATION_SET_VENDOR_NEWS, response.data)
                 })
         },
-        async [ACTION_GET_VENDOR_GALLERY]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY]({ commit, state }) {
             commit(MUTATION_SET_VENDOR_GALLERY, {data : [], meta : {}})
             return await apiVendors({
                     api    : state.vendor.id + '/gallery',
@@ -118,7 +106,7 @@ export const usePageVendorStore = defineStore('pageVendor', {
                     commit(MUTATION_SET_VENDOR_GALLERY, response.data)
                 })
         },
-        async [ACTION_GET_VENDOR_PROJECTS]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS]({ commit, state }) {
             commit(MUTATION_SET_VENDOR_PROJECTS, {data : [], meta : {}})
             return await apiVendors({
                     api    : state.vendor.id + '/projects',
@@ -127,7 +115,7 @@ export const usePageVendorStore = defineStore('pageVendor', {
                     commit(MUTATION_SET_VENDOR_PROJECTS, response.data)
                 })
         },
-        async [ACTION_GET_VENDOR_RATING]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_RATING]({ commit, state }) {
             commit(MUTATION_SET_VENDOR_RATING, {data : [], meta : {}})
             return await apiRating({
                     api    : 'vendor/' + state.vendor.id,
@@ -137,4 +125,4 @@ export const usePageVendorStore = defineStore('pageVendor', {
                 })
         },
     }
-}
+})

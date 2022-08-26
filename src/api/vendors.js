@@ -1,9 +1,9 @@
 import request from '@/utils/request';
-const api = '/api/v1/vendors';
+let api = '/api/v1/vendors';
 
-export default function (data, callback){
-    return request({
+export default async function (data, callback){
+    return await request({
         params : data.params,
-        url    : api,
-    })
+        url    : (data.api) ? (api + '/' + data.api) : api,
+    });
 }

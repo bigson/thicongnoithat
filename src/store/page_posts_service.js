@@ -1,28 +1,18 @@
+import { defineStore } from 'pinia'
 import apiSERVICES from '@/api/services'
 import apiVENDORS from '@/api/vendors'
 import apiLOCATIONS from '@/api/locations'
 
-import {
-    ACTION_GET_CITY,
-    ACTION_GET_DISTRICT,
-    ACTION_SEARCH_ADDRESS,
-    ACTION_POST_SERVICE
-} from '@/store/const/actions.js'
 
-import {
-    GETTER_CITY,
-    GETTER_DISTRICT,
-    GETTER_ADDRESS,
-    GETTER_SERVICE,
-} from '@/store/const/getters.js'
 
-import {
-    MUTATION_SET_CITY,
-    MUTATION_SET_CITY_SELECTED,
-    MUTATION_SET_DISTRICT,
-    MUTATION_SET_ADDRESS,
-    MUTATION_SET_SERVICE,
-} from '@/store/const/mutations.js'
+export const PAGE_POSTS_SERVICE_GETTER_CITY           = PAGE_POSTS_SERVICE_GETTER_CITY
+export const PAGE_POSTS_SERVICE_GETTER_DISTRICT       = PAGE_POSTS_SERVICE_GETTER_DISTRICT
+export const PAGE_POSTS_SERVICE_GETTER_ADDRESS        = PAGE_POSTS_SERVICE_GETTER_ADDRESS
+export const PAGE_POSTS_SERVICE_GETTER_SERVICE        = PAGE_POSTS_SERVICE_GETTER_SERVICE
+export const PAGE_POSTS_SERVICE_ACTION_GET_CITY       = PAGE_POSTS_SERVICE_ACTION_GET_CITY
+export const PAGE_POSTS_SERVICE_ACTION_GET_DISTRICT   = PAGE_POSTS_SERVICE_ACTION_GET_DISTRICT
+export const PAGE_POSTS_SERVICE_ACTION_SEARCH_ADDRESS = PAGE_POSTS_SERVICE_ACTION_SEARCH_ADDRESS
+export const PAGE_POSTS_SERVICE_ACTION_POST_SERVICE   = PAGE_POSTS_SERVICE_ACTION_POST_SERVICE
 
 // mutations
 const mutations = {
@@ -63,10 +53,10 @@ export const usePagePSStore = defineStore('pagePostsService', {
             }
     },
     getters : {
-        [GETTER_CITY](state) {
+        [PAGE_POSTS_SERVICE_GETTER_CITY](state) {
             return state.city;
         },
-        [GETTER_DISTRICT](state, citId) {
+        [PAGE_POSTS_SERVICE_GETTER_DISTRICT](state, citId) {
             let c = state.city.filter(x => x.id == citId)
 
             if(!c.length){
@@ -75,35 +65,35 @@ export const usePagePSStore = defineStore('pagePostsService', {
             console.log(c, state, citId)
             return c[0].childs;
         },
-        [GETTER_ADDRESS](state) {
+        [PAGE_POSTS_SERVICE_GETTER_ADDRESS](state) {
             return state.address;
         },
-        [GETTER_SERVICE](state) {
+        [PAGE_POSTS_SERVICE_GETTER_SERVICE](state) {
             return state.service;
         },
     },
     actions : {
-        async [ACTION_GET_CITY]({ commit, state }, options) {
+        async [PAGE_POSTS_SERVICE_ACTION_GET_CITY]({ commit, state }, options) {
             return await apiLOCATIONS(options).then(function(response) {
                     commit(MUTATION_SET_CITY, response.data.data);
                 })
         },
-        async [ACTION_GET_DISTRICT]({ commit, state }, citId) {
+        async [PAGE_POSTS_SERVICE_ACTION_GET_DISTRICT]({ commit, state }, citId) {
             return await apiLOCATIONS({
                     api : '/api/v1/locations/' + citId,
                 }).then(function(response) {
                     commit(MUTATION_SET_DISTRICT, response.data.data);
                 })
         },
-        async [ACTION_SEARCH_ADDRESS]({ commit, state }, options) {
+        async [PAGE_POSTS_SERVICE_ACTION_SEARCH_ADDRESS]({ commit, state }, options) {
             return await apiLOCATIONS(options).then(function(response) {
                     commit(MUTATION_SET_ADDRESS, response.data.data);
                 })
         },
-        async [ACTION_POST_SERVICE]({ commit, state }, options) {
+        async [PAGE_POSTS_SERVICE_ACTION_POST_SERVICE]({ commit, state }, options) {
             return await apiSERVICES(options).then(function(response) {
                     commit(MUTATION_SET_SERVICE, response.data.data);
                 })
         },
     }
-}
+})

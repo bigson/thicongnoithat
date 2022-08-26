@@ -4,6 +4,11 @@ import {GET_ALL, GET_PARENT_CHILDS, GET_DETAIL} from '@/store/const/getters.js'
 import {SET_ALL} from '@/store/const/mutations.js'
 import { defineStore } from 'pinia'
 
+export const IDEAS_GET_DETAIL        = 'IDEAS_GET_DETAIL'
+export const IDEAS_GET_ALL           = 'IDEAS_GET_ALL'
+export const IDEAS_GET_PARENT_CHILDS = 'IDEAS_GET_PARENT_CHILDS'
+export const IDEAS_ACT_API_ALL       = 'IDEAS_ACT_API_ALL'
+
 export const useIdeasStore = defineStore('ideas', {
     state : () => {
         return {
@@ -25,18 +30,18 @@ export const useIdeasStore = defineStore('ideas', {
             }
     },
     getters : {
-        [GET_DETAIL](id) {
+        [IDEAS_GET_DETAIL](id) {
             return state.getParentChilds;
         },
-        [GET_ALL](){
+        [IDEAS_GET_ALL](){
             return state.all;
         },
-        [GET_PARENT_CHILDS](){
+        [IDEAS_GET_PARENT_CHILDS](){
             return state.pc;
         }
     },
     actions : {
-        async [ACT_API_ALL]({ commit }) {
+        async [IDEAS_ACT_API_ALL]({ commit }) {
             // kt xem api có đang chạy không
             // nếu có nhiều nơi cùng gọi thì k chạy nhiều lần
             // if(state[ACT_API_ALL]){
@@ -70,4 +75,4 @@ export const useIdeasStore = defineStore('ideas', {
             state.all = _all;
         }
     },
-}
+})

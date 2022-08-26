@@ -1,3 +1,4 @@
+import { defineStore } from 'pinia'
 import shop from '@/api/products'
 
 export const useProductsStore = defineStore('products', {
@@ -18,4 +19,4 @@ export const useProductsStore = defineStore('products', {
             product.inventory--
         }
     },
-}
+})

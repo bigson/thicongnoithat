@@ -1,50 +1,20 @@
+import { defineStore } from 'pinia'
 import apiIdeas from '@/api/ideas'
 import apiSERVICES from '@/api/services'
 import apiLOCATIONS from '@/api/locations'
-import {
-    ACTION_GET_SERVICES,
-    ACTION_GET_LOCATION
-} from '@/store/const/actions.js'
 
-import {
-    GETTER_SERVICES,
-    GETTER_SERVICES_META,
-    GETTER_LOCATION,
-    GETTER_LOADED
-} from '@/store/const/getters.js'
+export const PAGE_CATEGORIES_GETTER_SERVICES      = 'PAGE_CATEGORIES_GETTER_SERVICES'
+export const PAGE_CATEGORIES_GETTER_SERVICES_META = 'PAGE_CATEGORIES_GETTER_SERVICES_META'
+export const PAGE_CATEGORIES_GETTER_LOCATION      = 'PAGE_CATEGORIES_GETTER_LOCATION'
+export const PAGE_CATEGORIES_GETTER_LOADED        = 'PAGE_CATEGORIES_GETTER_LOADED'
+export const PAGE_CATEGORIES_ACTION_GET_SERVICES  = 'PAGE_CATEGORIES_ACTION_GET_SERVICES'
+export const PAGE_CATEGORIES_ACTION_GET_LOCATION  = 'PAGE_CATEGORIES_ACTION_GET_LOCATION'
 
-import {
-    MUTATION_SET_SERVICES,
-    MUTATION_SET_SERVICES_META,
-    MUTATION_REFRESH,
-    MUTATION_SET_LOCATION,
-    MUTATION_SET_LOADED
-} from '@/store/const/mutations.js'
-
-// mutations
-const mutations = {
-    [MUTATION_REFRESH](state){
-        state.services      = []
-        state.services_meta = {}
-    },
-    [MUTATION_SET_SERVICES](state, services) {
-        state.services  = services ? services : false;
-    },
-    [MUTATION_SET_SERVICES_META](state, services_meta) {
-        state.services_meta  = services_meta ? services_meta : false;
-    },
-    [MUTATION_SET_LOCATION](state, location) {
-        state.location  = location;
-    },
-    [MUTATION_SET_LOADED](state, loaded) {
-        state.loaded  = loaded
-    },
-}
 
 // actions
 const actions = {
     // KHÔNG THỂ GET ALL ĐC VÌ PHẢI LOAD LOCATION TRƯỚC
-    // async [ACTION_GETTER_PAGE]({ commit, state }, options) {
+    // async [PAGE_CATEGORIES_ACTION_GETTER_PAGE]({ commit, state }, options) {
     //     let loadData = [
     //             apiSERVICES(options.services).then(function(response) {
     //                 commit(MUTATION_SET_SERVICES, response.data.data)
@@ -77,32 +47,32 @@ export const usePageCategoryStore = defineStore('pageCategory', {
         }
     },
     getters : {
-        [GETTER_SERVICES] : (state) => {
+        [PAGE_CATEGORIES_GETTER_SERVICES] : (state) => {
             return state.services;
         },
-        [GETTER_SERVICES_META] : (state) => {
+        [PAGE_CATEGORIES_GETTER_SERVICES_META] : (state) => {
             return state.services_meta;
         },
-        [GETTER_LOCATION] : (state) => {
+        [PAGE_CATEGORIES_GETTER_LOCATION] : (state) => {
             return state.location;
         },
-        [GETTER_LOADED] : (state) => {
+        [PAGE_CATEGORIES_GETTER_LOADED] : (state) => {
             return state.loaded;
         },
     },
     actions : {
-        async [ACTION_GET_SERVICES]({ commit, state }, options) {
+        async [PAGE_CATEGORIES_ACTION_GET_SERVICES]({ commit, state }, options) {
             return await apiSERVICES(options).then(function(response) {
                     commit(MUTATION_SET_SERVICES, response.data.data)
                     commit(MUTATION_SET_SERVICES_META, response.data.meta)
                     commit(MUTATION_SET_LOADED, true)
                 })
         },
-        async [ACTION_GET_LOCATION]({ commit, state }, options) {
+        async [PAGE_CATEGORIES_ACTION_GET_LOCATION]({ commit, state }, options) {
             return await apiLOCATIONS(options).then(function(response) {
                     commit(MUTATION_SET_LOCATION, response.data.data)
                     commit(MUTATION_SET_LOADED, true)
                 })
         },
     },
-}
+})

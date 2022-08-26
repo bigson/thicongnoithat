@@ -40,18 +40,11 @@
 </template>
 <script>
 
-    import {
-        USER_ACTION_POST_LOGIN,
-    } from '@/store/const/actions.js'
+    import {ACTION_POST_LOGIN} from '@/store/const/actions.js'
 
-    import {
-        USER_MUTATION_SET_STATUS_LOGIN,
-    } from '@/store/const/mutations.js'
+    import {MUTATION_SET_STATUS_LOGIN} from '@/store/const/mutations.js'
 
-    import {
-        USER_GETTER_STATUS_LOGIN,
-        USER_GETTER_DETAIL,
-    } from '@/store/const/getters.js'
+    import {GETTER_STATUS_LOGIN, USER_GETTER_DETAIL} from '@/store/const/getters.js'
 
 
     import config from '@/config'

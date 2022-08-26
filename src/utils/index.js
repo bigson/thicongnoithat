@@ -34,6 +34,181 @@ export function mergeDeep(target, ...sources) {
     return mergeDeep(target, ...sources);
 }
 
+export function generateNewsContent(html){
+    let getHead     = /<h(\d)([^\>]+)*\>(((?!\<\/h).)+)<\/h\d>(((?!\<h).)*)/g, // /<h(\d)([^\>]+)\>(((?!\<\/h).)+)/g,
+        getText     = /<\/?((?!\/?>).)+>/g,
+        getTeaser   = /((?!\<h\d).)+/,
+        list        = [],
+        preList     = {},
+        tOC         = [],
+        teaser      = '',
+        description = [],
+        m
+
+    teaser = getTeaser.exec(html)
+    if(teaser){
+        teaser = getTextFromHtml(teaser[0])
+    }else{
+        teaser = ''
+    }
+
+    while((m = getHead.exec(html))){
+        let h       = m[1],
+            attrs   = m[2],
+            text    = m[3],
+            next    = m[5],
+            v       = getTextFromHtml(text),
+            hash    = createlinkHash(v),
+            htag    = '<h' + h + ' id="' + hash + '" ' + attrs + '>'
+                        + text
+                        + '</h' + h + '>',
+            childs  = next.split(/(\<img [^>]+>)/)
+
+        childs = childs.map(x => {
+            if(x.startsWith('<img')){
+                let miMatch   = x.match(/(\w+)\=\"([^\"]+)\"/g),
+                    imgTag    = {}
+
+                if(!miMatch){
+                    return x
+                }
+
+                let map   = miMatch.forEach(y => {
+                        let param = y.replace(/\"/g, ''),
+                            s     = param.split('='),
+                            nameMatch = ''
+
+                        if(s[0] == 'src' && s[1].startsWith('https://cdn.vatgia.vn/')){
+                            // nếu mà từ cdn vật giá thì add name
+                            if(nameMatch = s[1].match(/\d+\-\w\w\w\.\w{3,4}/)){
+                                imgTag.name = nameMatch[0]
+                            }
+                        }
+
+                        imgTag[s[0]] = s[1]
+                    })
+
+                return imgTag
+            }
+
+            return x
+        })
+
+        list.push({h: h, value : v, href : hash})
+        description = description.concat([htag], childs)
+    }
+
+    if(list.length){
+        for(let i = 0; i < list.length; i++){
+            let e       = Object.assign({}, list[i]),
+                root    = tOC[tOC.length - 1]
+
+            if(e.h == 2){
+                e.h3 = []
+                tOC.push(e)
+                continue
+            }
+
+            for(let j = 3; j <= e.h-1; j++){
+                // console.log('root, rooth', root, root['h'+j])
+                if(!root['h'+j]){
+                    root['h'+j] = []
+                    break
+                }
+                root = root['h' + j][root['h' + j].length-1]
+            }
+            // console.log('root,e', root, e)
+            root['h' + e.h].push(e)
+        }
+    }
+
+    return [teaser, tOC, description]
+}
+
+function createTOC(list, item){
+
+}
+
+export function getTextFromHtml(html){
+    return html.replace(/<\/?((?!\/?>).)+>/g, '')
+}
+
+export function createlinkHash(text){
+    text = removeAccent(text)
+    text = text.replace(/[\W|\s]+/g, '_')
+
+    return text
+}
+
+export function removeAccent(text){
+    text = text.toLocaleLowerCase()
+    text = text.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a")
+    text = text.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e")
+    text = text.replace(/ì|í|ị|ỉ|ĩ/g, "i")
+    text = text.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o")
+    text = text.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u")
+    text = text.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y")
+    text = text.replace(/đ/g, "d")
+
+    return text
+}
+
+/**
+ * Tạo url ảnh từ tên ảnh
+ * @param  {[type]}  name [description]
+ * @param  {Boolean} size [description]
+ * @return {[type]}       [description]
+ */
+export function pictureSource(name, size = false){
+    let time
+    if(time = /^\d+/.exec(name)){
+        let tz      = 25200000, // 7 * 60 * 60 * 1000
+            date    = new Date(time * 1000 + tz)
+
+        if(size){
+            // 100x100
+            // 100
+            // w100
+            // h100
+            return 'https://cdn.vatgia.vn/pictures/thumb'
+                    + '/' + size
+                    + '/' + date.getUTCFullYear() + '/' + ('0' + (date.getUTCMonth() + 1)).slice(-2)
+                    + '/' + name;
+        }
+        return 'https://cdn.vatgia.vn/pictures/thicongtot'
+                    + '/' + date.getUTCFullYear()
+                    + '/' + ('0' + (date.getUTCMonth() + 1)).slice(-2)
+                    + '/' + ('0' + date.getUTCDate()).slice(-2)
+                    + '/' + name;
+    }else{
+        return name
+    }
+}
+
+/**
+ * Create new object from exist object with deep direct
+ * @param  {[type]} obj [description]
+ * @return {[type]}     [description]
+ */
+export function clone(obj) {
+    if (obj === null || typeof (obj) !== 'object' || 'isActiveClone' in obj)
+        return obj;
+
+    if (obj instanceof Date)
+        var temp = new obj.constructor(); //or new Date(obj);
+    else
+        var temp = obj.constructor();
+
+    for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            obj['isActiveClone'] = null;
+            temp[key] = clone(obj[key]);
+            delete obj['isActiveClone'];
+        }
+    }
+    return temp;
+}
+
 /**
  * [intToRGB(hashCode(''))]
  * @param  {[type]} str [description]

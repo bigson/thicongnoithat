@@ -22,11 +22,11 @@
     </div>
 </template>
 <script>
-  import {USER_ACTION_POST_FORGOT_PASSWORD} from '@/store/actions.js'
+  import {ACTION_POST_FORGOT_PASSWORD} from '@/store/const/actions.js'
 
-  import {USER_MUTATION_SET_STATUS_FORGOT_PASSWORD} from '@/store/const/mutations.js'
+  import {MUTATION_SET_STATUS_FORGOT_PASSWORD} from '@/store/const/mutations.js'
 
-  import {USER_GETTER_STATUS_FORGOT_PASSWORD} from '@/store/const/getters.js'
+  import {GETTER_STATUS_FORGOT_PASSWORD} from '@/store/const/getters.js'
 
   import config from '@/config'
   import titleMixin from '@/mixins/title-mixin'

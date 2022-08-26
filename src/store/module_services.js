@@ -1,5 +1,6 @@
-import apiServices from '@/api/services'
-import {GET_TYPE} from '@/store/const/getters.js'
+import { defineStore } from 'pinia'
+
+export const SERVICES_GET_TYPE = 'SERVICES_GET_TYPE'
 
 export const useServicesStore = defineStore('services', {
     state : () => {
@@ -23,8 +24,8 @@ export const useServicesStore = defineStore('services', {
             }
     },
     getters : {
-        [GET_TYPE]() {
+        [SERVICES_GET_TYPE]() {
             return state.TYPE;
         }
     },
-}
+})

@@ -1,6 +1,6 @@
 <script>
-    const utils = require('@/utils/index')
-    import {LAZYLOAD_MUTATION_ADD_IMAGE} from '@/store/mutations.js'
+    import {colorFromText, niceColor} from '@/utils/index'
+    import {LAZYLOAD_MUTATION_ADD_IMAGE, useLazyloadStore} from '@/store/module_lazyload.js'
 
     export default {
         name    : 'avatar',
@@ -23,10 +23,10 @@
         },
         methods : {
             getStyleAvatarHolder(name){
-                let clr = '#' + utils.colorFromText(name)
+                let clr = '#' + colorFromText(name)
                 let a = {
                     'background-color' : clr,
-                    'color'            : utils.niceColor(clr)
+                    'color'            : niceColor(clr)
                 }
 
                 return a

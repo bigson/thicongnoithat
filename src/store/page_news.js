@@ -1,37 +1,22 @@
+import { defineStore } from 'pinia'
 import apiNews from '@/api/news'
 import apiServices from '@/api/services'
 import {generateNewsContent} from '@/utils/index'
 
-import {
-    ACTION_GET_NEWS,
-    ACTION_GET_PAGE,
-    ACTION_SERVICES_CATEGORY,
-    ACTION_SERVICES_RELATED,
-    ACTION_PRODUCTS_CATEGORY,
-    ACTION_PRODUCTS_RELATED,
-} from '@/store/const/actions.js'
-
-import {
-    GETTER_NEWS,
-    GETTER_NEWS_RELATED,
-    GETTER_NEWS_RECOMMEND,
-    GETTER_NEWS_TABLE_CONTENT,
-    GETTER_SERVICES_CATEGORY,
-    GETTER_SERVICES_RELATED,
-    GETTER_PRODUCTS_CATEGORY,
-    GETTER_PRODUCTS_RELATED,
-} from '@/store/const/getters.js'
-
-import {
-    MUTATION_SET_NEWS,
-    MUTATION_SET_NEWS_RELATED,
-    MUTATION_SET_NEWS_RECOMMEND,
-    MUTATION_SET_NEWS_TABLE_CONTENT,
-    MUTATION_SERVICES_CATEGORY,
-    MUTATION_SERVICES_RELATED,
-    MUTATION_PRODUCTS_CATEGORY,
-    MUTATION_PRODUCTS_RELATED,
-} from '@/store/const/mutations.js'
+export const PAGE_NEWS_GETTER_NEWS               = 'PAGE_NEWS_GETTER_NEWS'
+export const PAGE_NEWS_GETTER_NEWS_RELATED       = 'PAGE_NEWS_GETTER_NEWS_RELATED'
+export const PAGE_NEWS_GETTER_NEWS_RECOMMEND     = 'PAGE_NEWS_GETTER_NEWS_RECOMMEND'
+export const PAGE_NEWS_GETTER_NEWS_TABLE_CONTENT = 'PAGE_NEWS_GETTER_NEWS_TABLE_CONTENT'
+export const PAGE_NEWS_GETTER_SERVICES_CATEGORY  = 'PAGE_NEWS_GETTER_SERVICES_CATEGORY'
+export const PAGE_NEWS_GETTER_SERVICES_RELATED   = 'PAGE_NEWS_GETTER_SERVICES_RELATED'
+export const PAGE_NEWS_GETTER_PRODUCTS_CATEGORY  = 'PAGE_NEWS_GETTER_PRODUCTS_CATEGORY'
+export const PAGE_NEWS_GETTER_PRODUCTS_RELATED   = 'PAGE_NEWS_GETTER_PRODUCTS_RELATED'
+export const PAGE_NEWS_ACTION_GET_NEWS           = 'PAGE_NEWS_ACTION_GET_NEWS'
+export const PAGE_NEWS_ACTION_GET_PAGE           = 'PAGE_NEWS_ACTION_GET_PAGE'
+export const PAGE_NEWS_ACTION_SERVICES_CATEGORY  = 'PAGE_NEWS_ACTION_SERVICES_CATEGORY'
+export const PAGE_NEWS_ACTION_SERVICES_RELATED   = 'PAGE_NEWS_ACTION_SERVICES_RELATED'
+export const PAGE_NEWS_ACTION_PRODUCTS_CATEGORY  = 'PAGE_NEWS_ACTION_PRODUCTS_CATEGORY'
+export const PAGE_NEWS_ACTION_PRODUCTS_RELATED   = 'PAGE_NEWS_ACTION_PRODUCTS_RELATED'
 
 // mutations
 const mutations = {
@@ -42,27 +27,6 @@ const mutations = {
 
         state.news               = news
         state.news_table_content = news.toc
-    },
-    [MUTATION_SET_NEWS_RELATED](state, news_related) {
-        state.news_related  = news_related
-    },
-    [MUTATION_SET_NEWS_RECOMMEND](state, news_recommend) {
-        state.news_recommend  = news_recommend
-    },
-    [MUTATION_SET_NEWS_TABLE_CONTENT](state, news_table_content) {
-        state.news_table_content  = news_table_content
-    },
-    [MUTATION_SERVICES_CATEGORY](state, services_category){
-        state.services_category = services_category
-    },
-    [MUTATION_SERVICES_RELATED](state, services_related){
-        state.services_related = services_related
-    },
-    [MUTATION_PRODUCTS_CATEGORY](state, products_category){
-        state.products_category = products_category
-    },
-    [MUTATION_PRODUCTS_RELATED](state, products_related){
-        state.products_related = products_related
     },
 }
 
@@ -80,38 +44,38 @@ export const usePageNewsStore = defineStore('pageNews', {
             }
     },
     getters : {
-        [GETTER_NEWS](state) {
+        [PAGE_NEWS_GETTER_NEWS](state) {
             return state.news
         },
-        [GETTER_NEWS_RELATED](state) {
+        [PAGE_NEWS_GETTER_NEWS_RELATED](state) {
             return state.news_related
         },
-        [GETTER_NEWS_RECOMMEND](state) {
+        [PAGE_NEWS_GETTER_NEWS_RECOMMEND](state) {
             return state.news_recommend
         },
-        [GETTER_NEWS_TABLE_CONTENT](state) {
+        [PAGE_NEWS_GETTER_NEWS_TABLE_CONTENT](state) {
             return state.news_table_content
         },
-        [GETTER_SERVICES_CATEGORY](state){
+        [PAGE_NEWS_GETTER_SERVICES_CATEGORY](state){
             return state.services_category
         },
-        [GETTER_SERVICES_RELATED](state){
+        [PAGE_NEWS_GETTER_SERVICES_RELATED](state){
             return state.services_related
         },
-        [GETTER_PRODUCTS_CATEGORY](state){
+        [PAGE_NEWS_GETTER_PRODUCTS_CATEGORY](state){
             return state.products_category
         },
-        [GETTER_PRODUCTS_RELATED](state){
+        [PAGE_NEWS_GETTER_PRODUCTS_RELATED](state){
             return state.products_related
         },
     },
     actions : {
-        async [ACTION_GET_NEWS]({ commit, state }, options) {
+        async [PAGE_NEWS_ACTION_GET_NEWS]({ commit, state }, options) {
             return await apiNews(options).then(function(response) {
                     commit(MUTATION_SET_NEWS, response.data.data)
                 })
         },
-        async [ACTION_GET_PAGE]({ commit, state }, options) {
+        async [PAGE_NEWS_ACTION_GET_PAGE]({ commit, state }, options) {
             return Promise.all([
                     apiNews(options.news_related).then(function(response) {
                         commit(MUTATION_SET_NEWS_RELATED, response.data.data)
@@ -125,4 +89,4 @@ export const usePageNewsStore = defineStore('pageNews', {
                 ])
         },
     }
-}
+})

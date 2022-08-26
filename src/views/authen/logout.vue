@@ -4,11 +4,11 @@
 </template>
 <script>
     import {
-        USER_GETTER_DETAIL,
+        GETTER_DETAIL,
     } from '@/store/const/getters.js'
 
     import {
-        USER_MUTATION_SET_DETAIL,
+        MUTATION_SET_DETAIL,
     } from '@/store/const/mutations.js'
 
     import config from '@/config'

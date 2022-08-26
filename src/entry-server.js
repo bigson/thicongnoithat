@@ -4,7 +4,7 @@ import serialize from 'serialize-javascript'
 
 export async function render (context = {}){
 
-    const { app, router, piniaStore } = createApp()
+    const { app, router, piniaStore } = await createApp()
 
     router.push(context.url)
 

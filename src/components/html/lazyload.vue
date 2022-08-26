@@ -1,5 +1,5 @@
 <script>
-    import {LAZYLOAD_MUTATION_ADD_IMAGE} from '@/store/mutations.js'
+    import {LAZYLOAD_MUTATION_ADD_IMAGE, useLazyloadStore} from '@/store/module_lazyload.js'
     import {pictureSource} from '@/utils/index.js'
 
     export default {

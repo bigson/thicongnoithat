@@ -1,44 +1,11 @@
+import { defineStore } from 'pinia'
 import apiLOCATIONS from '@/api/locations'
 
-import {
-    GETTER_IP,
-    GETTER_LOCATION,
-    GETTER_USER
-} from '@/store/const/getters.js'
+export const IP2LOCATION_GETTER_IP           = 'IP2LOCATION_GETTER_IP'
+export const IP2LOCATION_GETTER_LOCATION     = 'IP2LOCATION_GETTER_LOCATION'
+export const IP2LOCATION_GETTER_USER         = 'IP2LOCATION_GETTER_USER'
+export const IP2LOCATION_ACTION_GET_LOCATION = 'IP2LOCATION_ACTION_GET_LOCATION'
 
-import {
-    MUTATION_IP,
-    MUTATION_LOCATION,
-    MUTATION_USER,
-} from '@/store/const/mutations.js'
-
-import {ACTION_GET_LOCATION} from '@/store/const/actions.js'
-
-// initial state
-const state =
-
-// getters
-const getters =
-
-// mutations
-const mutations = {
-    [MUTATION_IP](state, ip) {
-        state.ip  = ip
-    },
-    [MUTATION_LOCATION](state, location) {
-        state.location  = location
-    },
-    [MUTATION_USER](state, user) {
-        state.user  = user
-    },
-}
-
-// actions
-const actions = {
-
-}
-
-import { defineStore } from 'pinia'
 export const useIp2locationStore = defineStore('ip2location', {
     state : () => {
         return {
@@ -48,18 +15,18 @@ export const useIp2locationStore = defineStore('ip2location', {
                 }
     },
     getters : {
-        [GETTER_IP](state) {
+        [IP2LOCATION_GETTER_IP](state) {
             return state.ip
         },
-        [GETTER_LOCATION](state) {
+        [IP2LOCATION_GETTER_LOCATION](state) {
             return state.location
         },
-        [GETTER_USER](state) {
+        [IP2LOCATION_GETTER_USER](state) {
             return state.user
         },
     },
     actions : {
-        async [ACTION_GET_LOCATION]({ commit, state }, options) {
+        async [IP2LOCATION_ACTION_GET_LOCATION]({ commit, state }, options) {
             if(options && options.params && options.params.ip){
                 this.ip = options.params.ip
             }
@@ -69,4 +36,4 @@ export const useIp2locationStore = defineStore('ip2location', {
             this.location = data
         },
     },
-}
+})

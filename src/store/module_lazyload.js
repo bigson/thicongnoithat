@@ -1,11 +1,9 @@
-// import {GET_TYPE} from '@/store/getters.js'
-import {
-    MUTATION_ADD_IMAGE,
-    MUTATION_REMOVE_IMAGE,
-    MUTATION_CLEAR_ALL_IMAGE,
-} from '@/store/const/mutations.js'
+import { defineStore } from 'pinia'
+import {pictureSource} from '@/utils/index.js'
 
-const {pictureSource} = require('@/utils/index.js')
+export const LAZYLOAD_ACTION_ADD_IMAGE       = 'LAZYLOAD_ACTION_ADD_IMAGE'
+export const LAZYLOAD_ACTION_REMOVE_IMAGE    = 'LAZYLOAD_ACTION_REMOVE_IMAGE'
+export const LAZYLOAD_ACTION_CLEAR_ALL_IMAGE = 'LAZYLOAD_ACTION_CLEAR_ALL_IMAGE'
 
 export const useLazyloadStore = defineStore('lazyload', {
     state : () => {
@@ -20,7 +18,7 @@ export const useLazyloadStore = defineStore('lazyload', {
         }
     },
     actions : {
-        [MUTATION_ADD_IMAGE](img, options = {}){\
+        [LAZYLOAD_ACTION_ADD_IMAGE](img, options = {}){
             if(!(this.observer instanceof IntersectionObserver)){
                 this.initObserver(options)
             }
@@ -31,11 +29,11 @@ export const useLazyloadStore = defineStore('lazyload', {
                 this.count++
             }
         },
-        [MUTATION_REMOVE_IMAGE](img){
+        [LAZYLOAD_ACTION_REMOVE_IMAGE](img){
             this.observer.unobserve(img)
             this.count--
         },
-        [MUTATION_CLEAR_ALL_IMAGE](options){
+        [LAZYLOAD_ACTION_CLEAR_ALL_IMAGE](options){
             this.initObserver(options)
         },
         initObserver(state, options){
@@ -76,7 +74,7 @@ export const useLazyloadStore = defineStore('lazyload', {
                                     img.height = height
                                 }
 
-                                that[MUTATION_REMOVE_IMAGE](img)
+                                that[LAZYLOAD_ACTION_REMOVE_IMAGE](img)
                             }, 200)
                         }else if(entry.isIntersecting || entry.intersectionRatio >= 0.75){
                             img.onload = function(){
@@ -97,7 +95,7 @@ export const useLazyloadStore = defineStore('lazyload', {
                                 img.setAttribute('height', height)
                             }
 
-                            that[MUTATION_REMOVE_IMAGE](img)
+                            that[LAZYLOAD_ACTION_REMOVE_IMAGE](img)
                         }else if(entry.intersectionRatio < 0.01){
                             return
                         }else{
@@ -111,4 +109,4 @@ export const useLazyloadStore = defineStore('lazyload', {
             }
         }
     },
-}
+})
