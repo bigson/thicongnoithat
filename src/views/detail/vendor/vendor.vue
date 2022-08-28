@@ -16,7 +16,6 @@
             <projects :projects="vendorProjects.data"/>
             <router-link
                     class="link-more"
-                    v-if=""
                     :to="vendor.url + '/du-an'">Xem thêm</router-link>
         </template>
 
@@ -29,22 +28,25 @@
 <script>
     import {
                 CATEGORIES_GETTER_BY_ID,
-
+                useCategoriesStore
+            } from '@/store/module_categories.js'
+    import {
                 PAGE_VENDOR_GETTER_VENDOR,
                 PAGE_VENDOR_GETTER_VENDOR_SERVICES,
                 PAGE_VENDOR_GETTER_VENDOR_NEWS,
                 PAGE_VENDOR_GETTER_VENDOR_GALLERY,
                 PAGE_VENDOR_GETTER_VENDOR_PROJECTS,
                 PAGE_VENDOR_GETTER_VENDOR_RATING,
-            } from '@/store/getters.js'
-    import {
+
                 PAGE_VENDOR_ACTION_GET_VENDOR,
                 PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES,
                 PAGE_VENDOR_ACTION_GET_VENDOR_NEWS,
                 PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY,
                 PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS,
                 PAGE_VENDOR_ACTION_GET_VENDOR_RATING,
-            } from '@/store/actions.js'
+
+                usePageVendorStore
+            } from '@/store/page_vendor.js'
 
     import detail from '@/views/detail/detail.vue'
 
@@ -59,7 +61,7 @@
     import ProgressBar from '@/mixins/progress-bar'
     import requestUrl from '@/mixins/request-url-mixin'
 
-    import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import { mapState, mapActions } from 'pinia'
 
     const optionsVendor = {
                         api    : '',

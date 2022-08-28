@@ -1,5 +1,5 @@
 import config      from '@/config'
-import utils       from './index'
+import utils       from './index.js'
 import axios       from 'axios'
 import querystring from 'querystring'
 

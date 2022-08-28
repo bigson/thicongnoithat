@@ -45,8 +45,7 @@
 </template>
 <script>
     import { mapState } from 'pinia'
-    import {GET_PARENT_CHILDS} from '@/store/const/getters.js'
-    import { useCategoriesStore } from '@/store/module_categories'
+    import { GET_PARENT_CHILDS, useCategoriesStore } from '@/store/module_categories.js'
 
     export default {
         name: 'header-page',

@@ -19,17 +19,21 @@
     </div>
 </template>
 <script>
-    import {IDEAS_GET_ALL, IDEAS_GET_PARENT_CHILDS} from '@/store/const/getters.js'
-    import {IDEAS_ACT_API_ALL} from '@/store/const/actions.js'
+    import {
+        IDEAS_GETTER_ALL,
+        IDEAS_GETTER_PARENT_CHILDS,
+        IDEAS_ACTION_API_ALL,
+        useIdeasStore
+    } from '@/store/module_ideas.js'
 
     export default {
         name : 'aside_ideas',
         computed :{
             ideasPc(){
-                return this.$store.getters[IDEAS_GET_PARENT_CHILDS];
+                return this.$store.getters[IDEAS_GETTER_PARENT_CHILDS];
             },
             ideasAll(){
-                return this.$store.getters[IDEAS_GET_ALL];
+                return this.$store.getters[IDEAS_GETTER_ALL];
             },
             properties(){
                 return this.$route.query.properties;
@@ -80,8 +84,8 @@
                 let pc;
                 console.log('start fetch aside ideas');
                 if(Object.keys(this.ideasAll).length == 0){
-                    await this.$store.dispatch(IDEAS_ACT_API_ALL).then((...a) => {
-                        console.log('done fetch aside ideas', this.$store.getters[IDEAS_GET_PARENT_CHILDS], this.$store.getters[IDEAS_GET_ALL], a);
+                    await this.$store.dispatch(IDEAS_ACTION_API_ALL).then((...a) => {
+                        console.log('done fetch aside ideas', this.$store.getters[IDEAS_GETTER_PARENT_CHILDS], this.$store.getters[IDEAS_GET_ALL], a);
                     });
                 }
             }

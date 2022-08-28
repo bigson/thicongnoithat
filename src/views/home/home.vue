@@ -162,6 +162,7 @@
     </div>
 </template>
 <script>
+    import { mapState, mapActions } from 'pinia'
     import {
         CATEGORIES_GETTER_ALL,
         useCategoriesStore
@@ -233,12 +234,13 @@ export default {
         }
     },
     computed: {
-        ...mapGetters({
-            categories : CATEGORIES_GETTER_ALL,
-            ideas      : PAGE_HOME_GETTER_IDEAS,
-            services   : PAGE_HOME_GETTER_SERVICES,
-            news       : PAGE_HOME_GETTER_NEWS,
-        }),
+        ...mapState(useCategoriesStore, [CATEGORIES_GETTER_ALL]),
+        ...mapState(usePageHomeStore, [
+                                            PAGE_HOME_GETTER_IDEAS,
+                                            PAGE_HOME_GETTER_SERVICES,
+                                            PAGE_HOME_GETTER_LOADED,
+                                            PAGE_HOME_GETTER_NEWS,
+                                        ]),
         hotCategories() {
             let hot  = [];
 
@@ -255,11 +257,11 @@ export default {
     },
 
     methods: {
-        ...mapActions({
-            getIdeas    : PAGE_HOME_ACTION_GET_IDEAS,
-            getServices : PAGE_HOME_ACTION_GET_SERVICES,
-            getPage     : PAGE_HOME_ACTION_GET_PAGE,
-        }),
+        ...mapActions(usePageHomeStore, {
+                                        getIdeas    : PAGE_HOME_ACTION_GET_IDEAS,
+                                        getServices : PAGE_HOME_ACTION_GET_SERVICES,
+                                        getPage     : PAGE_HOME_ACTION_GET_PAGE,
+                                    }),
         async fetchData(){
             return await this.getPage({
                                 ideas : {

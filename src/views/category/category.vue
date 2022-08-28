@@ -16,24 +16,27 @@
 </template>
 <script>
     import {
-                GETTER_ALL,
+                PAGE_CATEGORIES_GETTER_ALL,
+
+                PAGE_CATEGORIES_GETTER_SERVICES,
+                PAGE_CATEGORIES_GETTER_SERVICES_META,
+                PAGE_CATEGORIES_GETTER_LOCATION,
+                PAGE_CATEGORIES_GETTER_LOADED,
+                PAGE_CATEGORIES_ACTION_GET_SERVICES,
+                PAGE_CATEGORIES_ACTION_GET_LOCATION,
+
+                usePageCategoryStore
+            } from '@/store/page_categories.js'
+
+    import {
                 IP2LOCATION_GETTER_LOCATION,
+                useIp2locationStore
+            } from '@/store/module_ip2location.js'
 
-                GETTER_SERVICES,
-                GETTER_SERVICES_META,
-                GETTER_LOCATION,
-                GETTER_LOADED,
-            } from '@/store/const/getters.js'
-
-    import {
-                ACTION_GET_SERVICES,
-                ACTION_GET_LOCATION,
-            } from '@/store/const/actions.js'
-
-    import {
-                MUTATION_REFRESH,
-                MUTATION_SET_LOCATION,
-            } from '@/store/const/mutations.js'
+    // import {
+    //             MUTATION_REFRESH,
+    //             MUTATION_SET_LOCATION,
+    //         } from '@/store/const/mutations.js'
 
     import { clone } from '@/utils/index.js'
 
@@ -48,7 +51,7 @@
     import ProgressBar from '@/mixins/progress-bar'
     import requestUrl from '@/mixins/request-url-mixin'
 
-    import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import { mapState, mapActions } from 'pinia'
 
     const optionsServices = {
                                 params : {
@@ -76,16 +79,18 @@
         //     }
         // },
         computed: {
-            ...mapGetters({
+            ...mapState(usePageCategoryStore, {
                 services : PAGE_CATEGORIES_GETTER_SERVICES,
                 meta     : PAGE_CATEGORIES_GETTER_SERVICES_META,
                 location : PAGE_CATEGORIES_GETTER_LOCATION,
 
+            }),
+            ...mapState(usePageCategoryStore, {
                 ip2location : IP2LOCATION_GETTER_LOCATION,
             }),
-            ...mapMutations({
-                setLocation : PAGE_CATEGORIES_MUTATION_SET_LOCATION,
-            }),
+            // ...mapMutations({
+            //     setLocation : PAGE_CATEGORIES_MUTATION_SET_LOCATION,
+            // }),
 
             // from $route
             name(){
@@ -157,13 +162,13 @@
             },
         },
         methods: {
-            ...mapActions({
+            ...mapActions(usePageCategoryStore, {
                 getServices : PAGE_CATEGORIES_ACTION_GET_SERVICES,
                 getLocation : PAGE_CATEGORIES_ACTION_GET_LOCATION,
             }),
-            ...mapMutations({
-                refresh : PAGE_CATEGORIES_MUTATION_REFRESH,
-            }),
+            // ...mapMutations({
+            //     refresh : PAGE_CATEGORIES_MUTATION_REFRESH,
+            // }),
             async fetchData(){
                 // console.log('fetchData', this.locationSlug)
                 let that = this

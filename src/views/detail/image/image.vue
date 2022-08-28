@@ -51,7 +51,7 @@
     import metaMixin from '@/mixins/meta-mixin'
     import ProgressBar from '@/mixins/progress-bar'
 
-    import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import { mapState, mapActions } from 'pinia'
 
     export default {
         name       : 'detail_image',

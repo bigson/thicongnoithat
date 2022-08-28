@@ -19,26 +19,26 @@ export const PAGE_SERVICES_ACTION_GET_VENDOR_RATING   = 'PAGE_SERVICES_ACTION_GE
 
 
 // mutations
-const mutations = {
-    [MUTATION_SET_SERVICE](state, service) {
-        state.service  = service;
-    },
-    [MUTATION_SET_VENDOR_SERVICES](state, vendor_services) {
-        state.vendor_services  = vendor_services;
-    },
-    [MUTATION_SET_VENDOR_NEWS](state, vendor_news) {
-        state.vendor_news  = vendor_news;
-    },
-    [MUTATION_SET_VENDOR_GALLERY](state, vendor_gallery) {
-        state.vendor_gallery  = vendor_gallery;
-    },
-    [MUTATION_SET_VENDOR_PROJECTS](state, vendor_projects) {
-        state.vendor_projects  = vendor_projects;
-    },
-    [MUTATION_SET_VENDOR_RATING](state, vendor_rating) {
-        state.vendor_rating  = vendor_rating;
-    },
-}
+// const mutations = {
+//     [MUTATION_SET_SERVICE](state, service) {
+//         state.service  = service;
+//     },
+//     [MUTATION_SET_VENDOR_SERVICES](state, vendor_services) {
+//         state.vendor_services  = vendor_services;
+//     },
+//     [MUTATION_SET_VENDOR_NEWS](state, vendor_news) {
+//         state.vendor_news  = vendor_news;
+//     },
+//     [MUTATION_SET_VENDOR_GALLERY](state, vendor_gallery) {
+//         state.vendor_gallery  = vendor_gallery;
+//     },
+//     [MUTATION_SET_VENDOR_PROJECTS](state, vendor_projects) {
+//         state.vendor_projects  = vendor_projects;
+//     },
+//     [MUTATION_SET_VENDOR_RATING](state, vendor_rating) {
+//         state.vendor_rating  = vendor_rating;
+//     },
+// }
 
 // actions
 const actions = {

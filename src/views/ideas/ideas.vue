@@ -27,20 +27,22 @@
 <script>
     import {
         IDEAS_GETTER_ALL,
+        IDEAS_ACTION_API_ALL,
+        useIdeasStore
+    } from '@/store/module_ideas.js'
+
+    import {
         PAGE_IDEAS_GETTER_IMAGES,
         PAGE_IDEAS_GETTER_IMAGES_META,
         PAGE_IDEAS_GETTER_IMAGE,
-    } from '@/store/getters.js'
-
-    import {
-        IDEAS_ACTION_API_ALL,
         PAGE_IDEAS_ACTION_GET_IMAGES,
         PAGE_IDEAS_ACTION_GET_IMAGE,
-    } from '@/store/actions.js'
+        usePageIdeasStore
+    } from '@/store/page_ideas.js'
 
     import { clone } from '@/utils/index.js'
 
-    import {PAGE_IDEAS_MUTATION_SET_IMAGE} from '@/store/mutations.js'
+    // import {PAGE_IDEAS_MUTATION_SET_IMAGE} from '@/store/mutations.js'
 
     import asideIdeas from '@/components/aside/aside_ideas.vue'
     import images from '@/components/items/images/images.vue'
@@ -54,7 +56,7 @@
     import ProgressBar from '@/mixins/progress-bar'
     import requestUrl from '@/mixins/request-url-mixin'
 
-    import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import { mapState, mapActions } from 'pinia'
 
     const optionsPicture = {
                             params: {
@@ -83,11 +85,13 @@
             popupDetailImages,
         },
         computed:{
-            ...mapGetters({
+            ...mapState(usePageIdeasStore, {
                 meta        : PAGE_IDEAS_GETTER_IMAGES_META,
                 images      : PAGE_IDEAS_GETTER_IMAGES,
-                ideasAll    : IDEAS_GETTER_ALL,
                 detailImage : PAGE_IDEAS_GETTER_IMAGE,
+            }),
+            ...mapState(useIdeasStore, {
+                ideasAll    : IDEAS_GETTER_ALL,
             }),
             properties(){
                 let pp = this.$route.query.properties
@@ -151,14 +155,16 @@
             }
         },
         methods:{
-            ...mapActions({
-                getIdeas       : IDEAS_ACTION_API_ALL,
+            ...mapActions(usePageIdeasStore, {
                 getDetailImage : PAGE_IDEAS_ACTION_GET_IMAGE,
                 getPictures    : PAGE_IDEAS_ACTION_GET_IMAGES,
             }),
-            ...mapMutations({
-                mutationSetImage : PAGE_IDEAS_MUTATION_SET_IMAGE,
+            ...mapActions(useIdeasStore, {
+                getIdeas       : IDEAS_ACTION_API_ALL,
             }),
+            // ...mapMutations({
+            //     mutationSetImage : PAGE_IDEAS_MUTATION_SET_IMAGE,
+            // }),
             async fetchData(){
                 // console.log("fetchData")
                 let that = this

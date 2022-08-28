@@ -87,12 +87,12 @@
         PAGE_NEWS_GETTER_SERVICES_RELATED,
         PAGE_NEWS_GETTER_PRODUCTS_CATEGORY,
         PAGE_NEWS_GETTER_PRODUCTS_RELATED,
-    } from '@/store/getters.js'
 
-    import {
         PAGE_NEWS_ACTION_GET_NEWS,
         PAGE_NEWS_ACTION_GET_PAGE,
-    } from '@/store/actions.js'
+
+        usePageNewsStore
+    } from '@/store/page_news.js'
 
     import lazyload from '@/components/html/lazyload.vue'
     import avatar from '@/components/avatar/avatar.vue'
@@ -126,7 +126,7 @@
                     }
                 }
 
-    import { mapGetters, mapActions, mapMutations } from 'vuex'
+    import { mapState, mapActions } from 'pinia'
 
     export default {
         name       : 'page_news',

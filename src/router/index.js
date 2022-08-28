@@ -45,54 +45,54 @@ export function createRouter () {
                     components: {
                         default : home,
                     }
-                },{
-                    path: '/:type(dich-vu|tin-tuc|bo-suu-tap|du-an)/:name([a-zA-Z0-9+_\-]+)-s:id(\\d+)',
-                    name: 'detail_service',
-                    meta: Object.assign({}, meta, {}),
-                    components: {
-                        default : pageService,
-                    },
-                },{
-                    path: '/tin-tuc/:name([a-zA-Z0-9+_\-]+)-n:id(\\d+)',
-                    name: 'detail_news',
-                    meta: Object.assign({}, meta, {}),
-                    components: {
-                        default : pageNews,
-                    },
-                },{
-                //     path: '/cong-ty/:name([a-zA-Z0-9+_\-]+)-v:id(\\d+)',
-                //     name: 'detail_vendor',
+                // },{
+                //     path: '/:type(dich-vu|tin-tuc|bo-suu-tap|du-an)/:name([a-zA-Z0-9+_\-]+)-s:id(\\d+)',
+                //     name: 'detail_service',
+                //     meta: Object.assign({}, meta, {}),
+                //     components: {
+                //         default : pageService,
+                //     },
+                // },{
+                //     path: '/tin-tuc/:name([a-zA-Z0-9+_\-]+)-n:id(\\d+)',
+                //     name: 'detail_news',
+                //     meta: Object.assign({}, meta, {}),
+                //     components: {
+                //         default : pageNews,
+                //     },
+                // },{
+                // //     path: '/cong-ty/:name([a-zA-Z0-9+_\-]+)-v:id(\\d+)',
+                // //     name: 'detail_vendor',
+                // //     meta: Object.assign({}, meta, {}),
+                // //     components: {
+                // //         default : pageVendor,
+                // //     }
+                // // },{
+                //     path: '/cong-ty/:name([a-zA-Z0-9+_\-]+)-v:id(\\d+)/:type(dich-vu|tin-tuc|bo-suu-tap|du-an|danh-gia)?',
+                //     name: 'detail_vendor_type',
                 //     meta: Object.assign({}, meta, {}),
                 //     components: {
                 //         default : pageVendor,
                 //     }
                 // },{
-                    path: '/cong-ty/:name([a-zA-Z0-9+_\-]+)-v:id(\\d+)/:type(dich-vu|tin-tuc|bo-suu-tap|du-an|danh-gia)?',
-                    name: 'detail_vendor_type',
-                    meta: Object.assign({}, meta, {}),
-                    components: {
-                        default : pageVendor,
-                    }
-                },{
-                    path: '/y-tuong-thiet-ke',
-                    name: 'ideas',
-                    meta: Object.assign({}, meta, {
-                        title: 'Ý tưởng thiết kế nhà đẹp',
-                        description : 'Ý tưởng thiết kế biệt thự, nhà cấp 4, nhà ống. Bài trí đồ đạc phòng khách, phòng ngủ, phòng ăn đẹp, sang trọng',
-                    }),
-                    components: {
-                        default : ideas,
-                    }
-                },{
-                    path: '/y-tuong/:name([a-zA-Z0-9+_\-]+)-i:id(\\d+)',
-                    name: 'detail_image',
-                    meta: Object.assign({}, meta, {
-                        title: 'Ý tưởng thiết kế nhà đẹp',
-                        description : 'Ý tưởng thiết kế biệt thự, nhà cấp 4, nhà ống. Bài trí đồ đạc phòng khách, phòng ngủ, phòng ăn đẹp, sang trọng',
-                    }),
-                    components: {
-                        default : pageImage,
-                    }
+                //     path: '/y-tuong-thiet-ke',
+                //     name: 'ideas',
+                //     meta: Object.assign({}, meta, {
+                //         title: 'Ý tưởng thiết kế nhà đẹp',
+                //         description : 'Ý tưởng thiết kế biệt thự, nhà cấp 4, nhà ống. Bài trí đồ đạc phòng khách, phòng ngủ, phòng ăn đẹp, sang trọng',
+                //     }),
+                //     components: {
+                //         default : ideas,
+                //     }
+                // },{
+                //     path: '/y-tuong/:name([a-zA-Z0-9+_\-]+)-i:id(\\d+)',
+                //     name: 'detail_image',
+                //     meta: Object.assign({}, meta, {
+                //         title: 'Ý tưởng thiết kế nhà đẹp',
+                //         description : 'Ý tưởng thiết kế biệt thự, nhà cấp 4, nhà ống. Bài trí đồ đạc phòng khách, phòng ngủ, phòng ăn đẹp, sang trọng',
+                //     }),
+                //     components: {
+                //         default : pageImage,
+                //     }
                 },{
                     path: '/dang-dich-vu',
                     name: 'posts_service',

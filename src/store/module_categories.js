@@ -1,9 +1,9 @@
 import apiCategories from '@/api/categories'
 import { defineStore } from 'pinia'
 
-export const CATEGORIES_GET_ALL           = 'CATEGORIES_GET_ALL'
-export const CATEGORIES_GET_PARENT_CHILDS = 'CATEGORIES_GET_PARENT_CHILDS'
-export const CATEGORIES_ACT_API_ALL       = 'CATEGORIES_ACT_API_ALL'
+export const CATEGORIES_GETTER_ALL           = 'CATEGORIES_GETTER_ALL'
+export const CATEGORIES_GETTER_PARENT_CHILDS = 'CATEGORIES_GETTER_PARENT_CHILDS'
+export const CATEGORIES_ACTION_API_ALL       = 'CATEGORIES_ACTION_API_ALL'
 
 export const useCategoriesStore = defineStore('categories', {
     state : () => {
@@ -14,18 +14,18 @@ export const useCategoriesStore = defineStore('categories', {
                 }
     },
     getters : {
-        [CATEGORIES_GET_PARENT_CHILDS](state, id) {
+        [CATEGORIES_GETTER_PARENT_CHILDS](state, id) {
             return state.all[id];
         },
-        [CATEGORIES_GET_ALL](state){
+        [CATEGORIES_GETTER_ALL](state){
             return state.all;
         },
-        [CATEGORIES_GET_PARENT_CHILDS](state){
+        [CATEGORIES_GETTER_PARENT_CHILDS](state){
             return state.pc;
         }
     },
     actions : {
-        async [CATEGORIES_ACT_API_ALL]({ commit }) {
+        async [CATEGORIES_ACTION_API_ALL]({ commit }) {
             let response = await apiCategories(),
                 all = response.data.data,
                 pc = {},
