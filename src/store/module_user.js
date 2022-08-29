@@ -44,7 +44,7 @@ export const useUserStore = defineStore('user', {
         },
     },
     actions : {
-        async [USER_ACT_DETAIL]({ commit, state }, cookies) {
+        async [USER_ACT_DETAIL](cookies) {
             let c = [];
             for(let k in cookies){
                 c.push(k + '=' + cookies[k])
@@ -56,35 +56,39 @@ export const useUserStore = defineStore('user', {
                 withCredentials: true
             }).then(function(response) {
                     if(response.data.data){
-                        commit(MUTATION_SET_DETAIL, response.data.data);
+                        this.user = response.data.data
                     }else{
-                        commit(MUTATION_SET_DETAIL, false);
+                        this.user = false
                     }
                 })
         },
 
-        async [USER_ACTION_POST_FORGOT_PASSWORD] ({commit, state}, options) {
-            return await apiAuthen(options).then(function (response) {
-                commit(MUTATION_SET_STATUS_FORGOT_PASSWORD, response.data);
-            })
+        async [USER_ACTION_POST_FORGOT_PASSWORD] (options) {
+            return await apiAuthen(options)
+                            .then(function (response) {
+                                this.forgot_pass = response.data
+                            })
         },
-        async [USER_ACTION_POST_LOGIN] ({commit, state}, options) {
-            return await apiAuthen(options).then(function (response) {
-                commit(MUTATION_SET_STATUS_LOGIN,  response.data);
-                if(response.data.code == 1){
-                    commit(MUTATION_SET_DETAIL, response.data.data);
-                }
-            })
+        async [USER_ACTION_POST_LOGIN] (options) {
+            return await apiAuthen(options)
+                            .then(function (response) {
+                                this.login_status = response.data
+                                if(response.data.code == 1){
+                                    this.user = response.data.data
+                                }
+                            })
           },
-        async [USER_ACTION_POST_CHANGE_PASSWORD] ({commit, state}, options) {
-            return await apiAuthen(options).then(function (response) {
-                commit(MUTATION_SET_STATUS_CHANGE_PASSWORD, response.data);
-            })
+        async [USER_ACTION_POST_CHANGE_PASSWORD] (options) {
+            return await apiAuthen(options)
+                            .then(function (response) {
+                                this.change_password = response.data
+                            })
         },
-        async [USER_ACTION_POST_CREATE_ACCOUNT] ({commit, state}, options) {
-            return await apiAuthen(options).then(function (response) {
-                commit(MUTATION_SET_STATUS_CREATE_ACCOUNT, response.data);
-            })
+        async [USER_ACTION_POST_CREATE_ACCOUNT] (options) {
+            return await apiAuthen(options)
+                            .then(function (response) {
+                                this.create_account = response.data
+                            })
         }
     }
 })

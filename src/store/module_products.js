@@ -8,7 +8,7 @@ export const useProductsStore = defineStore('products', {
         }
     },
     actions : {
-        getProducts({ commit }) {
+        getProducts() {
             let response = shop.getProducts(),
                 data     = response.data.data
 

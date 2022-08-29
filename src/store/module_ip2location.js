@@ -26,7 +26,7 @@ export const useIp2locationStore = defineStore('ip2location', {
         },
     },
     actions : {
-        async [IP2LOCATION_ACTION_GET_LOCATION]({ commit, state }, options) {
+        async [IP2LOCATION_ACTION_GET_LOCATION](options) {
             if(options && options.params && options.params.ip){
                 this.ip = options.params.ip
             }

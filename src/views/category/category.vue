@@ -16,8 +16,6 @@
 </template>
 <script>
     import {
-                PAGE_CATEGORIES_GETTER_ALL,
-
                 PAGE_CATEGORIES_GETTER_SERVICES,
                 PAGE_CATEGORIES_GETTER_SERVICES_META,
                 PAGE_CATEGORIES_GETTER_LOCATION,
@@ -33,10 +31,10 @@
                 useIp2locationStore
             } from '@/store/module_ip2location.js'
 
-    // import {
-    //             MUTATION_REFRESH,
-    //             MUTATION_SET_LOCATION,
-    //         } from '@/store/const/mutations.js'
+    import {
+                CATEGORIES_GETTER_ALL,
+                useCategoriesStore
+            } from '@/store/module_catgories.js'
 
     import { clone } from '@/utils/index.js'
 

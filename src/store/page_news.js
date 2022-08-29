@@ -18,18 +18,6 @@ export const PAGE_NEWS_ACTION_SERVICES_RELATED   = 'PAGE_NEWS_ACTION_SERVICES_RE
 export const PAGE_NEWS_ACTION_PRODUCTS_CATEGORY  = 'PAGE_NEWS_ACTION_PRODUCTS_CATEGORY'
 export const PAGE_NEWS_ACTION_PRODUCTS_RELATED   = 'PAGE_NEWS_ACTION_PRODUCTS_RELATED'
 
-// mutations
-const mutations = {
-    [MUTATION_SET_NEWS](state, news) {
-        // let [teaser, tOC, description]   = generateNewsContent(news.description)
-        news.description         = news.description
-        news.teaser              = news.teaser
-
-        state.news               = news
-        state.news_table_content = news.toc
-    },
-}
-
 export const usePageNewsStore = defineStore('pageNews', {
     state : () => {
         return {
@@ -70,21 +58,28 @@ export const usePageNewsStore = defineStore('pageNews', {
         },
     },
     actions : {
-        async [PAGE_NEWS_ACTION_GET_NEWS]({ commit, state }, options) {
-            return await apiNews(options).then(function(response) {
-                    commit(MUTATION_SET_NEWS, response.data.data)
-                })
+        async [PAGE_NEWS_ACTION_GET_NEWS](options) {
+            return await apiNews(options)
+                    .then(function(response) {
+                        const news = response.data.data
+                        const [teaser, tOC, description] = generateNewsContent(news.description)
+                        news.description         = news.description
+                        news.teaser              = news.teaser
+
+                        this.news               = news
+                        this.news_table_content = news.tOC
+                    })
         },
-        async [PAGE_NEWS_ACTION_GET_PAGE]({ commit, state }, options) {
+        async [PAGE_NEWS_ACTION_GET_PAGE](options) {
             return Promise.all([
                     apiNews(options.news_related).then(function(response) {
-                        commit(MUTATION_SET_NEWS_RELATED, response.data.data)
+                        this.news_related = response.data.data
                     }),
                     apiNews(options.news_recommend).then(function(response) {
-                        commit(MUTATION_SET_NEWS_RECOMMEND, response.data.data)
+                        this.news_recommend = response.data.data
                     }),
                     apiServices(options.services_category).then(function(response){
-                        commit(MUTATION_SERVICES_CATEGORY, response.data.data)
+                        this.services_category = response.data.data
                     })
                 ])
         },

@@ -38,7 +38,7 @@ export const useIdeasStore = defineStore('ideas', {
         }
     },
     actions : {
-        async [IDEAS_ACTION_API_ALL]({ commit }) {
+        async [IDEAS_ACTION_API_ALL]() {
             // kt xem api có đang chạy không
             // nếu có nhiều nơi cùng gọi thì k chạy nhiều lần
             // if(state[ACT_API_ALL]){

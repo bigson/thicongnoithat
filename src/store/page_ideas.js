@@ -2,14 +2,6 @@ import { defineStore } from 'pinia'
 import apiIdeas from '@/api/ideas'
 import apiImages from '@/api/images'
 
-import {
-
-} from '@/store/const/actions.js'
-
-import {
-
-} from '@/store/const/getters.js'
-
 export const PAGE_IDEAS_GETTER_IMAGES      = 'PAGE_IDEAS_GETTER_IMAGES'
 export const PAGE_IDEAS_GETTER_IMAGES_META = 'PAGE_IDEAS_GETTER_IMAGES_META'
 export const PAGE_IDEAS_GETTER_IMAGE       = 'PAGE_IDEAS_GETTER_IMAGE'
@@ -37,16 +29,18 @@ export const usePageIdeasStore = defineStore('pageIdeas', {
         },
     },
     actions : {
-        async [PAGE_IDEAS_ACTION_GET_IMAGES]({ commit, state }, options) {
-            return await apiImages(options).then(function(response) {
-                    commit(MUTATION_SET_IMAGES, response.data.data)
-                    commit(MUTATION_SET_IMAGES_META, response.data.meta)
-                })
+        async [PAGE_IDEAS_ACTION_GET_IMAGES](options) {
+            return await apiImages(options)
+                        .then(function(response) {
+                            this.images      = response.data.data
+                            this.images_meta = response.data.meta
+                        })
         },
-        async [PAGE_IDEAS_ACTION_GET_IMAGE]({ commit, state }, options) {
-            return await apiImages(options).then(function(response) {
-                    commit(MUTATION_SET_IMAGE, response.data.data)
-                })
+        async [PAGE_IDEAS_ACTION_GET_IMAGE](options) {
+            return await apiImages(options)
+                        .then(function(response) {
+                            this.image = response.data.data
+                        })
         },
     },
 })

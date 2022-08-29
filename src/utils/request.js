@@ -1,5 +1,5 @@
 import config      from '@/config'
-import utils       from './index.js'
+import {mergeDeep}       from './index.js'
 import axios       from 'axios'
 import querystring from 'querystring'
 
@@ -22,7 +22,7 @@ export default async function (data, callback){
             // },
         }
 
-    defaultConfig = utils.mergeDeep(defaultConfig, data)
+    defaultConfig = mergeDeep(defaultConfig, data)
 
     if(!data.method){
         defaultConfig.method = 'get'

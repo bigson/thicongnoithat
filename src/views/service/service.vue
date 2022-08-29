@@ -18,10 +18,11 @@
     </div>
 </template>
 <script>
-    import {SERVICES_GET_TYPE} from '@/store/const/getters.js'
+    import {SERVICES_GETTER_TYPE, useServicesStore} from '@/store/const/getters.js'
     import breadcrumbs from '@/components/breadcrumbs/breadcrumbs.vue'
     import itemPaging from '@/components/items/item_paging.vue'
     import apiServices from '@/api/services'
+    import { mapState } from 'pinia'
 
     export default {
         name: 'page_services',
@@ -33,11 +34,9 @@
             }
         },
         computed: {
+            ...mapState(useServicesStore, {TYPE : SERVICES_GETTER_TYPE})
             category(){
                 return this.$route.meta.category;
-            },
-            TYPE(){
-                return this.$store.getters[SERVICES_GET_TYPE];
             },
             id(){
                 return this.$route.params.id;

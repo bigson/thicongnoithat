@@ -61,14 +61,14 @@ export const usePageCategoryStore = defineStore('pageCategory', {
         },
     },
     actions : {
-        async [PAGE_CATEGORIES_ACTION_GET_SERVICES]({ commit, state }, options) {
+        async [PAGE_CATEGORIES_ACTION_GET_SERVICES](options) {
             return await apiSERVICES(options).then(function(response) {
                     commit(MUTATION_SET_SERVICES, response.data.data)
                     commit(MUTATION_SET_SERVICES_META, response.data.meta)
                     commit(MUTATION_SET_LOADED, true)
                 })
         },
-        async [PAGE_CATEGORIES_ACTION_GET_LOCATION]({ commit, state }, options) {
+        async [PAGE_CATEGORIES_ACTION_GET_LOCATION](options) {
             return await apiLOCATIONS(options).then(function(response) {
                     commit(MUTATION_SET_LOCATION, response.data.data)
                     commit(MUTATION_SET_LOADED, true)

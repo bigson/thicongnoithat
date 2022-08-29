@@ -74,54 +74,54 @@ export const usePageVendorStore = defineStore('pageVendor', {
     },
     actions : {
         async [PAGE_VENDOR_ACTION_GET_VENDOR]({ commit, state }, options) {
-            commit(MUTATION_SET_VENDOR, {})
+            this.vendor = {}
             return await apiVendors(options).then(function(response) {
-                    commit(MUTATION_SET_VENDOR, response.data.data)
+                    this.vendor = response.data.data
                 })
         },
         async [PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES]({ commit, state }) {
-            commit(MUTATION_SET_VENDOR_SERVICES, {data : [], meta : {}})
+            this.vendor_services = {data : [], meta : {}}
             return await apiVendors({
                     api    : state.vendor.id + '/services',
                     params : {includes : 'category', meta : 1}
                 }).then(function(response) {
-                    commit(MUTATION_SET_VENDOR_SERVICES, response.data)
+                    this.vendor_services = response.data
                 })
         },
         async [PAGE_VENDOR_ACTION_GET_VENDOR_NEWS]({ commit, state }) {
-            commit(MUTATION_SET_VENDOR_NEWS, {data : [], meta : {}})
+            this.vendor_news = {data : [], meta : {}}
             return await apiVendors({
                     api    : state.vendor.id + '/news',
                     params : {meta : 1},
                 }).then(function(response) {
-                    commit(MUTATION_SET_VENDOR_NEWS, response.data)
+                    this.vendor_news = response.data
                 })
         },
         async [PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY]({ commit, state }) {
-            commit(MUTATION_SET_VENDOR_GALLERY, {data : [], meta : {}})
+            this.vendor_gallery = {data : [], meta : {}}
             return await apiVendors({
                     api    : state.vendor.id + '/gallery',
                     params : {meta : 1},
                 }).then(function(response) {
-                    commit(MUTATION_SET_VENDOR_GALLERY, response.data)
+                    this.vendor_gallery = response.data
                 })
         },
         async [PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS]({ commit, state }) {
-            commit(MUTATION_SET_VENDOR_PROJECTS, {data : [], meta : {}})
+            this.vendor_projects = {data : [], meta : {}}
             return await apiVendors({
                     api    : state.vendor.id + '/projects',
                     params : {meta : 1},
                 }).then(function(response) {
-                    commit(MUTATION_SET_VENDOR_PROJECTS, response.data)
+                    this.vendor_projects = response.data
                 })
         },
         async [PAGE_VENDOR_ACTION_GET_VENDOR_RATING]({ commit, state }) {
-            commit(MUTATION_SET_VENDOR_RATING, {data : [], meta : {}})
+            this.vendor_rating = {data : [], meta : {}}
             return await apiRating({
                     api    : 'vendor/' + state.vendor.id,
                     params : {meta : 1},
                 }).then(function(response) {
-                    commit(MUTATION_SET_VENDOR_RATING, response.data)
+                    this.vendor_rating = response.data
                 })
         },
     }

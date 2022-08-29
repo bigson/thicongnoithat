@@ -1,5 +1,5 @@
 <script>
-    import {LAZYLOAD_MUTATION_ADD_IMAGE, useLazyloadStore} from '@/store/module_lazyload.js'
+    import {LAZYLOAD_ACTION_ADD_IMAGE, useLazyloadStore} from '@/store/module_lazyload.js'
     import {pictureSource} from '@/utils/index.js'
 
     export default {
@@ -51,11 +51,11 @@
         },
         mounted(){
             // console.log('mounted lazyload', this.name)
-            this.$store.commit(LAZYLOAD_MUTATION_ADD_IMAGE, this.$refs.img)
+            this.$store.commit(LAZYLOAD_ACTION_ADD_IMAGE, this.$refs.img)
         },
         updated(){
             // console.log('beforeUpdate lazyload', this.name)
-            this.$store.commit(LAZYLOAD_MUTATION_ADD_IMAGE, this.$refs.img)
+            this.$store.commit(LAZYLOAD_ACTION_ADD_IMAGE, this.$refs.img)
         },
         render: function (createElement) {
             let img,

@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 export const CATEGORIES_GETTER_ALL           = 'CATEGORIES_GETTER_ALL'
 export const CATEGORIES_GETTER_PARENT_CHILDS = 'CATEGORIES_GETTER_PARENT_CHILDS'
+export const CATEGORIES_GETTER_BY_ID         = 'CATEGORIES_GETTER_BY_ID'
 export const CATEGORIES_ACTION_API_ALL       = 'CATEGORIES_ACTION_API_ALL'
 
 export const useCategoriesStore = defineStore('categories', {
@@ -14,18 +15,23 @@ export const useCategoriesStore = defineStore('categories', {
                 }
     },
     getters : {
-        [CATEGORIES_GETTER_PARENT_CHILDS](state, id) {
-            return state.all[id];
+        [CATEGORIES_GETTER_PARENT_CHILDS](state) {
+            return (id) => state.all[id];
         },
         [CATEGORIES_GETTER_ALL](state){
             return state.all;
         },
         [CATEGORIES_GETTER_PARENT_CHILDS](state){
             return state.pc;
+        },
+        [CATEGORIES_GETTER_BY_ID](state){
+            return (id) => {
+
+            }
         }
     },
     actions : {
-        async [CATEGORIES_ACTION_API_ALL]({ commit }) {
+        async [CATEGORIES_ACTION_API_ALL]() {
             let response = await apiCategories(),
                 all = response.data.data,
                 pc = {},

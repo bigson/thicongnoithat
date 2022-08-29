@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const SERVICES_GET_TYPE = 'SERVICES_GET_TYPE'
+export const SERVICES_GETTER_TYPE = 'SERVICES_GETTER_TYPE'
 
 export const useServicesStore = defineStore('services', {
     state : () => {
@@ -24,7 +24,7 @@ export const useServicesStore = defineStore('services', {
             }
     },
     getters : {
-        [SERVICES_GET_TYPE]() {
+        [SERVICES_GETTER_TYPE]() {
             return state.TYPE;
         }
     },

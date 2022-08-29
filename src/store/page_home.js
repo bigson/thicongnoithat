@@ -41,34 +41,34 @@ export const usePageHomeStore = defineStore('pageHome', {
         },
     },
     actions : {
-        async [PAGE_HOME_ACTION_GET_PAGE]({ commit, state }, options) {
-            return Promise.all([
+        async [PAGE_HOME_ACTION_GET_PAGE](options) {
+            return await Promise.all([
                     apiImages(options.ideas).then(function(response) {
-                        commit(MUTATION_SET_IDEAS, response.data.data)
+                        this.ideas = response.data.data
                     }),
                     apiServices(options.services).then(function(response) {
-                        commit(MUTATION_SET_SERVICES, response.data.data)
+                        this.services = response.data.data
                     }),
                     apiNews(options.news).then(function(response) {
-                        commit(MUTATION_SET_NEWS, response.data.data)
+                        this.news = response.data.data
                     })
                 ])
         },
-        async [PAGE_HOME_ACTION_GET_IDEAS]({ commit, state }, options) {
+        async [PAGE_HOME_ACTION_GET_IDEAS](options) {
             return await apiImages(options).then(function(response) {
-                    commit(MUTATION_SET_IDEAS, response.data.data)
+                    this.ideas = response.data.data
                 })
         },
-        async [PAGE_HOME_ACTION_GET_SERVICES]({ commit, state }, options) {
+        async [PAGE_HOME_ACTION_GET_SERVICES](options) {
             // console.log('actions act get services')
             return await apiServices(options).then(function(response) {
-                    commit(MUTATION_SET_SERVICES, response.data.data)
+                    this.services = response.data.data
                 })
         },
-        async [PAGE_HOME_ACTION_GET_NEWS]({ commit, state }, options) {
+        async [PAGE_HOME_ACTION_GET_NEWS](options) {
             // console.log('actions act get services')
             return await apiNews(options).then(function(response) {
-                    commit(MUTATION_SET_NEWS, response.data.data)
+                    this.news = response.data.data
                 })
         },
     }

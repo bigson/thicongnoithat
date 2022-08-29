@@ -13,15 +13,18 @@
     </div>
 </template>
 <script>
-    import {CATEGORIES_GET_PARENT_CHILDS} from '@/store/const/getters.js'
+    import { mapState } from 'pinia'
+    import { CATEGORIES_GETTER_PARENT_CHILDS, useCategoriesStore } from '@/store/module_categories.js'
+
     export default {
         name: 'aside_menu',
         computed :{
+            ...mapState(useCategoriesStore, [CATEGORIES_GETTER_PARENT_CHILDS]),
             category(){
                 return this.$route.meta.category;
             },
             categoryRoot(){
-                let pc      = this.$store.getters[CATEGORIES_GET_PARENT_CHILDS],
+                let pc      = this.[CATEGORIES_GETTER_PARENT_CHILDS],
                     root_id = this.category.root_id;
 
                 if(root_id == 0){

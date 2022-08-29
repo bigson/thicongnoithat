@@ -45,14 +45,14 @@
 </template>
 <script>
     import { mapState } from 'pinia'
-    import { GET_PARENT_CHILDS, useCategoriesStore } from '@/store/module_categories.js'
+    import { CATEGORIES_GETTER_PARENT_CHILDS, useCategoriesStore } from '@/store/module_categories.js'
 
     export default {
         name: 'header-page',
         computed: {
-            ...mapState(useCategoriesStore, [GET_PARENT_CHILDS]),
+            ...mapState(useCategoriesStore, [CATEGORIES_GETTER_PARENT_CHILDS]),
             categories(){
-                let pc = this.GET_PARENT_CHILDS
+                let pc = this.CATEGORIES_GETTER_PARENT_CHILDS
 
                 // xoa danh muc do noi that
                 // if(pc[20000]) delete(pc[20000]);
