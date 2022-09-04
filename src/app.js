@@ -5,11 +5,13 @@
 import { createSSRApp } from 'vue'
 
 import App from '@/views/layouts/index.vue'
-import { initRouter } from '@/router'
+import router from './router'
 import { piniaStore } from '@/store'
-import { GET_ALL } from '@/store/const/getters.js'
-import { ACTION_API_ALL } from '@/store/const/actions.js'
-import { useCategoriesStore } from '@/store/module_categories.js'
+import {
+    CATEGORIES_GETTER_ALL,
+    CATEGORIES_ACTION_API_ALL,
+    useCategoriesStore
+} from '@/store/module_categories.js'
 import { useUserStore } from '@/store/module_user.js'
 
 // component for add routers
@@ -19,7 +21,7 @@ import pictureSource from '@/mixins/picture-source-mixin.js'
 
 export async function createApp(context) {
 
-    const router = initRouter()
+    // const router = createRouter()
     const app    = createSSRApp(App)
     app.use(piniaStore)
 
@@ -46,8 +48,8 @@ export async function createApp(context) {
 
 async function addRoutes(){
     const useCategories = useCategoriesStore()
-    await useCategoriesStore[ACTION_API_ALL]()
-    let categories  = store.getters[GET_ALL]
+    await useCategoriesStore[CATEGORIES_ACTION_API_ALL]()
+    let categories  = store.getters[CATEGORIES_GETTER_ALL]
 
     // console.log('before add router', Object.keys(categories).length);
     let r    = [],

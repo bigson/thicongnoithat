@@ -32,11 +32,13 @@
     </div>
 </template>
 <script>
-    import {ACTION_POST_CHANGE_PASSWORD} from '@/store/const/actions.js'
+    import {
+        USER_GETTER_STATUS_CHANGE_PASSWORD,
+        USER_ACTION_POST_CHANGE_PASSWORD,
+        useUserStore
+    } from '@/store/module_user.js'
 
-    import {MUTATION_SET_STATUS_CHANGE_PASSWORD} from '@/store/const/mutations.js'
-
-    import {GETTER_STATUS_CHANGE_PASSWORD} from '@/store/const/getters.js'
+    import { mapState, mapActions, mapWritableState  } from 'pinia'
 
     import config from '@/config'
     import titleMixin from '@/mixins/title-mixin'
@@ -62,54 +64,61 @@ export default {
       }
     },
     computed: {
-      redirectUrl () {
-        return this.$route.query.redirect_url
-      },
-      backUrl () {
-        if (this.redirectUrl) {
-          return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
-        } else {
-          return '/'
-        }
-      },
-      checkToken () {
-        let status = this.$store.getters[USER_GETTER_STATUS_CHANGE_PASSWORD];
-        if(status.code == 1){
-          alert('Bạn đã đổi mật khẩu thành công. Vui lòng đăng nhập tài khoản với mật khẩu mới');
-          this.$store.commit(USER_MUTATION_SET_STATUS_CHANGE_PASSWORD,{code:0})
-          this.$router.push(this.backUrl);
-        } else{
-          return status;
-        }
-      },
+        ...mapState(useUserStore, [
+                                    USER_GETTER_STATUS_CHANGE_PASSWORD,
+                                ]),
+        ...mapWritableState(useUserStore, {
+            storeUpdatePassword: 'change_password',
+        }),
+        redirectUrl () {
+            return this.$route.query.redirect_url
+        },
+        backUrl () {
+            if (this.redirectUrl) {
+              return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
+            } else {
+              return '/'
+            }
+        },
+        checkToken () {
+            let status = this.$store.getters[USER_GETTER_STATUS_CHANGE_PASSWORD];
+            if(status.code == 1){
+              alert('Bạn đã đổi mật khẩu thành công. Vui lòng đăng nhập tài khoản với mật khẩu mới');
+              this.storeUpdatePassword = {code:0}
+              this.$router.push(this.backUrl);
+            } else{
+              return status;
+            }
+        },
     },
     methods: {
-      async save () {
+        ...mapActions(useUserStore, [USER_ACTION_POST_CHANGE_PASSWORD]),
+        async save () {
 
-        if(this.password.value.trim() == ''){
-          this.password.classes = 'error';
-          return false;
-        } else {
-          this.password.classes = '';
-        }
+            if(this.password.value.trim() == ''){
+              this.password.classes = 'error';
+              return false;
+            } else {
+              this.password.classes = '';
+            }
 
-        if(this.password_confirm.value.trim() == ''){
-          this.password_confirm.classes = 'error';
-          return false;
-        } else {
-          this.password_confirm.classes = '';
-        }
+            if(this.password_confirm.value.trim() == ''){
+              this.password_confirm.classes = 'error';
+              return false;
+            } else {
+              this.password_confirm.classes = '';
+            }
 
-        await this.$store.dispatch(USER_ACTION_POST_CHANGE_PASSWORD, {
-          api: '/api/v1/authentication/changePass',
-          data: {
-            token: this.$route.query.token,
-            password: this.password.value,
-            password_confirm: this.password_confirm.value
-          }
-        })
+            await this[USER_ACTION_POST_CHANGE_PASSWORD]({
+                api: '/api/v1/authentication/changePass',
+                data: {
+                    token: this.$route.query.token,
+                    password: this.password.value,
+                    password_confirm: this.password_confirm.value
+                }
+            })
         // apiServices.
-      },
+        },
     },
     async serverPrefetch () {
     },

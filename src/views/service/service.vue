@@ -18,7 +18,7 @@
     </div>
 </template>
 <script>
-    import {SERVICES_GETTER_TYPE, useServicesStore} from '@/store/const/getters.js'
+    import {SERVICES_GETTER_TYPE, useServicesStore} from '@/store/module_services.js'
     import breadcrumbs from '@/components/breadcrumbs/breadcrumbs.vue'
     import itemPaging from '@/components/items/item_paging.vue'
     import apiServices from '@/api/services'

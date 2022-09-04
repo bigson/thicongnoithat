@@ -26,19 +26,20 @@
 </template>
 <script>
     import {
-        IDEAS_GETTER_ALL,
         PAGE_IDEAS_GETTER_IMAGES,
         PAGE_IDEAS_GETTER_IMAGES_META,
         PAGE_IDEAS_GETTER_IMAGE,
-    } from '@/store/const/getters.js'
+        PAGE_IDEAS_ACTION_GET_IMAGES,
+        PAGE_IDEAS_ACTION_GET_IMAGE,
+        PAGE_IDEAS_ACTION_SET_IMAGE,
+        usePageIdeasStore
+    } from '@/store/page_ideas.js'
 
     import {
         IDEAS_ACTION_API_ALL,
-        PAGE_IDEAS_ACTION_GET_IMAGES,
-        PAGE_IDEAS_ACTION_GET_IMAGE,
-    } from '@/store/const/actions.js'
-
-    import {PAGE_IDEAS_MUTATION_SET_IMAGE} from '@/store/const/mutations.js'
+        IDEAS_GETTER_ALL,
+        useIdeasStore
+    } from '@/store/module_ideas.js'
 
     import asideIdeas from '@/components/aside/aside_ideas.vue'
     import images from '@/components/items/images/images.vue'
@@ -83,11 +84,13 @@
             }
         },
         computed:{
-            ...mapGetters({
+            ...mapState(usePageIdeasStore, {
                 meta        : PAGE_IDEAS_GETTER_IMAGES_META,
                 images      : PAGE_IDEAS_GETTER_IMAGES,
-                ideasAll    : IDEAS_GETTER_ALL,
                 detailImage : PAGE_IDEAS_GETTER_IMAGE,
+            }),
+            ...mapState(useIdeasStore, {
+                ideasAll    : IDEAS_GETTER_ALL,
             }),
             properties(){
                 if(!this.detailImage.images){
@@ -152,13 +155,13 @@
             }
         },
         methods:{
-            ...mapActions({
-                getIdeas       : IDEAS_ACTION_API_ALL,
+            ...mapActions(usePageIdeasStore,{
                 getDetailImage : PAGE_IDEAS_ACTION_GET_IMAGE,
                 getPictures    : PAGE_IDEAS_ACTION_GET_IMAGES,
+                mutationSetImage : PAGE_IDEAS_ACTION_SET_IMAGE,
             }),
-            ...mapMutations({
-                mutationSetImage : PAGE_IDEAS_MUTATION_SET_IMAGE,
+            ...mapActions(useIdeasStore,{
+                getIdeas       : IDEAS_ACTION_API_ALL,
             }),
             async fetchData(){
                 // console.log("fetchData")

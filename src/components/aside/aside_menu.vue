@@ -24,7 +24,7 @@
                 return this.$route.meta.category;
             },
             categoryRoot(){
-                let pc      = this.[CATEGORIES_GETTER_PARENT_CHILDS],
+                let pc      = this[CATEGORIES_GETTER_PARENT_CHILDS],
                     root_id = this.category.root_id;
 
                 if(root_id == 0){

@@ -52,18 +52,14 @@
 <script>
 
     import {
-        ACTION_POST_CREATE_ACCOUNT,
-    } from '@/store/const/actions.js'
+        USER_GETTER_DETAIL,
+        USER_GETTER_STATUS_CREATE_ACCOUNT,
+        USER_ACTION_POST_CREATE_ACCOUNT,
+        // MUTATION_SET_STATUS_CREATE_ACCOUNT,
+        useUserStore
+    } from '@/store/module_user.js'
 
-    import {
-        MUTATION_SET_STATUS_CREATE_ACCOUNT,
-    } from '@/store/const/mutations.js'
-
-    import {
-        GETTER_STATUS_CREATE_ACCOUNT,
-        GETTER_DETAIL,
-    } from '@/store/const/getters.js'
-
+    import { mapState, mapActions } from 'pinia'
 
     import config from '@/config'
     import titleMixin from '@/mixins/title-mixin'
@@ -100,29 +96,35 @@ export default {
       }
     },
     computed:{
-      redirectUrl(){
-        return this.$route.query.redirect_url
-      },
-      backUrl(){
-        if(this.redirectUrl){
-          return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
-        }else{
-          return '/'
-        }
-      },
-      statusRegister () {
-        let status = this.$store.getters[USER_GETTER_STATUS_CREATE_ACCOUNT];
-        if(status.code == 1){
-          alert("Chúc mừng bạn đã đăng ký thành công. Vui lòng check email kích hoạt và làm theo hướng dẫn");
-          this.$store.commit(USER_MUTATION_SET_STATUS_CREATE_ACCOUNT,{code:0})
-          this.$router.push(this.backUrl);
-        } else{
-           return status;
-        }
-      },
+        ...mapState(useUserStore, [
+                                    USER_GETTER_DETAIL,
+                                    USER_GETTER_STATUS_CREATE_ACCOUNT,
+                                    USER_GETTER_STATUS_CREATE_ACCOUNT,
+                                ]),
+        redirectUrl(){
+            return this.$route.query.redirect_url
+        },
+        backUrl(){
+            if(this.redirectUrl){
+              return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
+            }else{
+              return '/'
+            }
+        },
+        statusRegister () {
+            let status = this[USER_GETTER_STATUS_CREATE_ACCOUNT];
+            if(status.code == 1){
+              alert("Chúc mừng bạn đã đăng ký thành công. Vui lòng check email kích hoạt và làm theo hướng dẫn");
+              // this.$store.commit(USER_MUTATION_SET_STATUS_CREATE_ACCOUNT,{code:0})
+              this.$router.push(this.backUrl);
+            } else{
+               return status;
+            }
+        },
     },
 
     methods: {
+        ...mapActions(useUserStore, [USER_ACTION_POST_CREATE_ACCOUNT]),
         async create(){
             //Check form
             if(this.accountName.value.trim() == ''){
@@ -169,7 +171,7 @@ export default {
                 this.password_confirm.classes = '';
             }
 
-            await this.$store.dispatch(USER_ACTION_POST_CREATE_ACCOUNT, {
+            await this[USER_ACTION_POST_CREATE_ACCOUNT]({
                 api: '/api/v1/authentication/register',
                 data :{
                     name: this.accountName.value,
@@ -182,7 +184,7 @@ export default {
         },
     },
     created(){
-        if(Object.keys(this.$store.getters[USER_GETTER_DETAIL]).length){
+        if(Object.keys(this[USER_GETTER_DETAIL]).length){
             let redirectUrl = this.$route.query.redirect_url
 
             if(!redirectUrl){

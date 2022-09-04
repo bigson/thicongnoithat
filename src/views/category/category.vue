@@ -34,7 +34,7 @@
     import {
                 CATEGORIES_GETTER_ALL,
                 useCategoriesStore
-            } from '@/store/module_catgories.js'
+            } from '@/store/module_categories.js'
 
     import { clone } from '@/utils/index.js'
 

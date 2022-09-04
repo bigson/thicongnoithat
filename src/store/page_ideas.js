@@ -7,6 +7,7 @@ export const PAGE_IDEAS_GETTER_IMAGES_META = 'PAGE_IDEAS_GETTER_IMAGES_META'
 export const PAGE_IDEAS_GETTER_IMAGE       = 'PAGE_IDEAS_GETTER_IMAGE'
 export const PAGE_IDEAS_ACTION_GET_IMAGES  = 'PAGE_IDEAS_ACTION_GET_IMAGES'
 export const PAGE_IDEAS_ACTION_GET_IMAGE   = 'PAGE_IDEAS_ACTION_GET_IMAGE'
+export const PAGE_IDEAS_ACTION_SET_IMAGE   = 'PAGE_IDEAS_ACTION_SET_IMAGE'
 
 export const usePageIdeasStore = defineStore('pageIdeas', {
     state : () => {
@@ -41,6 +42,13 @@ export const usePageIdeasStore = defineStore('pageIdeas', {
                         .then(function(response) {
                             this.image = response.data.data
                         })
+        },
+        async [PAGE_IDEAS_ACTION_SET_IMAGE](image) {
+            if(image.images && image.images.length){
+                this.image = Object.assign({}, this.image, image);
+            }else{
+                this.image = image
+            }
         },
     },
 })

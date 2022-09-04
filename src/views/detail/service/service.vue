@@ -123,7 +123,7 @@
         },
 
         methods: {
-            ...mapActions({
+            ...mapActions(usePageService, {
                 getService        : PAGE_SERVICE_ACTION_GET_SERVICE,
                 getVendorServices : PAGE_SERVICE_ACTION_GET_VENDOR_SERVICES,
                 getVendorNews     : PAGE_SERVICE_ACTION_GET_VENDOR_NEWS,

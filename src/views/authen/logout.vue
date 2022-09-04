@@ -3,13 +3,13 @@
     </div>
 </template>
 <script>
-    import {
-        GETTER_DETAIL,
-    } from '@/store/const/getters.js'
 
     import {
-        MUTATION_SET_DETAIL,
-    } from '@/store/const/mutations.js'
+        USER_GETTER_DETAIL,
+        USER_GETTER_STATUS_LOGIN,
+        USER_ACTION_POST_LOGIN,
+        useUserStore
+    } from '@/store/module_user.js'
 
     import config from '@/config'
     import titleMixin from '@/mixins/title-mixin'
@@ -17,6 +17,8 @@
     import ProgressBar from '@/mixins/progress-bar'
     import requestUrl from '@/mixins/request-url-mixin'
     import responseCookie from '@/mixins/response-cookie-mixin'
+
+    import { mapState, mapActions } from 'pinia'
 
     export default {
         mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl, responseCookie],
@@ -36,6 +38,9 @@
                 }else{
                     return '/'
                 }
+            },
+            userStore(){
+                return useUserStore()
             }
         },
         created(){
@@ -49,7 +54,7 @@
                             value : '',
                         })
 
-            this.$store.commit(USER_MUTATION_SET_DETAIL,{})
+            this.userStore.$reset()
         },
         beforeMount(){
 
@@ -72,7 +77,7 @@
                             name : 'pas',
                             value : '',
                         })
-            store.commit(USER_MUTATION_SET_DETAIL,{})
+            this.userStore.$reset()
 
             let redirectUrl = route.query.redirect_url
 

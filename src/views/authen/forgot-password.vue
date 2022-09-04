@@ -22,19 +22,19 @@
     </div>
 </template>
 <script>
-  import {ACTION_POST_FORGOT_PASSWORD} from '@/store/const/actions.js'
+import {
+    USER_GETTER_STATUS_FORGOT_PASSWORD,
+    USER_ACTION_POST_FORGOT_PASSWORD,
+    useUserStore
+} from '@/store/module_user.js'
 
-  import {MUTATION_SET_STATUS_FORGOT_PASSWORD} from '@/store/const/mutations.js'
+import config from '@/config'
+import titleMixin from '@/mixins/title-mixin'
+import metaMixin from '@/mixins/meta-mixin'
+import ProgressBar from '@/mixins/progress-bar'
+import requestUrl from '@/mixins/request-url-mixin'
 
-  import {GETTER_STATUS_FORGOT_PASSWORD} from '@/store/const/getters.js'
-
-  import config from '@/config'
-  import titleMixin from '@/mixins/title-mixin'
-  import metaMixin from '@/mixins/meta-mixin'
-  import ProgressBar from '@/mixins/progress-bar'
-  import requestUrl from '@/mixins/request-url-mixin'
-
-  export default {
+export default {
     mixins: [titleMixin, metaMixin, ProgressBar, requestUrl],
     name: 'page_forgot_password',
     data () {
@@ -47,38 +47,38 @@
       }
     },
     computed: {
-      redirectUrl () {
-        return this.$route.query.redirect_url
-      },
-      backUrl () {
-        if (this.redirectUrl) {
-          return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
-        } else {
-          return '/'
-        }
-      },
-      statusForgot () {
-        let status = this.$store.getters[USER_GETTER_STATUS_FORGOT_PASSWORD];
-        if(status.code == 1){
-          alert("Đã gửi email xác thực đến hòm thư của bạn. Bạn vui lòng check email xác thực và làm theo hướng dẫn");
-          this.$store.commit(USER_MUTATION_SET_STATUS_FORGOT_PASSWORD,{code:0})
-          this.$router.push(this.backUrl);
-        } else{
-          return status;
-        }
-      },
+        redirectUrl () {
+            return this.$route.query.redirect_url
+        },
+        backUrl () {
+            if (this.redirectUrl) {
+                return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
+            } else {
+                return '/'
+            }
+        },
+        statusForgot () {
+            let status = this.$store.getters[USER_GETTER_STATUS_FORGOT_PASSWORD];
+            if(status.code == 1){
+            alert("Đã gửi email xác thực đến hòm thư của bạn. Bạn vui lòng check email xác thực và làm theo hướng dẫn");
+            this.$store.commit(USER_MUTATION_SET_STATUS_FORGOT_PASSWORD,{code:0})
+                this.$router.push(this.backUrl);
+            } else{
+                return status;
+            }
+        },
     },
     methods: {
       async save () {
         if(this.account.value.trim() == ''){
-          this.account.classes = 'error';
-          return false;
+            this.account.classes = 'error';
+            return false;
         } else {
-          this.account.classes = '';
+            this.account.classes = '';
         }
-         await this.$store.dispatch(USER_ACTION_POST_FORGOT_PASSWORD, {
-          api: '/api/v1/authentication/forgetPass',
-          data: {account: this.account.value}
+        await this.$store.dispatch(USER_ACTION_POST_FORGOT_PASSWORD, {
+            api: '/api/v1/authentication/forgetPass',
+            data: {account: this.account.value}
         })
         // apiServices.
       },
@@ -92,7 +92,7 @@
       return this.$route.meta.title
     },
     meta () {
-      return [
+        return [
             {
                 tag : 'link',
                 rel  : 'canonical',
@@ -102,48 +102,48 @@
                 name    : 'robots',
                 content : 'noindex,nofollow'
             },
-        {
-          name: 'description',
-          content: this.$route.meta.description,
-        },
-        {
-          name: 'subject',
-          content: 'Trang lấy lại mật khẩu',
-        },
-        {
-          name: 'copyright',
-          content: this.$route.meta.copyright,
-        },
-        {
-          name: 'language',
-          content: this.$route.meta.language,
-        },
+            {
+              name: 'description',
+              content: this.$route.meta.description,
+            },
+            {
+              name: 'subject',
+              content: 'Trang lấy lại mật khẩu',
+            },
+            {
+              name: 'copyright',
+              content: this.$route.meta.copyright,
+            },
+            {
+              name: 'language',
+              content: this.$route.meta.language,
+            },
 
-        {
-          name: 'og:title',
-          content: this.$route.meta.title,
-        },
-        {
-          name: 'og:type',
-          content: this.$route.meta.type,
-        },
-        {
-          name: 'og:url',
-          content: this.canonicalOriginal,
-        },
-        {
-          name: 'og:image',
-          content: '',
-        },
-        {
-          name: 'og:site_name',
-          content: this.$route.meta.site_name,
-        },
-        {
-          name: 'og:description',
-          content: this.$route.meta.description,
-        },
-      ]
+            {
+              name: 'og:title',
+              content: this.$route.meta.title,
+            },
+            {
+              name: 'og:type',
+              content: this.$route.meta.type,
+            },
+            {
+              name: 'og:url',
+              content: this.canonicalOriginal,
+            },
+            {
+              name: 'og:image',
+              content: '',
+            },
+            {
+              name: 'og:site_name',
+              content: this.$route.meta.site_name,
+            },
+            {
+              name: 'og:description',
+              content: this.$route.meta.description,
+            },
+        ]
     }
   }
 </script>

@@ -82,7 +82,7 @@
             vendorReviews,
         },
         computed: {
-            ...mapGetters({
+            ...mapState(usePageVendorStore, {
                 vendor         : PAGE_VENDOR_GETTER_VENDOR,
                 vendorServices : PAGE_VENDOR_GETTER_VENDOR_SERVICES,
                 vendorNews     : PAGE_VENDOR_GETTER_VENDOR_NEWS,
@@ -148,7 +148,7 @@
             },
         },
         methods: {
-            ...mapActions({
+            ...mapActions(usePageVendorStore, {
                 getVendor         : PAGE_VENDOR_ACTION_GET_VENDOR,
                 getVendorServices : PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES,
                 getVendorNews     : PAGE_VENDOR_ACTION_GET_VENDOR_NEWS,

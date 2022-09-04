@@ -6,10 +6,13 @@ import { createSSRApp } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 
 import Layout from '@/views/layouts/index.vue'
-import { initRouter } from '@/router'
+import router from './router'
 import { piniaStore } from '@/store'
-import { GET_ALL } from '@/store/const/getters.js'
-import { ACT_API_ALL } from '@/store/const/actions.js'
+import {
+    CATEGORIES_GETTER_ALL,
+    CATEGORIES_ACTION_API_ALL,
+    useCategoriesStore
+} from '@/store/module_categories.js'
 
 // component for add routers
 import pageCategory from '@/views/category/category.vue'
@@ -18,7 +21,7 @@ import page404 from '@/views/404/404.vue'
 //
 // const app = createApp(App)
 // Vue.config.productionTip = false
-const router = initRouter()
+// const router = createRouter()
 
 const app = createSSRApp(Layout)
 
@@ -29,6 +32,9 @@ renderToString(app).then((html) => {
   console.log(html)
 })
 
+    // const useCategories = useCategoriesStore()
+    // await useCategoriesStore[CATEGORIES_ACTION_API_ALL]()
+    // let categories  = store.getters[CATEGORIES_GETTER_ALL]
 // add dynamic router from category
 /*if (Object.keys(store.getters[CATEGORIES_GET_ALL]).length == 0) {
 

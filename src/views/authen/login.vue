@@ -40,11 +40,18 @@
 </template>
 <script>
 
-    import {ACTION_POST_LOGIN} from '@/store/const/actions.js'
+    import {
+        USER_GETTER_DETAIL,
+        USER_GETTER_STATUS_LOGIN,
+        USER_ACTION_POST_LOGIN,
+        useUserStore
+    } from '@/store/module_user.js'
 
-    import {MUTATION_SET_STATUS_LOGIN} from '@/store/const/mutations.js'
+    import { mapState, mapActions } from 'pinia'
 
-    import {GETTER_STATUS_LOGIN, USER_GETTER_DETAIL} from '@/store/const/getters.js'
+    // import {MUTATION_SET_STATUS_LOGIN} from '@/store/const/mutations.js'
+
+    // import {GETTER_STATUS_LOGIN, USER_GETTER_DETAIL} from '@/store/const/getters.js'
 
 
     import config from '@/config'
@@ -70,6 +77,7 @@
             }
         },
         computed:{
+            ...mapState(useUserStore, [USER_GETTER_DETAIL, USER_GETTER_STATUS_LOGIN]),
             redirectUrl(){
                 return this.$route.query.redirect_url
             },
@@ -81,9 +89,9 @@
                 }
             },
             statusLogin () {
-                let status = this.$store.getters[USER_GETTER_STATUS_LOGIN];
+                let status = this[USER_GETTER_STATUS_LOGIN]
                 if(status.code == 1){
-                    this.$store.commit(USER_MUTATION_SET_STATUS_LOGIN,{code:0})
+                    // this.$store.commit(USER_MUTATION_SET_STATUS_LOGIN,{code:0})
                     this.$router.push(this.backUrl);
                 } else{
                     return status;
@@ -95,6 +103,7 @@
         },
 
         methods: {
+            ...mapActions(useUserStore, [USER_ACTION_POST_LOGIN]),
             async login(){
 
                 if(this.account.value.trim() == ''){
@@ -111,7 +120,7 @@
                   this.password.classes = '';
                 }
 
-                await this.$store.dispatch(USER_ACTION_POST_LOGIN, {
+                await this[USER_ACTION_POST_LOGIN]({
                     api: '/api/v1/authentication/login',
                     data :{account: this.account.value, password : this.password.value}})
                 // apiServices.

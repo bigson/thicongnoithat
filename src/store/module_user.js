@@ -17,11 +17,11 @@ export const USER_ACTION_POST_CREATE_ACCOUNT  = 'USER_ACTION_POST_CREATE_ACCOUNT
 export const useUserStore = defineStore('user', {
     state : () => {
         return {
-            user      : {},
-            login_status: {},
-            forgot_pass: [],
-            change_password: [],
-            create_account: [],
+            user            : {},
+            login_status    : {},
+            forgot_pass     : [],
+            change_password : [],
+            create_account  : [],
         }
     },
     getters : {

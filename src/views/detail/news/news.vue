@@ -137,7 +137,7 @@
             newsServices,
         },
         computed:{
-            ...mapGetters({
+            ...mapState(usePageNewsStore, {
                 news             : PAGE_NEWS_GETTER_NEWS,
                 newsRelated      : PAGE_NEWS_GETTER_NEWS_RELATED,
                 newsRecommend    : PAGE_NEWS_GETTER_NEWS_RECOMMEND,
