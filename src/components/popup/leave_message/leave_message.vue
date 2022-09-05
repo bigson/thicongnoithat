@@ -39,7 +39,7 @@
 
     export default {
         mixins     : [popupMixin],
-        name       : 'popup-leave-message',
+        name       : 'PopupLeaveMessage',
         data(){
             return {
                 vendor      : {},

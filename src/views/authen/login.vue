@@ -59,10 +59,11 @@
     import metaMixin from '@/mixins/meta-mixin'
     import ProgressBar from '@/mixins/progress-bar'
     import requestUrl from '@/mixins/request-url-mixin'
+    import redirectUrl from '@/mixins/redirect-url-mixin'
 
     export default {
-        mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl],
-        name       : 'page_login',
+        mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl, redirectUrl],
+        name       : 'PageLogin',
         data(){
             return {
                 config : config,
@@ -135,7 +136,7 @@
                     redirectUrl = '/'
                 }
 
-                window.location = redirectUrl
+                redirectUrl(redirectUrl)
             }
         },
         updated(){

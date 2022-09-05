@@ -14,7 +14,7 @@
 </template>
 <script>
     export default {
-        name: 'popup',
+        name: 'Popup',
         props : {
             closeCallback : {
                 type    : Function,

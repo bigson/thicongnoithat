@@ -17,7 +17,7 @@
     import { CATEGORIES_GETTER_PARENT_CHILDS, useCategoriesStore } from '@/store/module_categories.js'
 
     export default {
-        name: 'aside_menu',
+        name: 'AsideMenu',
         computed :{
             ...mapState(useCategoriesStore, [CATEGORIES_GETTER_PARENT_CHILDS]),
             category(){

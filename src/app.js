@@ -26,8 +26,8 @@ export async function createApp(context) {
     app.use(piniaStore)
 
     await Promise.all([
-            addRoutes(),
-            getUser(),
+            addRoutes(router),
+            getUser(context),
         ]).then(() => console.log('done add route and get user'))
             .catch(err => console.log('err',err))
 
@@ -46,10 +46,10 @@ export async function createApp(context) {
 
 }
 
-async function addRoutes(){
+async function addRoutes(router){
     const useCategories = useCategoriesStore()
-    await useCategoriesStore[CATEGORIES_ACTION_API_ALL]()
-    let categories  = store.getters[CATEGORIES_GETTER_ALL]
+    await useCategories[CATEGORIES_ACTION_API_ALL]()
+    let categories  = useCategories[CATEGORIES_GETTER_ALL]
 
     // console.log('before add router', Object.keys(categories).length);
     let r    = [],
@@ -65,7 +65,7 @@ async function addRoutes(){
         }
     for (let i in categories) {
         let category = categories[i];
-        r.push({
+        router.addRoute({
             path: '/' + category.slug,
             name: 'category_' + category.id,
             meta: {
@@ -77,14 +77,14 @@ async function addRoutes(){
     }
 
     // Nếu là server thì mới add router này
-    if (process.env.VUE_ENV !== 'server' ) {
-        r.push(p404);
-    }
+    // if (process.env.VUE_ENV !== 'server' ) {
+    //     router.addRoute(p404);
+    // }
 
-    router.addRoutes(r);
+    // router.addRoutes(r);
     console.log('end addRoutes')
 }
-async function getUser(){
+async function getUser(context){
     if(context && context.cookies && context.cookies.uid && context.cookies.pas){
         console.log('start getUser')
         userStore = useUserStore()

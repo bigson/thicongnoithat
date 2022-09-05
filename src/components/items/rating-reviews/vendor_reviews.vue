@@ -18,7 +18,7 @@
 </template>
 <script>
     export default {
-        name: 'item-rating-vendor',
+        name: 'ItemRatingVendor',
         props: ['rating'],
     }
 </script>

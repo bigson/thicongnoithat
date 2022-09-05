@@ -27,7 +27,7 @@
     } from '@/store/module_ideas.js'
 
     export default {
-        name : 'aside_ideas',
+        name : 'AsideIdeas',
         computed :{
             ideasPc(){
                 return this.$store.getters[IDEAS_GETTER_PARENT_CHILDS];

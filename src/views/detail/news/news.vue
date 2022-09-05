@@ -129,7 +129,7 @@
     import { mapState, mapActions } from 'pinia'
 
     export default {
-        name       : 'page_news',
+        name       : 'PageNews',
         mixins     : [titleMixin, metaMixin, ProgressBar],
         components : {
             lazyload,

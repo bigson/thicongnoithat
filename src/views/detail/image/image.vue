@@ -55,7 +55,7 @@
     import { mapState, mapActions } from 'pinia'
 
     export default {
-        name       : 'detail_image',
+        name       : 'DetailImage',
         mixins     : [titleMixin, metaMixin, ProgressBar],
         components : {
             asideIdeas,

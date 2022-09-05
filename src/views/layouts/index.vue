@@ -1,23 +1,28 @@
 <template>
-    <div id="app">
-        <progress-bar ref="progress"/>
-        <header-page v-if="show"/>
-        <router-view @show="updateShow"
-                        @progressStart="start"
-                        @progressFinish="finish"
-                        @progressFail="fail"/>
-        <footer-page v-if="show"/>
-        <svg viewBox="0 0 2000 2000" style="display: none">
-            <filter id="blur" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feGaussianBlur stdDeviation="20 20" result="blur"/>
-            </filter>
-        </svg>
-    </div>
+    <ProgressBar ref="progress"/>
+
+    <HeaderPage v-if="show"/>
+
+    <RouterView @show="updateShow"
+                    @progressStart="start"
+                    @progressFinish="finish"
+                    @progressFail="fail" />
+
+    <FooterPage v-if="show"/>
+
+    <svg viewBox="0 0 2000 2000" style="display: none">
+        <filter id="blur" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feGaussianBlur stdDeviation="20 20" result="blur"/>
+        </filter>
+    </svg>
 </template>
 <script>
-    import progressBar from '@/components/html/progress_bar.vue'
-    import headerPage from '@/components/header/header.vue'
-    import footerPage from '@/components/footer/footer.vue'
+    import '@/assets/head.scss'
+    import '@/assets/style.scss'
+
+    import ProgressBar from '@/components/html/progress_bar.vue'
+    import HeaderPage from '@/components/header/header.vue'
+    import FooterPage from '@/components/footer/footer.vue'
 
     export default {
         name     : 'Layout',
@@ -57,9 +62,9 @@
         // },
 
         components: {
-            headerPage,
-            footerPage,
-            progressBar,
+            HeaderPage,
+            FooterPage,
+            ProgressBar,
         }
     }
 </script>

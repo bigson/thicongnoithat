@@ -1,9 +1,10 @@
 <script>
+    import { h } from 'vue'
     import {colorFromText, niceColor} from '@/utils/index'
     import {LAZYLOAD_ACTION_ADD_IMAGE, useLazyloadStore} from '@/store/module_lazyload.js'
 
     export default {
-        name    : 'avatar',
+        name    : 'Avatar',
         props   : {
             thumb : {
                 type    : String,
@@ -48,14 +49,14 @@
                 this.$store.commit(LAZYLOAD_ACTION_ADD_IMAGE, this.$refs.img)
             }
         },
-        render: function (createElement) {
+        render: function () {
             // không có avatar - render = ảnh mặc định
             if(!this.vendor
             //     || (!this.vendor['avatar'] && !this.vendor['name'])
                 ){
                 return false
             //     console.log('khong co ten, khong co avatar')
-            //     return createElement(
+            //     return h(
             //             'img',
             //             {
             //                 attrs : {
@@ -86,7 +87,7 @@
                     attrs['data-src'] = this.pictureSource(avatar, this.width)
                 }
 
-                return createElement(
+                return h(
                     'img',   // tag name
                     {
                         class : classes,
@@ -96,7 +97,7 @@
                 )
             }else if(this.vendor['name']){
                 // render băng tên
-                return createElement(
+                return h(
                     'div',   // tag name
                     {
                         class : 'avatar-holder',

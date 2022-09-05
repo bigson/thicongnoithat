@@ -17,12 +17,13 @@
     import ProgressBar from '@/mixins/progress-bar'
     import requestUrl from '@/mixins/request-url-mixin'
     import responseCookie from '@/mixins/response-cookie-mixin'
+    import redirectUrl from '@/mixins/redirect-url-mixin'
 
     import { mapState, mapActions } from 'pinia'
 
     export default {
-        mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl, responseCookie],
-        name       : 'page_login',
+        mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl, responseCookie, redirectUrl],
+        name       : 'PageLogout',
         data(){
             return {
                 config : config
@@ -64,7 +65,7 @@
                 redirectUrl = '/'
             }
 
-            window.location = redirectUrl
+            redirectUrl(redirectUrl)
 
             this.progressFinish()
         },

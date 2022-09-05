@@ -18,6 +18,6 @@ const clientMetaMixin = {
 }
 
 // `VUE_ENV` can be injected with `webpack.DefinePlugin`
-export default process.env.VUE_ENV === 'server' ?
+export default import.meta.env.SSR ?
     serverMetaMixin :
     clientMetaMixin

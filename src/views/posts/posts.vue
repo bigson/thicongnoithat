@@ -87,7 +87,7 @@
 
     export default {
         mixins     : [titleMixin, metaMixin, ProgressBar],
-        name       : 'posts',
+        name       : 'PagePosts',
         data(){
             return {
                 description   : '',

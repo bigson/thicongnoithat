@@ -17,7 +17,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 let root = process.cwd(),
     viteDevServer = await vite.createServer({
-            root,
+            // root,
             logLevel: isTest ? 'error' : 'info',
             server: {
                 middlewareMode: true,
@@ -44,7 +44,7 @@ server.get('*', async (req, res) => {
 try {
     const url = req.originalUrl
     // always read fresh template in dev
-    let template = fs.readFileSync(path.resolve('index.html'), 'utf-8')
+    let template = fs.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8')
 
     template = await viteDevServer.transformIndexHtml(url, template)
 

@@ -98,7 +98,7 @@
     // import requestUrl from '@/mixins/request-url-mixin'
 
     export default {
-        name       : 'detail',
+        name       : 'Detail',
         components : {
             avatar,
             htmlLazyload,

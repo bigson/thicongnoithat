@@ -32,8 +32,8 @@
                             </li>
                         </ul>
                         <div class="side-account">
-                            <router-link :to="'/'" class="register">Đăng ký<span> miễn phí</span></router-link>
-                            <router-link :to="'/'" class="login">Đăng nhập<span> tài khoản</span></router-link>
+                            <router-link :to="'/dang-ky'" class="register">Đăng ký<span> miễn phí</span></router-link>
+                            <router-link :to="'/dang-nhap'" class="login">Đăng nhập<span> tài khoản</span></router-link>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
     import { CATEGORIES_GETTER_PARENT_CHILDS, useCategoriesStore } from '@/store/module_categories.js'
 
     export default {
-        name: 'header-page',
+        name: 'HeaderPage',
         computed: {
             ...mapState(useCategoriesStore, [CATEGORIES_GETTER_PARENT_CHILDS]),
             categories(){

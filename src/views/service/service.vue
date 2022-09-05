@@ -25,7 +25,7 @@
     import { mapState } from 'pinia'
 
     export default {
-        name: 'page_services',
+        name: 'PageServices',
         props: ['_service'],
         data(){
             return {

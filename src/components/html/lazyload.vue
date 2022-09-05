@@ -1,9 +1,14 @@
 <script>
-    import {LAZYLOAD_ACTION_ADD_IMAGE, useLazyloadStore} from '@/store/module_lazyload.js'
+    import { h } from 'vue'
+    import { mapActions } from 'pinia'
+    import {
+        LAZYLOAD_ACTION_ADD_IMAGE,
+        useLazyloadStore
+    } from '@/store/module_lazyload.js'
     import {pictureSource} from '@/utils/index.js'
 
     export default {
-        name    : 'html-lazyload',
+        name    : 'HtmlLazyload',
         props   : {
             name : {
                 type    : String,
@@ -49,15 +54,18 @@
                 default : 'data:image/gif;base64,R0lGODlhAwABAJEAAEOw4je4sXjKjAAAACH5BAAAAAAALAAAAAADAAEAAAICVFAAOw=='
             }
         },
+        methods:{
+            ...mapActions(useLazyloadStore, [LAZYLOAD_ACTION_ADD_IMAGE])
+        },
         mounted(){
             // console.log('mounted lazyload', this.name)
-            this.$store.commit(LAZYLOAD_ACTION_ADD_IMAGE, this.$refs.img)
+            this[LAZYLOAD_ACTION_ADD_IMAGE](this.$refs.img)
         },
         updated(){
             // console.log('beforeUpdate lazyload', this.name)
-            this.$store.commit(LAZYLOAD_ACTION_ADD_IMAGE, this.$refs.img)
+            this[LAZYLOAD_ACTION_ADD_IMAGE](this.$refs.img)
         },
-        render: function (createElement) {
+        render: function () {
             let img,
                 that  = this,
                 attrs = {
@@ -121,13 +129,14 @@
                 attrs.height         = this.thumb_height
                 attrs['data-height'] = this.height
             }
-
-            return createElement(
+            console.log('attrs')
+            return h(
                 'img',   // tag name
                 {
                     class : this.classes,
-                    attrs : attrs,
-                    ref   : 'img'
+                    // attrs : attrs,
+                    ref   : 'img',
+                    ...attrs
                 }
             )
         }

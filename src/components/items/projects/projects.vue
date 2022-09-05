@@ -105,7 +105,7 @@
     import avatar from '@/components/avatar/avatar.vue'
 
     export default {
-        name       : 'item-projects',
+        name       : 'ItemProjects',
         props      : {
             'projects' : {
                 type : Array

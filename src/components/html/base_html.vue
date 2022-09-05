@@ -1,16 +1,17 @@
 <script>
+    import { h } from 'vue'
     export default {
-        name    : 'base-html',
+        name    : 'BaseHtml',
         props   : {
             html : {
                 type    : String,
                 default : '',
             },
         },
-        render: function (createElement) {
+        render: function () {
 
 
-            return createElement(
+            return h(
                 'img',   // tag name
                 {
                     class : this.classes,

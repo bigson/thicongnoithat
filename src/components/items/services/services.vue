@@ -149,7 +149,7 @@
     import popupLeaveMessage from '@/components/popup/leave_message/leave_message.vue'
 
     export default {
-        name       : 'item-services',
+        name       : 'ItemServices',
         props      : {
             'services' : {
                 type : Array

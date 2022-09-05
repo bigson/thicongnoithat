@@ -48,7 +48,7 @@
 
 export default {
     mixins: [titleMixin, metaMixin, ProgressBar, requestUrl],
-    name: 'page_forgot_password',
+    name: 'PageChangePassword',
     data () {
       return {
         config: config,

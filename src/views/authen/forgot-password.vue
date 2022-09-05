@@ -36,7 +36,7 @@ import requestUrl from '@/mixins/request-url-mixin'
 
 export default {
     mixins: [titleMixin, metaMixin, ProgressBar, requestUrl],
-    name: 'page_forgot_password',
+    name: 'PageForgotPassword',
     data () {
       return {
         config: config,

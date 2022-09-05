@@ -72,7 +72,7 @@
 
     export default {
         mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl],
-        name       : 'page_vendor',
+        name       : 'PageVendor',
         components : {
             breadcrumbs,
             paging,

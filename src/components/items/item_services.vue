@@ -28,7 +28,7 @@
 </template>
 <script>
     export default {
-        name: 'item-services',
+        name: 'ItemServices',
         props: ['services'],
     }
 </script>

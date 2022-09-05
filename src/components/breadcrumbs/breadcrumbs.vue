@@ -14,7 +14,7 @@
 </template>
 <script>
     export default {
-        name: 'breadcrumbs',
+        name: 'Breadcrumbs',
         props: ['breadcrumbs'],
     }
 </script>

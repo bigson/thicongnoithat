@@ -12,7 +12,7 @@
 </template>
 <script>
     export default {
-        name: 'item-paging',
+        name: 'ItemPaging',
         props: ['meta'],
         data(){
             return {

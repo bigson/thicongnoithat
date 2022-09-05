@@ -7,7 +7,7 @@
 </template>
 <script>
     export default {
-        name: 'item-filters',
+        name: 'ItemSlideHome',
         props: ['services'],
     }
 </script>

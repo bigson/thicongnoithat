@@ -45,7 +45,7 @@
 
     export default {
         mixins     : [popupMixin],
-        name       : 'popup-get-quote',
+        name       : 'PopupGetQuote',
         data(){
             return {
                 vendor      : {},

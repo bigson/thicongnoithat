@@ -15,7 +15,7 @@
     import apiServices from '@/api/services'
 
     export default {
-        name: 'page_vendor',
+        name: 'PageVendor',
         data(){
             return {
                 services : [],

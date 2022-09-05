@@ -42,7 +42,7 @@
     import htmlLazyload from '@/components/html/lazyload.vue'
 
     export default {
-        name       : 'item-images',
+        name       : 'ItemImages',
         props      : {
                         'images' : {
                             type : Array

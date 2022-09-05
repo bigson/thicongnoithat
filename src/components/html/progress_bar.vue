@@ -5,7 +5,7 @@
 </template>
 <script>
     export default {
-        name: 'html-progress-bar',
+        name: 'HtmlProgressBar',
         props:{
         },
         data () {

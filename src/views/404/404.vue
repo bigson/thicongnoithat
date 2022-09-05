@@ -3,7 +3,7 @@
 </template>
 <script>
     export default {
-        name: 'page_404',
+        name: 'Page404',
         methods: {},
 
         components: {

@@ -64,7 +64,7 @@
 
     export default {
         mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl],
-        name       : 'page_category',
+        name       : 'PageCategory',
         components : {
             asideMenu,
             breadcrumbs,

@@ -76,7 +76,7 @@
                         }
 
     export default {
-        name       : 'page_ideas',
+        name       : 'PageIdeas',
         mixins     : [titleMixin, metaMixin, ProgressBar, requestUrl],
         components : {
             asideIdeas,

@@ -10,7 +10,7 @@
 </template>
 <script>
     export default {
-        name: 'item-images',
+        name: 'ItemImages',
         props: ['images'],
     }
 </script>

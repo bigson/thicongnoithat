@@ -46,7 +46,7 @@ export const useCategoriesStore = defineStore('categories', {
                         breadcrumbs = [];
                     path.pop();
 
-                    parent = pc;
+                    let parent = pc;
                     path.forEach(function(id, i){
                         parent      = parent[id];
                         breadcrumbs = parent['breadcrumbs'];
@@ -66,8 +66,8 @@ export const useCategoriesStore = defineStore('categories', {
             });
 
 
-            state.pc  = pc;
-            state.all = _all;
+            this.pc  = pc;
+            this.all = _all;
         }
     }
 })

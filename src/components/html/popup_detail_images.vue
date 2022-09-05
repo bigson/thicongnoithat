@@ -74,7 +74,7 @@
     import bodyClasses from '@/mixins/body-classes-mixin'
 
     export default {
-        name       : 'popup-detail-images',
+        name       : 'PopupDetailImages',
         mixins     : [bodyClasses],
         components : {
             avatar,

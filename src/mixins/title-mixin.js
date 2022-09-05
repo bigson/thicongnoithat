@@ -37,7 +37,7 @@ const serverTitleMixin = {
 
 const clientTitleMixin = {
     mounted () {
-        console.log('mixin title mounted')
+        // console.log('mixin title mounted')
         const title = getTitle(this)
         // console.log('title-mixin mounted', title)
         if (title) {
@@ -45,7 +45,7 @@ const clientTitleMixin = {
         }
     },
     beforeUpdate () {
-        console.log('mixin title before update')
+        // console.log('mixin title before update')
         const title = getTitle(this)
         // console.log('title-mixin beforeUpdate', title)
         if (title) {
@@ -55,6 +55,6 @@ const clientTitleMixin = {
 }
 
 // `VUE_ENV` can be injected with `webpack.DefinePlugin`
-export default process.env.VUE_ENV === 'server' ?
+export default import.meta.env.SSR ?
     serverTitleMixin :
     clientTitleMixin

@@ -12,6 +12,7 @@
     "test:unit": "vitest --environment jsdom"
   },
   "dependencies": {
+    "@nuxt/devalue": "^2.0.0",
     "axios": "^0.27.2",
     "pinia": "^2.0.19",
     "vue": "^3.2.37",

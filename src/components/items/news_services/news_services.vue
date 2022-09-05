@@ -42,7 +42,7 @@
     import avatar from '@/components/avatar/avatar.vue'
 
     export default {
-        name       : 'news-services',
+        name       : 'NewsServices',
         props      : {
             'services' : {
                 type : Array

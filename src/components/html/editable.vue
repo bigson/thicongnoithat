@@ -84,7 +84,7 @@
 </template>
 <script>
     export default {
-        name: 'html-editable',
+        name: 'HtmlEditable',
         props: {
             content: {
                 type    : String,

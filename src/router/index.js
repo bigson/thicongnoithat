@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
 
 import home                 from '@/views/home/home.vue'
 import ideas                from '@/views/ideas/ideas.vue'
@@ -21,8 +20,6 @@ import unsubscribe          from '@/views/authen/unsubscribe.vue'
 import pagePosts            from '@/views/posts/posts.vue'
 import pageSearch           from '@/views/search/search.vue'
 
-// Vue.use(Router)
-
 let meta = {
                 copyright : 'ThiCongTot.Com',
                 language  : 'VN',
@@ -31,7 +28,7 @@ let meta = {
                 locale    : 'vi_VN'
             }
 const router = createRouter({
-    history: createWebHistory(import.meta.env.BASE_URL),
+    history: import.meta.env.SSR ? createMemoryHistory() : createWebHistory(), // import.meta.env.BASE_URL
     routes: [
         {
             path: '/',

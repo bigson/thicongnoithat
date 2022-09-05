@@ -15,7 +15,7 @@
 <script>
     export default {
         //v-if="i < currentPage + 3"
-        name: 'item-paging',
+        name: 'ItemPaging',
         props: ['meta'],
         data(){
             return {
