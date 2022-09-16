@@ -1,12 +1,21 @@
+import { useSSRContext } from 'vue'
+
 const serverRequestUrl = {
     data(){
         // vì server proxy từ ngix sang nên bị "http" mặc định server render sẽ là https
-        const urlOriginal = this.$ssrContext.urlOriginal.replace('http://', 'https://'),
-            domain        = /http(s)?\:\/\/[^\/]+/.exec(urlOriginal),
-            canonical     = /[^?|#]+/.exec(urlOriginal)
+        // console.log('dump[', Object.keys(useSSRContext().req))
+        const ssrContext = useSSRContext(),
+            req         = ssrContext.req,
+            protocol    = req.protocol,
+            host        = req.get('host'),
+            url         = req.originalUrl,
+            fullUrl     = `${protocol}://${host}${url}`,
+
+            domain        = /http(s)?\:\/\/[^\/]+/.exec(fullUrl),
+            canonical     = /[^?|#]+/.exec(fullUrl)
 
         return {
-            urlOriginal       : urlOriginal,
+            urlOriginal       : fullUrl,
             domainOriginal    : domain[0],
             canonicalOriginal : canonical[0],
         }
@@ -15,12 +24,12 @@ const serverRequestUrl = {
 
 const clientRequestUrl = {
     data() {
-        let urlOriginal = window.location.href,
-            domain      = /http(s)?\:\/\/[^\/]+/.exec(urlOriginal),
-            canonical   = /[^?|#]+/.exec(urlOriginal)
+        let originalUrl = window.location.href,
+            domain      = /http(s)?\:\/\/[^\/]+/.exec(originalUrl),
+            canonical   = /[^?|#]+/.exec(originalUrl)
 
         return {
-            urlOriginal       : urlOriginal,
+            urlOriginal       : originalUrl,
             domainOriginal    : domain[0],
             canonicalOriginal : canonical[0],
         }

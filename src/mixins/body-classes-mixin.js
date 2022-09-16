@@ -1,10 +1,10 @@
 const serverBodyClassesMixin = {
     methods : {
         bodyAddClass(c){
-            this.$ssrContext.bodyClasses.push(c)
+            // this.$ssrContext.bodyClasses.push(c)
         },
         bodyRemoveClass(c){
-            this.$ssrContext.bodyClasses = this.$ssrContext.bodyClasses.filter(x => x != c)
+            // this.$ssrContext.bodyClasses = this.$ssrContext.bodyClasses.filter(x => x != c)
         }
     }
 }

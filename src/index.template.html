@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="vi">
 <head>
     <title>{{ title }}</title>
     <meta charset="utf-8">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon" sizes="120x120" href="/public/logo-120.png">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
-    <link rel="shortcut icon" sizes="48x48" href="/public/logo-48.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="/favicon.svg">
     <meta name="theme-color" content="#f60">
 
     <style>
@@ -29,11 +28,13 @@
     }
 
     </style>
+    <!--preload-links-->
 </head>
 
 <body>
-    <div id="skip"><a href="#app">skip to content</a></div>
-    <!--vue-ssr-outlet-->
+    <!-- <div id="skip"><a href="#app">skip to content</a></div> -->
+    <div id="app"><!--app-html--></div>
+    <script type="module" src="/src/entry-client.js"></script>
 </body>
 
 </html>

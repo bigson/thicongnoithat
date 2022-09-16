@@ -242,8 +242,8 @@ export default {
         hotCategories() {
             let hot  = [];
 
-            for (let i in this.categories) {
-                let e = this.categories[i]
+            for (let i in this.CATEGORIES_GETTER_ALL) {
+                let e = this.CATEGORIES_GETTER_ALL[i]
 
                 if (e.id == 10100 || e.parent_id == 10200) {
                     hot.push(e)
@@ -300,7 +300,7 @@ export default {
         }
     },
     async serverPrefetch() {
-        console.log('serverPrefetch')
+        console.log('serverPrefetch HOME')
         const homeStore = usePageHomeStore(this.$pinia)
 
         await homestore[PAGE_HOME_ACTION_GET_PAGE](

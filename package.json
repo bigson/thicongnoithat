@@ -9,10 +9,11 @@
     "server:dev": "node server-dev.js",
     "server:build": "vite-ssr build && npm run move",
     "server:build_deploy": "npm run build && npm run deploy",
-    "test:unit": "vitest --environment jsdom"
+    "test:unit": "vitest --environment jsdom",
+    "build:client": "vite build --outDir dist/client --ssrManifest",
+    "build:server": "vite build --outDir dist/server --ssr src/entry-server.js "
   },
   "dependencies": {
-    "@nuxt/devalue": "^2.0.0",
     "axios": "^0.27.2",
     "pinia": "^2.0.19",
     "vue": "^3.2.37",

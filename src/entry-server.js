@@ -1,32 +1,31 @@
 import { createApp } from '@/app'
 import { renderToString } from 'vue/server-renderer'
 import serialize from 'serialize-javascript'
+import { USER_ACT_DETAIL, useUserStore } from '@/store/module_user.js'
 
 export async function render (context = {}){
 
-    const { app, router, piniaStore } = await createApp()
+    const { app, router, piniaStore } = await createApp(context)
 
-    router.push(context.url)
+    await router.push(context.req.originalUrl)
+    await Promise.all([
+            router.isReady(),
+            getUser(context.req.cookies)
+        ]).then(x => console.log(x))
+        .catch(err => console.error(err))
 
-    await router.isReady()
-
-    // const matchedComponents = router.getMatchedComponents()
-    // console.log('matchedComponents',matchedComponents);
-    // // no matched routes, reject with 404
-    // if (!matchedComponents.length) {
-    //     throw '404 Not found'
-    //     return reject({ code: 404 })
-    // }
-
-    context.rendered = () => {
-        // After the app is rendered, our store is now
-        // filled with the state from our components.
-        // When we attach the state to the context, and the `template` option
-        // is used for the renderer, the state will automatically be
-        // serialized and injected into the HTML as `window.__INITIAL_STATE__`.
-        context.state = serialize(piniaStore.state)
-    }
+    context.pinia = serialize(piniaStore.state.value)
 
     return await renderToString(app, context)
 
+}
+
+async function getUser(cookies){
+    return
+    if(cookies && cookies.uid && cookies.pas){
+        console.log('start getUser', cookies)
+        const userStore = useUserStore()
+        await userStore[USER_ACT_DETAIL](cookies)
+        console.log('end getUser')
+    }
 }

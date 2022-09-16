@@ -1,7 +1,10 @@
+import { useSSRContext } from 'vue'
+
 const serverCookie = {
     methods : {
         setCookie(c){
-            this.$ssrContext.cookiesRes.push(c)
+            const ssrContext = useSSRContext()
+            ssrContext.req.res.cookie(c.name, c.value, c.option || { maxAge: 900000, httpOnly: true })
         }
     }
 }

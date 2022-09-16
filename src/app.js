@@ -12,23 +12,22 @@ import {
     CATEGORIES_ACTION_API_ALL,
     useCategoriesStore
 } from '@/store/module_categories.js'
-import { useUserStore } from '@/store/module_user.js'
 
 // component for add routers
 import pageCategory from '@/views/category/category.vue'
 import page404 from '@/views/404/404.vue'
 import pictureSource from '@/mixins/picture-source-mixin.js'
 
-export async function createApp(context) {
+export async function createApp() {
 
-    // const router = createRouter()
     const app    = createSSRApp(App)
     app.use(piniaStore)
 
     await Promise.all([
             addRoutes(router),
-            getUser(context),
-        ]).then(() => console.log('done add route and get user'))
+            // getUser(cookies),
+        ])
+            .then(() => console.log('done add route and get user'))
             .catch(err => console.log('err',err))
 
 
@@ -82,13 +81,6 @@ async function addRoutes(router){
     // }
 
     // router.addRoutes(r);
-    console.log('end addRoutes')
+    // console.log('end addRoutes')
 }
-async function getUser(context){
-    if(context && context.cookies && context.cookies.uid && context.cookies.pas){
-        console.log('start getUser')
-        userStore = useUserStore()
-        await userStore[ACT_DETAIL](context.cookies)
-        console.log('end getUser')
-    }
-}
+

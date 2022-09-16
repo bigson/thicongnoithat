@@ -39,29 +39,37 @@ let root = process.cwd(),
 // use vite's connect instance as middleware
 server.use(viteDevServer.middlewares)
 server.use('/static', express.static(path.resolve(__dirname, './public')));
+server.use('/favicon.svg', express.static(path.resolve(__dirname, './public/favicon.svg')));
 
-server.get('*', async (req, res) => {
-try {
-    const url = req.originalUrl
-    // always read fresh template in dev
-    let template = fs.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8')
+server.use('*', async (req, res) => {
+    try {
+        const url = req.originalUrl
+        // always read fresh template in dev
+        let template = fs.readFileSync(path.resolve(__dirname, './src/index.template.html'), 'utf-8'),
+            context = {req}
 
-    template = await viteDevServer.transformIndexHtml(url, template)
+        template = await viteDevServer.transformIndexHtml(url, template)
 
-    const entryServer = await viteDevServer.ssrLoadModule('/src/entry-server.js')
-    const appHtml = await entryServer.render(req)
-    const html = template.replace(`<!--app-html-->`, appHtml)
+        const entryServer = await viteDevServer.ssrLoadModule('/src/entry-server.js')
+        const appHtml = await entryServer.render(context)
 
-    res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+        let html = template.replace(`<!--app-html-->`, appHtml)
 
-} catch (e) {
-    // vite && vite.ssrFixStacktrace(e)
-    console.log(e)
-    res.status(500).end(e.stack)
-}
+        if(context.pinia){
+            html = html.replace('</body>', `<script>window.__pinia='${context.pinia}'</script>`)
+        }
+
+        res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+
+    } catch (e) {
+        // vite && vite.ssrFixStacktrace(e)
+        console.log(e)
+        res.status(500).end(e.stack)
+    }
 });
 
 
-server.listen(3000, () => {
-  console.log('ready');
-});
+const port = process.env.PORT || 3000
+server.listen(port, () => {
+    console.log(`server started at localhost:${port}`)
+})
