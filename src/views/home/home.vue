@@ -55,108 +55,110 @@
                 </div>
             </div>
         </div>
-        <div class="main">
-            <template v-if="services.length">
-            <h2>DỊCH VỤ UY TÍN</h2>
-            <div class="home-services item-services c">
-                <div class="item r" v-for="service in services">
-                    <div class="item-imgs" :data-group="service.gallery.length > 3 ? 3 : service.gallery.length">
-                        <template v-for="(img, i) in service.gallery.slice(0,3)">
-                        <div class="wrap-img more"  v-if="i == 2 && service.gallery.length > 3" :data-length="service.gallery.length">
-                            <router-link
-                                :key="'service_detail_' + service.id"
-                                :to="{
-                                    path: service.url,
-                                    params : {_service : service},
-                                }">
-                                <html-lazyload :name="img" srcset="h150" :alt="service.title"/>
-                            </router-link>
+        <!-- <div class="wrap-home-servicess"> -->
+            <div class="main">
+                <template v-if="services.length">
+                <h2>DỊCH VỤ UY TÍN</h2>
+                <div class="home-services item-services c">
+                    <div class="item r" v-for="service in services">
+                        <div class="item-imgs" :data-group="service.gallery.length > 3 ? 3 : service.gallery.length">
+                            <template v-for="(img, i) in service.gallery.slice(0,3)">
+                            <div class="wrap-img more"  v-if="i == 2 && service.gallery.length > 3" :data-length="service.gallery.length">
+                                <router-link
+                                    :key="'service_detail_' + service.id"
+                                    :to="{
+                                        path: service.url,
+                                        params : {_service : service},
+                                    }">
+                                    <html-lazyload :name="img" srcset="h150" :alt="service.title"/>
+                                </router-link>
+                            </div>
+                            <div class="wrap-img" v-else>
+                                <html-lazyload
+                                    :name="img"
+                                    :alt="service.title"
+                                    srcset="w615 615w, w225 225w"
+                                    sizes="(max-width: 768px) 615px, (min-width: 769px) 250px"
+                                    src="h310"
+                                    />
+                            </div>
+                            </template>
                         </div>
-                        <div class="wrap-img" v-else>
+                        <div class="item-info r">
+                            <div class="info-service">
+                                <h3 class="is-title"><router-link
+                                    :key="'service_detail_' + service.id"
+                                    :to="{
+                                        path: service.url,
+                                        params : {_service : service},
+                                    }">{{service.title}}</router-link></h3>
+                                <p class="is-description">{{service.meta.description}}</p>
+                            </div>
+                            <div class="info-vendor">
+                                <div class="iv-logo">
+                                    <avatar :vendor="service.vendor" :width="50"/>
+                                </div>
+                                <h3 class="iv-name">
+                                    <router-link
+                                        :to="{
+                                            path: service.vendor.url,
+                                            meta:{service : service, name : service.title},
+                                            params : {_service : service},
+                                        }">{{service.vendor.name}}</router-link>
+                                    <div class="rating" v-if="service.vendor.rating">
+                                        <template v-for="i in parseInt(service.vendor.rating)">★ </template>
+                                        <template v-for="i in (5 - parseInt(service.vendor.rating))">☆ </template>
+                                    </div>
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- <figure class="item-imgs" data-length="service.gallery.length" data-group="service.gallery.length > 4 ? 4 : service.gallery.length">
+                            <div class="wrap-img">
+                                <img v-for="img in service.gallery.slice(0,4)" :src="pictureSource(img, 200)" :alt="service.title">
+                            </div>
+                            <figcaption class="hidden">{{service.title}}</figcaption>
+                        </figure>
+                        <div class="item-info">
+                            <div class="ii-logo">
+                                <img :src="pictureSource(service.vendor.avatar)" :alt="service.vendor.name">
+                            </div>
+                            <h3 class="ii-name">{{service.vendor.name}}</h3>
+                            <div class="ii-address">{{service.vendor.address}}</div>
+                        </div> -->
+                        <!-- <ul class="item-imgs" v-if="service.gallery.length">
+                            <li v-for="img in service.gallery.slice(0,2)">
+                                <img :src="pictureSource(img)" :alt="service.title">
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+                </template>
+
+                <template v-if="news.length">
+                <h2>CHUYÊN GIA TƯ VẤN</h2>
+                <div class="home-news item-news">
+                    <div class="i-news" v-for="(n, i) in news" :class="i< 2? 'header' : ''">
+                        <router-link :to="n.url" class="item-imgs">
                             <html-lazyload
-                                :name="img"
-                                :alt="service.title"
-                                srcset="w615 615w, w225 225w"
-                                sizes="(max-width: 768px) 615px, (min-width: 769px) 250px"
+                                v-if="n.gallery.length"
+                                :name="n.gallery[0]"
+                                :alt="n.title"
+                                srcset="w600 600w, w225 225w"
+                                :sizes="i > 2 ? '(max-width: 768px) 600px, (min-width: 769px) 150px' : ' (min-width: 320px) 600px'"
                                 src="h310"
                                 />
+                        </router-link>
+                        <div class="item-info">
+                            <h3><router-link
+                                    :to="n.url">{{n.title}}</router-link></h3>
+                            <div class="item-time">{{n.time_create}}</div>
+                            <p class="item-teaser">{{n.teaser}}</p>
                         </div>
-                        </template>
-                    </div>
-                    <div class="item-info r">
-                        <div class="info-service">
-                            <h3 class="is-title"><router-link
-                                :key="'service_detail_' + service.id"
-                                :to="{
-                                    path: service.url,
-                                    params : {_service : service},
-                                }">{{service.title}}</router-link></h3>
-                            <p class="is-description">{{service.meta.description}}</p>
-                        </div>
-                        <div class="info-vendor">
-                            <div class="iv-logo">
-                                <avatar :vendor="service.vendor" :width="50"/>
-                            </div>
-                            <h3 class="iv-name">
-                                <router-link
-                                    :to="{
-                                        path: service.vendor.url,
-                                        meta:{service : service, name : service.title},
-                                        params : {_service : service},
-                                    }">{{service.vendor.name}}</router-link>
-                                <div class="rating" v-if="service.vendor.rating">
-                                    <template v-for="i in parseInt(service.vendor.rating)">★ </template>
-                                    <template v-for="i in (5 - parseInt(service.vendor.rating))">☆ </template>
-                                </div>
-                            </h3>
-                        </div>
-                    </div>
-                    <!-- <figure class="item-imgs" data-length="service.gallery.length" data-group="service.gallery.length > 4 ? 4 : service.gallery.length">
-                        <div class="wrap-img">
-                            <img v-for="img in service.gallery.slice(0,4)" :src="pictureSource(img, 200)" :alt="service.title">
-                        </div>
-                        <figcaption class="hidden">{{service.title}}</figcaption>
-                    </figure>
-                    <div class="item-info">
-                        <div class="ii-logo">
-                            <img :src="pictureSource(service.vendor.avatar)" :alt="service.vendor.name">
-                        </div>
-                        <h3 class="ii-name">{{service.vendor.name}}</h3>
-                        <div class="ii-address">{{service.vendor.address}}</div>
-                    </div> -->
-                    <!-- <ul class="item-imgs" v-if="service.gallery.length">
-                        <li v-for="img in service.gallery.slice(0,2)">
-                            <img :src="pictureSource(img)" :alt="service.title">
-                        </li>
-                    </ul> -->
-                </div>
-            </div>
-            </template>
-
-            <template v-if="news.length">
-            <h2>CHUYÊN GIA TƯ VẤN</h2>
-            <div class="home-news item-news">
-                <div class="i-news" v-for="(n, i) in news" :class="i< 2? 'header' : ''">
-                    <router-link :to="n.url" class="item-imgs">
-                        <html-lazyload
-                            v-if="n.gallery.length"
-                            :name="n.gallery[0]"
-                            :alt="n.title"
-                            srcset="w600 600w, w225 225w"
-                            :sizes="i > 2 ? '(max-width: 768px) 600px, (min-width: 769px) 150px' : ' (min-width: 320px) 600px'"
-                            src="h310"
-                            />
-                    </router-link>
-                    <div class="item-info">
-                        <h3><router-link
-                                :to="n.url">{{n.title}}</router-link></h3>
-                        <div class="item-time">{{n.time_create}}</div>
-                        <p class="item-teaser">{{n.teaser}}</p>
                     </div>
                 </div>
+                </template>
             </div>
-            </template>
-        </div>
+        <!-- </div> -->
     </div>
 </template>
 <script>

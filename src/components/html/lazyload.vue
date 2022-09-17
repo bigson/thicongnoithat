@@ -129,7 +129,7 @@
                 attrs.height         = this.thumb_height
                 attrs['data-height'] = this.height
             }
-            console.log('attrs')
+            // console.log('attrs')
             return h(
                 'img',   // tag name
                 {
