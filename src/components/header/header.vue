@@ -141,7 +141,7 @@
             }
         },
         computed: {
-            ...mapState(useCategoriesStore, [CATEGORIES_GETTER_PARENT_CHILDS]),
+            ...mapState(useCategoriesStore, {categoriesPC : CATEGORIES_GETTER_PARENT_CHILDS}),
             ...mapState(useUserStore, {user : USER_GETTER_DETAIL}),
             query(){
                 return {redirect_url : this.urlOriginal}

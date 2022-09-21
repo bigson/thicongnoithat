@@ -11,13 +11,13 @@
                     :title="vendor.name"
                     itemprop="image">
                 <img v-else-if="vendor && Object.keys(vendor).length"
-                    src="https://thicongtot.com/public/images/placeholder.svg"
+                    src="/public/images/placeholder.svg"
                     :alt="vendor.name"
                     :title="vendor.name"
                     class="placeholder"
                     itemprop="image">
                 <img v-else
-                    src="https://thicongtot.com/public/images/placeholder.svg"
+                    src="/public/images/placeholder.svg"
                     alt="thicongtot.com"
                     title="thicongtot.com"
                     class="placeholder"

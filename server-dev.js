@@ -31,14 +31,15 @@ let root = process.cwd(),
                 //     port: hmrPort
                 // }
             },
-            appType: 'custom'
+            appType: 'custom',
+            publicDir : false
         })
 
 // const renderPage = createPageRenderer({ viteDevServer, isProduction, root })
 
 // use vite's connect instance as middleware
 server.use(viteDevServer.middlewares)
-server.use('/static', express.static(path.resolve(__dirname, './public')));
+server.use('/public', express.static(path.resolve(__dirname, './public')));
 server.use('/favicon.svg', express.static(path.resolve(__dirname, './public/favicon.svg')));
 
 server.use('*', async (req, res) => {
@@ -46,7 +47,12 @@ server.use('*', async (req, res) => {
         const url = req.originalUrl
         // always read fresh template in dev
         let template = fs.readFileSync(path.resolve(__dirname, './src/index.template.html'), 'utf-8'),
-            context = {req}
+            context = {
+                req,
+                url   : `${req.protocol}://${req.get('host')}${req.originalUrl}`,
+                title : '',
+                meta  : ''
+            }
 
         template = await viteDevServer.transformIndexHtml(url, template)
 
@@ -56,7 +62,7 @@ server.use('*', async (req, res) => {
         let html = template.replace(`<!--app-html-->`, appHtml)
 
         if(context.pinia){
-            html = html.replace('</body>', `<script>window.__pinia='${context.pinia}'</script>`)
+            html = html.replace('</body>', `<script>window.__pinia=${context.pinia}</script>`)
         }
 
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html)

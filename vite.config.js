@@ -42,7 +42,7 @@ export default defineConfig({
             '@': resolve(__dirname, 'src')
         }
     },
-    publicDir : './public',
+    // publicDir : './public',
     build: {
         // manifest: true,
         // lib:{

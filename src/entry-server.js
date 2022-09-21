@@ -7,14 +7,18 @@ export async function render (context = {}){
 
     const { app, router, piniaStore } = await createApp(context)
 
-    await router.push(context.req.originalUrl)
+    //  we need to manually call router.replace() to change the current location and overwrite where we were
+    // (instead of pushing a new entry, ending up in the same location twice in our history):
+    await router.replace(context.req.originalUrl)
+
     await Promise.all([
             router.isReady(),
             getUser(context.req.cookies)
-        ]).then(x => console.log(x))
+        ])
+        // .then(x => console.log(x))
         .catch(err => console.error(err))
 
-    context.pinia = serialize(piniaStore.state.value)
+    context.pinia = serialize(piniaStore.state.value, {isJSON: true})
 
     return await renderToString(app, context)
 

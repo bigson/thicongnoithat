@@ -1,3 +1,5 @@
+import { useSSRContext } from 'vue'
+
 function getTitle(vm) {
     // components can simply provide a `title` option
     // which can be either a string or a function
@@ -9,28 +11,12 @@ function getTitle(vm) {
     }
 }
 
-// const serverTitleMixin = {
-//     methods : {
-//         setTitle(title){
-//             console.log('set title')
-//             this.$ssrContext.title = title
-//         }
-//     }
-// }
-
-// const clientTitleMixin = {
-//     methods : {
-//         setTitle(title){
-//             document.title = title
-//         }
-//     }
-// }
-
 const serverTitleMixin = {
     created () {
         const title = getTitle(this)
         if (title) {
-            this.$ssrContext.title = title
+            const ssrContext  = useSSRContext()
+            ssrContext.title = title
         }
     }
 }

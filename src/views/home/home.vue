@@ -19,7 +19,11 @@
             <div class="main">
                 <div class="home-categories" v-if="hotCategories.length">
                     <div class="item-hc" v-for="category in hotCategories">
-                        <router-link :to="category.slug" class="img">
+                        <router-link
+                                    :to="{
+                                        name   : 'category_' + category.id,
+                                    }"
+                                    class="img">
                             <img :src="pictureSource(category.pictures[0], 350)" :alt="category.name">
                         </router-link>
                         <h3>
@@ -67,8 +71,8 @@
                                 <router-link
                                     :key="'service_detail_' + service.id"
                                     :to="{
-                                        path: service.url,
-                                        params : {_service : service},
+                                        name   : 'detail_service',
+                                        params : {type : service.type_slug, name : service.route, id : service.id},
                                     }">
                                     <html-lazyload :name="img" srcset="h150" :alt="service.title"/>
                                 </router-link>
@@ -89,8 +93,8 @@
                                 <h3 class="is-title"><router-link
                                     :key="'service_detail_' + service.id"
                                     :to="{
-                                        path: service.url,
-                                        params : {_service : service},
+                                        name   : 'detail_service',
+                                        params : {type : service.type_slug, name : service.route, id : service.id},
                                     }">{{service.title}}</router-link></h3>
                                 <p class="is-description">{{service.meta.description}}</p>
                             </div>
@@ -101,9 +105,8 @@
                                 <h3 class="iv-name">
                                     <router-link
                                         :to="{
-                                            path: service.vendor.url,
-                                            meta:{service : service, name : service.title},
-                                            params : {_service : service},
+                                            name   : 'detail_vendor',
+                                            params : {name : service.vendor.route, id : service.vendor.id},
                                         }">{{service.vendor.name}}</router-link>
                                     <div class="rating" v-if="service.vendor.rating">
                                         <template v-for="i in parseInt(service.vendor.rating)">★ </template>
@@ -171,11 +174,11 @@
     import {
         PAGE_HOME_GETTER_IDEAS,
         PAGE_HOME_GETTER_SERVICES,
-        PAGE_HOME_GETTER_LOADED,
         PAGE_HOME_GETTER_NEWS,
         PAGE_HOME_ACTION_GET_PAGE,
         PAGE_HOME_ACTION_GET_IDEAS,
         PAGE_HOME_ACTION_GET_SERVICES,
+        PAGE_HOME_ACTION_GET_NEWS,
         usePageHomeStore
     } from '@/store/page_home.js'
 
@@ -238,7 +241,6 @@ export default {
         ...mapState(usePageHomeStore, {
                                             ideas    : PAGE_HOME_GETTER_IDEAS,
                                             services : PAGE_HOME_GETTER_SERVICES,
-                                            loaded   : PAGE_HOME_GETTER_LOADED,
                                             news     : PAGE_HOME_GETTER_NEWS,
                                         }),
         hotCategories() {
@@ -260,6 +262,7 @@ export default {
         ...mapActions(usePageHomeStore, {
                                         getIdeas    : PAGE_HOME_ACTION_GET_IDEAS,
                                         getServices : PAGE_HOME_ACTION_GET_SERVICES,
+                                        getNews     : PAGE_HOME_ACTION_GET_NEWS,
                                         getPage     : PAGE_HOME_ACTION_GET_PAGE,
                                     }),
         async fetchData(){
@@ -305,7 +308,7 @@ export default {
         console.log('serverPrefetch HOME')
         const homeStore = usePageHomeStore(this.$pinia)
 
-        await homestore[PAGE_HOME_ACTION_GET_PAGE](
+        await homeStore[PAGE_HOME_ACTION_GET_PAGE](
                             {
                                 ideas : {
                                         params: {

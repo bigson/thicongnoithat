@@ -27,7 +27,7 @@ export async function createApp() {
             addRoutes(router),
             // getUser(cookies),
         ])
-            .then(() => console.log('done add route and get user'))
+            // .then(() => console.log('done add route and get user'))
             .catch(err => console.log('err',err))
 
 
@@ -73,6 +73,7 @@ async function addRoutes(router){
             },
             component: pageCategory,
         });
+        // console.log('add R', category.slug)
     }
 
     // Nếu là server thì mới add router này

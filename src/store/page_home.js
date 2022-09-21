@@ -42,32 +42,33 @@ export const usePageHomeStore = defineStore('pageHome', {
     },
     actions : {
         async [PAGE_HOME_ACTION_GET_PAGE](options) {
+            const that = this
             return await Promise.all([
                     apiImages(options.ideas).then(function(response) {
-                        this.ideas = response.data.data
+                        that.ideas = response.data.data
                     }),
                     apiServices(options.services).then(function(response) {
-                        this.services = response.data.data
+                        that.services = response.data.data
                     }),
                     apiNews(options.news).then(function(response) {
-                        this.news = response.data.data
+                        that.news = response.data.data
                     })
                 ])
         },
         async [PAGE_HOME_ACTION_GET_IDEAS](options) {
-            return await apiImages(options).then(function(response) {
+            return await apiImages(options).then((response) => {
                     this.ideas = response.data.data
                 })
         },
         async [PAGE_HOME_ACTION_GET_SERVICES](options) {
             // console.log('actions act get services')
-            return await apiServices(options).then(function(response) {
+            return await apiServices(options).then((response) => {
                     this.services = response.data.data
                 })
         },
         async [PAGE_HOME_ACTION_GET_NEWS](options) {
             // console.log('actions act get services')
-            return await apiNews(options).then(function(response) {
+            return await apiNews(options).then((response) => {
                     this.news = response.data.data
                 })
         },

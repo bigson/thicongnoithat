@@ -4,13 +4,8 @@ const serverRequestUrl = {
     data(){
         // vì server proxy từ ngix sang nên bị "http" mặc định server render sẽ là https
         // console.log('dump[', Object.keys(useSSRContext().req))
-        const ssrContext = useSSRContext(),
-            req         = ssrContext.req,
-            protocol    = req.protocol,
-            host        = req.get('host'),
-            url         = req.originalUrl,
-            fullUrl     = `${protocol}://${host}${url}`,
-
+        const ssrContext  = useSSRContext(),
+            fullUrl       = ssrContext.url,
             domain        = /http(s)?\:\/\/[^\/]+/.exec(fullUrl),
             canonical     = /[^?|#]+/.exec(fullUrl)
 

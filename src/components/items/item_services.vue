@@ -9,9 +9,9 @@
                     <router-link
                         :key="'service_detail_' + service.id"
                         :to="{
-                            path: service.url,
-                            meta:{service : service, name : service.title},
-                            params : {_service : service},
+                            name   : 'detail_service',
+                            meta   : {service : service, name : service.title},
+                            params : {type : service.type_slug, name : service.route, id : service.id},
                         }">
                         {{service.vendor.name}}
                     </router-link>

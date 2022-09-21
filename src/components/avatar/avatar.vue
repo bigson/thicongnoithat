@@ -60,7 +60,7 @@
             //             'img',
             //             {
             //                 attrs : {
-            //                     src : 'https://thicongtot.com/public/images/placeholder.svg'
+            //                     src : '/public/images/placeholder.svg'
             //                 }
             //             }
             //         )
@@ -91,7 +91,7 @@
                     'img',   // tag name
                     {
                         class : classes,
-                        attrs : attrs,
+                        ...attrs,
                         ref : 'img'
                     }
                 )

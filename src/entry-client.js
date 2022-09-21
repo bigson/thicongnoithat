@@ -4,10 +4,10 @@ createApp().then(({ app, router, piniaStore }) => {
     // const  = await createApp()
 
     if (window.__pinia) {
-        piniaStore.state.value = deserialize(window.__pinia)
+        piniaStore.state.value = window.__pinia
     }
 
-    console.log('client', piniaStore)
+    // console.log('client', piniaStore)
     // devalue(piniaStore.state.value)
     // this assumes App.vue template root element has `id="app"`
     router.isReady().then(() => {

@@ -1,3 +1,5 @@
+import { useSSRContext } from 'vue'
+
 function getMeta(vm) {
     // components can simply provide a `meta` option
     // which can be either a string or a function
@@ -9,38 +11,11 @@ function getMeta(vm) {
     }
 }
 
-// const serverMetaMixin = {
-//     methods: {
-//         setMeta(list){
-//             if (list) {
-//                 let str = ''
-
-//                 for(let i in list){
-//                     str += '<meta'
-
-//                     for(let k in list[i]){
-//                         str += ` ${k}="${list[i][k]}"`
-//                     }
-
-//                     str += '>'
-//                 }
-//                 this.$ssrContext.meta = str
-//             }
-//         }
-//     }
-// }
-
-// const clientMetaMixin = {
-//     methods: {
-//         setMeta(){
-
-//         }
-//     }
-// }
-
 const serverMetaMixin = {
     created () {
-        const meta = getMeta(this)
+        const meta       = getMeta(this)
+        const ssrContext = useSSRContext()
+
         if (meta) {
             let str = ''
 
@@ -61,7 +36,7 @@ const serverMetaMixin = {
                 str += '/>'
             }
 
-            this.$ssrContext.meta = str
+            ssrContext.meta = str
         }
     }
 }

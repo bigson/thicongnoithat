@@ -38,16 +38,20 @@
         },
         methods : {
             updateShow(show){
+                console.log('layout updateShow')
                 this.show = show
             },
             start(){
-                this.$refs.progress.start()
+                console.log('layout start')
+                this.$refs.progress && this.$refs.progress.start()
             },
             finish(){
-                this.$refs.progress.finish()
+                console.log('layout finish')
+                this.$refs.progress && this.$refs.progress.finish()
             },
             fail(){
-                this.$refs.progress.fail()
+                console.log('layout fail')
+                this.$refs.progress && this.$refs.progress.fail()
             }
         },
         // beforeRouteEnter (to, from, next) {

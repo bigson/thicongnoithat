@@ -1,5 +1,5 @@
 <template>
-    <div class="progress" :class="error" v-if="show">
+    <div class="progress" :class="error" v-show="show">
         <div class="percent" :style="{width: (100 - percent) + '%'}"></div>
     </div>
 </template>
