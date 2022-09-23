@@ -243,6 +243,60 @@ export default {
                                             services : PAGE_HOME_GETTER_SERVICES,
                                             news     : PAGE_HOME_GETTER_NEWS,
                                         }),
+
+        title(){
+            return this.$route.meta.title
+        },
+        meta(){
+            return [
+                {
+                    tag  : 'link',
+                    rel  : 'canonical',
+                    href : this.urlOriginal,
+                },
+                {
+                    name    : 'description',
+                    content : this.$route.meta.description,
+                },
+                {
+                    name    : 'subject',
+                    content : 'Trang chủ ThiCongTot.Com',
+                },
+                {
+                    name    : 'copyright',
+                    content : 'ThiCongTot.Com',
+                },
+                {
+                    name    : 'language',
+                    content : 'VN',
+                },
+
+                {
+                    property : 'og:title',
+                    content  : this.$route.meta.title,
+                },
+                {
+                    property : 'og:type',
+                    content  : 'website',
+                },
+                {
+                    property : 'og:url',
+                    content  : this.urlOriginal,
+                },
+                {
+                    property : 'og:image',
+                    content  : '',
+                },
+                {
+                    property : 'og:site_name',
+                    content  : 'Kết nối các nền tảng Chủ - Thầu - Thợ',
+                },
+                {
+                    property : 'og:description',
+                    content  : this.$route.meta.description,
+                },
+            ]
+        },
         hotCategories() {
             let hot  = [];
 
@@ -305,7 +359,7 @@ export default {
         }
     },
     async serverPrefetch() {
-        console.log('serverPrefetch HOME')
+        // console.log('serverPrefetch HOME')
         const homeStore = usePageHomeStore(this.$pinia)
 
         await homeStore[PAGE_HOME_ACTION_GET_PAGE](
@@ -331,59 +385,6 @@ export default {
                                     }
                                 }
                             })
-    },
-    title () {
-        return this.$route.meta.title;
-    },
-    meta(){
-        return [
-            {
-                tag : 'link',
-                rel  : 'canonical',
-                href : this.urlOriginal,
-            },
-            {
-                name    : 'description',
-                content : this.$route.meta.description,
-            },
-            {
-                name    : 'subject',
-                content : 'Trang chủ ThiCongTot.Com',
-            },
-            {
-                name    : 'copyright',
-                content : 'ThiCongTot.Com',
-            },
-            {
-                name    : 'language',
-                content : 'VN',
-            },
-
-            {
-                property : 'og:title',
-                content  : this.$route.meta.title,
-            },
-            {
-                property : 'og:type',
-                content  : 'website',
-            },
-            {
-                property : 'og:url',
-                content  : this.urlOriginal,
-            },
-            {
-                property : 'og:image',
-                content  : '',
-            },
-            {
-                property : 'og:site_name',
-                content  : 'Kết nối các nền tảng Chủ - Thầu - Thợ',
-            },
-            {
-                property : 'og:description',
-                content  : this.$route.meta.description,
-            },
-        ]
     }
 }
 

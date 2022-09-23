@@ -71,11 +71,6 @@
             services,
             paging,
         },
-        // data(){
-        //     return {
-        //         breadcrumbs : this.category.breadcrumbs
-        //     }
-        // },
         computed: {
             ...mapState(usePageCategoryStore, {
                 services : PAGE_CATEGORIES_GETTER_SERVICES,
@@ -83,12 +78,89 @@
                 location : PAGE_CATEGORIES_GETTER_LOCATION,
 
             }),
-            ...mapState(usePageCategoryStore, {
+            ...mapState(useIp2locationStore, {
                 ip2location : IP2LOCATION_GETTER_LOCATION,
             }),
-            // ...mapMutations({
-            //     setLocation : PAGE_CATEGORIES_MUTATION_SET_LOCATION,
-            // }),
+
+            title(){
+                // console.log('call title', this.$route.meta.category, this.category)
+                let title = this.category.meta.title
+
+                if(Object.keys(this.location).length){
+                    title += ' tại ' + this.location.address
+                }
+
+                return title
+            },
+            meta(){
+                let url = this.domainOriginal + this.$router.resolve({name   : 'category_' + this.category.id}).href,
+                    description = this.category.meta.description,
+                    name        = this.category.name,
+                    title       = this.category.meta.title
+
+                if(Object.keys(this.location).length){
+                    description += ' tại ' + this.location.address
+                    name        += ' tại ' + this.location.address
+                    title       += ' tại ' + this.location.address
+                }
+
+                let meta        = [
+                        {
+                            tag  : 'link',
+                            rel  : 'canonical',
+                            href : url
+                        },
+                        {
+                            name    : 'description',
+                            content : description,
+                        },
+                        {
+                            name    : 'subject',
+                            content : name,
+                        },
+                        {
+                            name    : 'copyright',
+                            content : this.$route.meta.copyright,
+                        },
+                        {
+                            name    : 'language',
+                            content : this.$route.meta.language,
+                        },
+
+                        {
+                            property : 'og:title',
+                            content  : title,
+                        },
+                        {
+                            property : 'og:type',
+                            content  : this.$route.meta.type,
+                        },
+                        {
+                            property : 'og:url',
+                            content  : url,
+                        },
+                        {
+                            property : 'og:site_name',
+                            content  : this.$route.meta.site_name,
+                        },
+                        {
+                            property : 'og:description',
+                            content  : description,
+                        },
+                    ]
+
+                if(this.category.pictures && this.category.pictures.length){
+                    this.category.pictures.forEach(p => {
+                        meta.push({
+                            property : 'og:image',
+                            content  : this.pictureSource(p),
+                        })
+                    })
+                }
+
+
+                return meta
+            },
 
             // from $route
             name(){
@@ -231,6 +303,7 @@
                 // }
             },
         },
+
         beforeMount (){
             // console.log('beforeMount', this.$store.getters[PAGE_CATEGORIES_GETTER_LOADED], this.services.length)
             if(!this.services.length || (this.location && this.location.slug != this.locationSlug)){
@@ -239,36 +312,35 @@
                 this.progressFinish()
             }
         },
-        async asyncData ({ store, route }) {
-            let category         = route.meta.category,
-                page             = route.query.page,
-                that             = this,
-                location         = route.params.location,
-                options          = clone(optionsServices)
-
-            options.params.page = page ? page : 1
+        async serverPrefetch() {
+            const store = usePageCategoryStore(this.$pinia),
+                route    = this.$route,
+                category = route.meta.category,
+                page     = route.query.page,
+                that     = this,
+                location = route.params.location,
+                options  = clone(optionsServices)
 
             if(location){
                 optionsLocation.api = 'slug/' + location
 
-                await store.dispatch(
-                            PAGE_CATEGORIES_ACTION_GET_LOCATION,
-                            optionsLocation
-                        ).then(() => {
-                            location = store.getters[PAGE_CATEGORIES_GETTER_LOCATION]
+                await store[PAGE_CATEGORIES_ACTION_GET_LOCATION](optionsLocation)
 
-                            switch(location.type){
-                                case 'city':
-                                    options.params.cit_id = location.id
-                                    break;
-                                case 'district':
-                                    options.params.dis_id = location.id
-                                    break;
-                            }
-                        }).catch(() => {
-                            // nếu không có location này thì redirect 301 đến trang gốc category
-                            throw {code : 301, url : category.slug}
-                        })
+                const location = store[PAGE_CATEGORIES_GETTER_LOCATION]
+
+                if(!location){
+                    // nếu không có location này thì redirect 301 đến trang gốc category
+                    throw {code : 301, url : category.slug}
+                }
+
+                switch(location.type){
+                    case 'city':
+                        options.params.cit_id = location.id
+                        break;
+                    case 'district':
+                        options.params.dis_id = location.id
+                        break;
+                }
             }
 
             if(category.id == 10100){
@@ -280,86 +352,8 @@
             }else{
                 options.params.cat_id = category.id
             }
-            // console.log('params', params, route);
-            await store.dispatch(PAGE_CATEGORIES_ACTION_GET_SERVICES, options)
-        },
-        title(){
-            let title = this.category.meta.title
 
-            if(Object.keys(this.location).length){
-                title += ' tại ' + this.location.address
-            }
-
-            return title
-        },
-        meta(){
-            let url = this.domainOriginal + this.$router.resolve({name   : 'category_' + this.category.id}).href,
-                description = this.category.meta.description,
-                name        = name,
-                title       = title
-
-            if(Object.keys(this.location).length){
-                description += ' tại ' + this.location.address
-                name        += ' tại ' + this.location.address
-                title       += ' tại ' + this.location.address
-            }
-
-            let meta        = [
-                    {
-                        tag  : 'link',
-                        rel  : 'canonical',
-                        href : url
-                    },
-                    {
-                        name    : 'description',
-                        content : description,
-                    },
-                    {
-                        name    : 'subject',
-                        content : name,
-                    },
-                    {
-                        name    : 'copyright',
-                        content : this.$route.meta.copyright,
-                    },
-                    {
-                        name    : 'language',
-                        content : this.$route.meta.language,
-                    },
-
-                    {
-                        property : 'og:title',
-                        content  : title,
-                    },
-                    {
-                        property : 'og:type',
-                        content  : this.$route.meta.type,
-                    },
-                    {
-                        property : 'og:url',
-                        content  : url,
-                    },
-                    {
-                        property : 'og:site_name',
-                        content  : this.$route.meta.site_name,
-                    },
-                    {
-                        property : 'og:description',
-                        content  : description,
-                    },
-                ]
-
-            if(this.category.pictures && this.category.pictures.length){
-                this.category.pictures.forEach(p => {
-                    meta.push({
-                        property : 'og:image',
-                        content  : this.pictureSource(p),
-                    })
-                })
-            }
-
-
-            return meta
+            await store[PAGE_CATEGORIES_ACTION_GET_SERVICES](options)
         },
     }
 </script>

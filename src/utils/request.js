@@ -32,7 +32,7 @@ export default async function (data, callback){
     }
 
     if(data.data){
-        defaultConfig.data   = querystring.stringify(data.data)
+        defaultConfig.data   = data.data //querystring.stringify(data.data)
     }
     // console.log('request', defaultConfig, data)
     if(callback){

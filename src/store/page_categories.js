@@ -11,32 +11,6 @@ export const PAGE_CATEGORIES_ACTION_GET_SERVICES  = 'PAGE_CATEGORIES_ACTION_GET_
 export const PAGE_CATEGORIES_ACTION_GET_LOCATION  = 'PAGE_CATEGORIES_ACTION_GET_LOCATION'
 
 
-// actions
-const actions = {
-    // KHÔNG THỂ GET ALL ĐC VÌ PHẢI LOAD LOCATION TRƯỚC
-    // async [PAGE_CATEGORIES_ACTION_GETTER_PAGE]({ commit, state }, options) {
-    //     let loadData = [
-    //             apiSERVICES(options.services).then(function(response) {
-    //                 commit(MUTATION_SET_SERVICES, response.data.data)
-    //                 commit(MUTATION_SET_SERVICES_META, response.data.meta)
-    //                 commit(MUTATION_SET_LOADED, true)
-    //             })
-    //         ]
-
-    //     if(options.locations){
-    //         loadData.push(
-    //                     apiLOCATIONS(options.locations).then(function(response) {
-    //                         commit(MUTATION_SET_LOCATION, response.data.data)
-    //                         commit(MUTATION_SET_LOADED, true)
-    //                     })
-    //                 )
-    //     }
-
-    //     return Promise.all(loadData)
-    // },
-
-}
-
 export const usePageCategoryStore = defineStore('pageCategory', {
     state : () => {
         return {
@@ -62,16 +36,16 @@ export const usePageCategoryStore = defineStore('pageCategory', {
     },
     actions : {
         async [PAGE_CATEGORIES_ACTION_GET_SERVICES](options) {
-            return await apiSERVICES(options).then(function(response) {
-                    commit(MUTATION_SET_SERVICES, response.data.data)
-                    commit(MUTATION_SET_SERVICES_META, response.data.meta)
-                    commit(MUTATION_SET_LOADED, true)
+            return await apiSERVICES(options).then((response) => {
+                    this.services      = response.data.data
+                    this.services_meta = response.data.meta
+                    this.loaded        = true
                 })
         },
         async [PAGE_CATEGORIES_ACTION_GET_LOCATION](options) {
-            return await apiLOCATIONS(options).then(function(response) {
-                    commit(MUTATION_SET_LOCATION, response.data.data)
-                    commit(MUTATION_SET_LOADED, true)
+            return await apiLOCATIONS(options).then((response) => {
+                    this.location = response.data.data
+                    this.loaded   = true
                 })
         },
     },

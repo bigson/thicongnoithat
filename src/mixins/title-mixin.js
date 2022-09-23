@@ -12,9 +12,11 @@ function getTitle(vm) {
 }
 
 const serverTitleMixin = {
-    created () {
-        const title = getTitle(this)
-        if (title) {
+    created(){
+        this.setTitle(this.title)
+    },
+    methods : {
+        setTitle (title) {
             const ssrContext  = useSSRContext()
             ssrContext.title = title
         }
@@ -23,18 +25,25 @@ const serverTitleMixin = {
 
 const clientTitleMixin = {
     mounted () {
-        // console.log('mixin title mounted')
-        const title = getTitle(this)
-        // console.log('title-mixin mounted', title)
-        if (title) {
-            document.title = title
-        }
+        this.setTitle(this.title)
+    //     // console.log('mixin title mounted')
+    //     const title = getTitle(this)
+    //     // console.log('title-mixin mounted', title)
+    //     if (title) {
+    //         document.title = title
+    //     }
     },
     beforeUpdate () {
-        // console.log('mixin title before update')
-        const title = getTitle(this)
-        // console.log('title-mixin beforeUpdate', title)
-        if (title) {
+        this.setTitle(this.title)
+    //     // console.log('mixin title before update')
+    //     const title = getTitle(this)
+    //     // console.log('title-mixin beforeUpdate', title)
+    //     if (title) {
+    //         document.title = title
+    //     }
+    },
+    methods : {
+        setTitle(title){
             document.title = title
         }
     }

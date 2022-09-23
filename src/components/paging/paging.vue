@@ -1,12 +1,14 @@
 <template>
     <div class="item-paging" v-if="meta && meta.total_page > 1">
         <ul class="paging">
-            <li v-for="p in list" :key="'paging_' + p.page" v-if="!p.current" :title="p.title" :class="p.classes">
+            <template v-for="p in list" :key="'paging_' + p.page">
+            <li v-if="!p.current" :title="p.title" :class="p.classes">
                 <router-link :to="{path : path, query : p.query}" >{{p.page}}</router-link>
             </li>
             <li v-else class="current" :title="'Bạn đang ở trang ' + p.page" :class="p.classes">
                 <span>{{p.page}}</span>
             </li>
+            </template>
         </ul>
     </div>
 </template>

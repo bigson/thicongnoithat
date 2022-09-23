@@ -8,9 +8,9 @@
                         <router-link
                             :key="'service_detail_' + service.id"
                             :to="{
-                                path   : service.url,
+                                name   : 'detail_service',
                                 meta   : {service : service, name : service.title},
-                                params : {_service : service},
+                                params : {type : service.type_slug, name : service.route, id : service.id},
                             }">
                             <html-lazyload
                                 srcset="w615 615w, w225 225w"
@@ -25,9 +25,9 @@
                         <router-link
                             :key="'service_detail_' + service.id"
                             :to="{
-                                path   : service.url,
+                                name   : 'detail_service',
                                 meta   : {service : service, name : service.title},
-                                params : {_service : service},
+                                params : {type : service.type_slug, name : service.route, id : service.id}
                             }">
                             <html-lazyload
                                 srcset="w615 615w, w225 225w"
@@ -42,9 +42,9 @@
                         <router-link
                             :key="'service_detail_' + service.id"
                             :to="{
-                                path   : service.url,
+                                name   : 'detail_service',
                                 meta   : {service : service, name : service.title},
-                                params : {_service : service},
+                                params : {type : service.type_slug, name : service.route, id : service.id}
                             }">
                             <html-lazyload
                                 srcset="h150"
@@ -58,9 +58,9 @@
                         <router-link
                             :key="'service_detail_' + service.id"
                             :to="{
-                                path   : service.url,
+                                name   : 'detail_service',
                                 meta   : {service : service, name : service.title},
-                                params : {_service : service},
+                                params : {type : service.type_slug, name : service.route, id : service.id}
                             }">
                             <html-lazyload
                                 srcset="w615 615w, w225 225w"
@@ -81,9 +81,9 @@
                         <h3><router-link
                             :key="'service_detail_' + service.id"
                             :to="{
-                                path: service.url,
-                                meta:{service : service, name : service.title},
-                                params : {_service : service},
+                                name   : 'detail_service',
+                                meta   : {service : service, name : service.title},
+                                params : {type : service.type_slug, name : service.route, id : service.id}
                             }">{{service.vendor.name}}</router-link></h3>
                         <div class="rating" v-if="service.vendor.rating">
                             <template v-for="i in parseInt(service.vendor.rating)">★ </template>

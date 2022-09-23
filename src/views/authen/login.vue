@@ -79,6 +79,63 @@
         },
         computed:{
             ...mapState(useUserStore, [USER_GETTER_DETAIL, USER_GETTER_STATUS_LOGIN]),
+            title () {
+                return this.$route.meta.title
+            },
+            meta(){
+                return [
+                    {
+                        tag : 'link',
+                        rel  : 'canonical',
+                        href : this.canonicalOriginal
+                    },
+                    {
+                        name    : 'robots',
+                        content : 'noindex,nofollow'
+                    },
+                    {
+                        name    : 'description',
+                        content : this.$route.meta.description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : 'Trang đăng nhập',
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    {
+                        property : 'og:title',
+                        content  : this.$route.meta.title,
+                    },
+                    {
+                        property : 'og:type',
+                        content  : this.$route.meta.type,
+                    },
+                    {
+                        property : 'og:url',
+                        content  : this.canonicalOriginal,
+                    },
+                    {
+                        property : 'og:image',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:site_name',
+                        content  : this.$route.meta.site_name,
+                    },
+                    {
+                        property : 'og:description',
+                        content  : this.$route.meta.description,
+                    },
+                ]
+            },
             redirectUrl(){
                 return this.$route.query.redirect_url
             },
@@ -129,7 +186,7 @@
             },
         },
         created(){
-            if(Object.keys(this.$store.getters[USER_GETTER_DETAIL]).length){
+            if(Object.keys(this[USER_GETTER_DETAIL]).length){
                 let redirectUrl = this.$route.query.redirect_url
 
                 if(!redirectUrl){
@@ -148,8 +205,12 @@
         beforeCreate(){
             // console.log(this.$store, this.$route, this.$router, this.$options.methods)
         },
-        async asyncData ({ store, route, context : {urlOriginal} }) {
-            if(Object.keys(store.getters[USER_GETTER_DETAIL]).length){
+
+        async serverPrefetch() {
+            // console.log('serverPrefetch HOME')
+            const userStore = useUserStore(this.$pinia)
+
+            if(Object.keys(userStore[USER_GETTER_DETAIL]).length){
                 let redirectUrl = route.query.redirect_url
 
                 if(!redirectUrl){
@@ -158,63 +219,17 @@
 
                 throw {url : redirectUrl}
             }
-        },
-        title () {
-            return this.$route.meta.title
-        },
-        meta(){
-            return [
-                {
-                    tag : 'link',
-                    rel  : 'canonical',
-                    href : this.canonicalOriginal
-                },
-                {
-                    name    : 'robots',
-                    content : 'noindex,nofollow'
-                },
-                {
-                    name    : 'description',
-                    content : this.$route.meta.description,
-                },
-                {
-                    name    : 'subject',
-                    content : 'Trang đăng nhập',
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                {
-                    property : 'og:title',
-                    content  : this.$route.meta.title,
-                },
-                {
-                    property : 'og:type',
-                    content  : this.$route.meta.type,
-                },
-                {
-                    property : 'og:url',
-                    content  : this.canonicalOriginal,
-                },
-                {
-                    property : 'og:image',
-                    content  : '',
-                },
-                {
-                    property : 'og:site_name',
-                    content  : this.$route.meta.site_name,
-                },
-                {
-                    property : 'og:description',
-                    content  : this.$route.meta.description,
-                },
-            ]
         }
+        // async asyncData ({ store, route, context : {urlOriginal} }) {
+        //     if(Object.keys(store.getters[USER_GETTER_DETAIL]).length){
+        //         let redirectUrl = route.query.redirect_url
+
+        //         if(!redirectUrl){
+        //             redirectUrl = '/'
+        //         }
+
+        //         throw {url : redirectUrl}
+        //     }
+        // },
     }
 </script>
