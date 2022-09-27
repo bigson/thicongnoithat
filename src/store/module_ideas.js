@@ -23,53 +23,37 @@ export const useIdeasStore = defineStore('ideas', {
                             8 : 'Hoa văn',//    const TYPE_TEXTURE        = ;
                             9 : 'Tiện ích',//    const TYPE_SMART          = ;
                         },
-                [ACT_API_ALL] : false,
             }
     },
     getters : {
-        [IDEAS_GETTER_DETAIL](id) {
-            return state.getParentChilds;
-        },
-        [IDEAS_GETTER_ALL](){
+        // [IDEAS_GETTER_DETAIL](state) {
+        //     return state.getParentChilds;
+        // },
+        [IDEAS_GETTER_ALL](state){
             return state.all;
         },
-        [IDEAS_GETTER_PARENT_CHILDS](){
+        [IDEAS_GETTER_PARENT_CHILDS](state){
             return state.pc;
         }
     },
     actions : {
         async [IDEAS_ACTION_API_ALL]() {
-            // kt xem api có đang chạy không
-            // nếu có nhiều nơi cùng gọi thì k chạy nhiều lần
-            // if(state[ACT_API_ALL]){
-            //     return {};
-            // }
-            // commit('updateStateApi', true);
-            // return new Promise((resolve, reject) => {
-            //     ({}, function(response) {
-            //        resolve(response);
-            //     });
-            // }).then((response) => {
-            //     commit('updateStateApi', false);
-            //     commit(SET_ALL, response.data.data);
-            // });
-
             let response = await apiIdeas(),
-                all = response.data.data,
-                pc = {},
-                _all = {};
+                all      = response.data.data,
+                pc       = {},
+                _all     = {};
 
-            all.forEach(function(c,i){
-                if(!pc[state.type[c.type]]){
-                    pc[state.type[c.type]] = {[c.id] : c};
+            all.forEach((c,i) => {
+                if(!pc[this.type[c.type]]){
+                    pc[this.type[c.type]] = {[c.id] : c};
                 }else{
-                    pc[state.type[c.type]][c.id] = c;
+                    pc[this.type[c.type]][c.id] = c;
                 }
                 _all[c.id] = c;
             });
 
-            state.pc  = pc;
-            state.all = _all;
+            this.pc  = pc;
+            this.all = _all;
         }
     },
 })

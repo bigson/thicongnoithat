@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <images :images="images" :imageClick="imageClick"/>
-                <paging :meta="meta"/>
+                <paging :meta="imagesMeta"/>
             </section>
         </div>
         <template v-if="Object.keys(detailImage).length">
@@ -37,6 +37,7 @@
         PAGE_IDEAS_GETTER_IMAGE,
         PAGE_IDEAS_ACTION_GET_IMAGES,
         PAGE_IDEAS_ACTION_GET_IMAGE,
+        PAGE_IDEAS_ACTION_SET_IMAGE,
         usePageIdeasStore
     } from '@/store/page_ideas.js'
 
@@ -86,7 +87,7 @@
         },
         computed:{
             ...mapState(usePageIdeasStore, {
-                meta        : PAGE_IDEAS_GETTER_IMAGES_META,
+                imagesMeta  : PAGE_IDEAS_GETTER_IMAGES_META,
                 images      : PAGE_IDEAS_GETTER_IMAGES,
                 detailImage : PAGE_IDEAS_GETTER_IMAGE,
             }),
@@ -138,6 +139,61 @@
                 }
 
                 return tags;
+            },
+            title () {
+                return this.$route.meta.title
+            },
+            meta(){
+                let url = this.domainOriginal + this.$router.resolve({name   : 'ideas'}).href
+
+                return [
+                    {
+                        tag  : 'link',
+                        rel  : 'canonical',
+                        href : url
+                    },
+                    {
+                        name    : 'description',
+                        content : this.$route.meta.description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : this.$route.meta.title,
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    {
+                        property : 'og:title',
+                        content  : this.$route.meta.title,
+                    },
+                    {
+                        property : 'og:type',
+                        content  : this.$route.meta.type,
+                    },
+                    {
+                        property : 'og:url',
+                        content  : url,
+                    },
+                    {
+                        property : 'og:image',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:site_name',
+                        content  : this.$route.meta.site_name,
+                    },
+                    {
+                        property : 'og:description',
+                        content  : this.$route.meta.description,
+                    },
+                ]
             }
         },
         watch:{
@@ -158,12 +214,12 @@
             ...mapActions(usePageIdeasStore, {
                 getDetailImage : PAGE_IDEAS_ACTION_GET_IMAGE,
                 getPictures    : PAGE_IDEAS_ACTION_GET_IMAGES,
+                mutationSetImage : PAGE_IDEAS_ACTION_SET_IMAGE,
             }),
             ...mapActions(useIdeasStore, {
-                getIdeas       : IDEAS_ACTION_API_ALL,
+                getIdeas         : IDEAS_ACTION_API_ALL,
             }),
             // ...mapMutations({
-            //     mutationSetImage : PAGE_IDEAS_MUTATION_SET_IMAGE,
             // }),
             async fetchData(){
                 // console.log("fetchData")
@@ -188,11 +244,12 @@
                 return await this.getPictures(options)
             },
             imageClick(image){
+                console.log(image)
                 this.mutationSetImage(image)
                 this.getDetailImage({
                                 api    : image.id,
                                 params : {
-                                    includes : 'images,images.properties,images.tags',
+                                    includes : 'images,images.properties,images.tags,vendor',
                                 }
                             })
 
@@ -236,60 +293,5 @@
             }
             next()
         },
-        title () {
-            return this.$route.meta.title
-        },
-        meta(){
-            let url = this.domainOriginal + this.$router.resolve({name   : 'ideas'}).href
-
-            return [
-                {
-                    tag  : 'link',
-                    rel  : 'canonical',
-                    href : url
-                },
-                {
-                    name    : 'description',
-                    content : this.$route.meta.description,
-                },
-                {
-                    name    : 'subject',
-                    content : this.$route.meta.title,
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                {
-                    property : 'og:title',
-                    content  : this.$route.meta.title,
-                },
-                {
-                    property : 'og:type',
-                    content  : this.$route.meta.type,
-                },
-                {
-                    property : 'og:url',
-                    content  : url,
-                },
-                {
-                    property : 'og:image',
-                    content  : '',
-                },
-                {
-                    property : 'og:site_name',
-                    content  : this.$route.meta.site_name,
-                },
-                {
-                    property : 'og:description',
-                    content  : this.$route.meta.description,
-                },
-            ]
-        }
     }
 </script>

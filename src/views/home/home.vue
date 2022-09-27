@@ -252,7 +252,7 @@ export default {
                 {
                     tag  : 'link',
                     rel  : 'canonical',
-                    href : this.urlOriginal,
+                    href : this.originalUrl,
                 },
                 {
                     name    : 'description',
@@ -281,7 +281,7 @@ export default {
                 },
                 {
                     property : 'og:url',
-                    content  : this.urlOriginal,
+                    content  : this.originalUrl,
                 },
                 {
                     property : 'og:image',
@@ -359,7 +359,7 @@ export default {
         }
     },
     async serverPrefetch() {
-        // console.log('serverPrefetch HOME')
+        console.log('serverPrefetch HOME', this)
         const homeStore = usePageHomeStore(this.$pinia)
 
         await homeStore[PAGE_HOME_ACTION_GET_PAGE](

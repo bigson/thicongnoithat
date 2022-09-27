@@ -32,18 +32,18 @@ export const usePageIdeasStore = defineStore('pageIdeas', {
     actions : {
         async [PAGE_IDEAS_ACTION_GET_IMAGES](options) {
             return await apiImages(options)
-                        .then(function(response) {
+                        .then((response) => {
                             this.images      = response.data.data
                             this.images_meta = response.data.meta
                         })
         },
         async [PAGE_IDEAS_ACTION_GET_IMAGE](options) {
             return await apiImages(options)
-                        .then(function(response) {
+                        .then((response) => {
                             this.image = response.data.data
                         })
         },
-        async [PAGE_IDEAS_ACTION_SET_IMAGE](image) {
+        [PAGE_IDEAS_ACTION_SET_IMAGE](image) {
             if(image.images && image.images.length){
                 this.image = Object.assign({}, this.image, image);
             }else{

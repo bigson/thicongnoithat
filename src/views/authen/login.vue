@@ -18,7 +18,7 @@
                 </label>
                 <div class="bt">
                     <label>
-                        <input type="checkbox" name="keep-login" class="keep-login">
+                        <input v-model="keepLogin" value="1" type="checkbox" name="keep-login" class="keep-login">
                         <i class="cb"></i>
                         Giữ đăng nhập
                     </label>
@@ -34,7 +34,7 @@
                 <a :href="config.path_login_facebook" class="facebook">FACEBOOK</a>
                 <a :href="config.path_login_google" class="google">GOOGLE</a>
             </div>
-            <router-link :to="backUrl" class="back-link">← Quay lại trang trước</router-link>
+            <router-link :to="redirectUrl" class="back-link">← Quay lại trang trước</router-link>
         </div>
     </div>
 </template>
@@ -74,7 +74,8 @@
                 password: {
                   value: '',
                   classes: ''
-                }
+                },
+                keepLogin : false,
             }
         },
         computed:{
@@ -137,26 +138,20 @@
                 ]
             },
             redirectUrl(){
-                return this.$route.query.redirect_url
-            },
-            backUrl(){
-                if(this.redirectUrl){
-                    return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
-                }else{
-                    return '/'
-                }
+                return this.$route.query.redirect_url || '/'
             },
             statusLogin () {
-                let status = this[USER_GETTER_STATUS_LOGIN]
+                return this[USER_GETTER_STATUS_LOGIN] || {code : 0}
                 if(status.code == 1){
                     // this.$store.commit(USER_MUTATION_SET_STATUS_LOGIN,{code:0})
-                    this.$router.push(this.backUrl);
+                    // this.$router.push(this.redirectUrl);
+                    this.redirect(this.redirectUrl)
                 } else{
                     return status;
                 }
             },
             user(){
-                return this.$store.getters[USER_GETTER_DETAIL]
+                return this[USER_GETTER_DETAIL]
             }
         },
 
@@ -180,20 +175,24 @@
 
                 await this[USER_ACTION_POST_LOGIN]({
                     api: '/api/v1/authentication/login',
-                    data :{account: this.account.value, password : this.password.value}})
+                    data :{
+                        account      : this.account.value,
+                        password     : this.password.value,
+                        'keep-login' : this.keepLogin
+                    }
+                })
                 // apiServices.
 
+                if(this[USER_GETTER_STATUS_LOGIN].code != 1){
+                    return alert(this[USER_GETTER_STATUS_LOGIN].message)
+                }
+
+                this.redirect({path: this.redirectUrl})
             },
         },
         created(){
             if(Object.keys(this[USER_GETTER_DETAIL]).length){
-                let redirectUrl = this.$route.query.redirect_url
-
-                if(!redirectUrl){
-                    redirectUrl = '/'
-                }
-
-                redirectUrl(redirectUrl)
+                this.redirect({path: this.redirectUrl})
             }
         },
         updated(){

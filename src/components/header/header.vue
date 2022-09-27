@@ -144,7 +144,7 @@
             ...mapState(useCategoriesStore, {categoriesPC : CATEGORIES_GETTER_PARENT_CHILDS}),
             ...mapState(useUserStore, {user : USER_GETTER_DETAIL}),
             query(){
-                return {redirect_url : this.urlOriginal}
+                return {redirect_url : this.originalUrl}
             },
             categories(){
                 let categories = Object.assign({}, this.c, this.categoriesPC)

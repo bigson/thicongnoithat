@@ -31,17 +31,67 @@
         },
         computed:{
             redirectUrl(){
-                return this.$route.query.redirect_url
-            },
-            backUrl(){
-                if(this.redirectUrl){
-                    return /http(s)?\:\/\/[^\/]+(.*)/.exec(this.redirectUrl)[2]
-                }else{
-                    return '/'
-                }
+                return this.$route.query.redirect_url || '/'
             },
             userStore(){
                 return useUserStore()
+            },
+            title () {
+                return this.$route.meta.title
+            },
+            meta(){
+                return [
+                    {
+                        tag : 'link',
+                        rel  : 'canonical',
+                        href : this.canonicalOriginal
+                    },
+                    {
+                        name    : 'robots',
+                        content : 'noindex,nofollow'
+                    },
+                    {
+                        name    : 'description',
+                        content : this.$route.meta.description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : 'Trang đăng xuất để bảo vệ thông tin cá nhân của bạn',
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    {
+                        property : 'og:title',
+                        content  : this.$route.meta.title,
+                    },
+                    {
+                        property : 'og:type',
+                        content  : this.$route.meta.type,
+                    },
+                    {
+                        property : 'og:url',
+                        content  : this.canonicalOriginal,
+                    },
+                    {
+                        property : 'og:image',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:site_name',
+                        content  : this.$route.meta.site_name,
+                    },
+                    {
+                        property : 'og:description',
+                        content  : this.$route.meta.description,
+                    },
+                ]
             }
         },
         created(){
@@ -58,18 +108,11 @@
             this.userStore.$reset()
         },
         beforeMount(){
-
-            let redirectUrl = this.$route.query.redirect_url
-
-            if(!redirectUrl){
-                redirectUrl = '/'
-            }
-
-            redirectUrl(redirectUrl)
-
-            this.progressFinish()
+            this.redirect(this.redirectUrl)
         },
-        async asyncData ({ store, route, context : {urlOriginal, cookiesRes} }) {
+        async serverPrefetch (a) {
+            console.log(a, arguments)
+            return
             cookiesRes.push({
                             name : 'uid',
                             value : '',
@@ -88,62 +131,5 @@
 
             throw {url : redirectUrl}
         },
-        title () {
-            return this.$route.meta.title
-        },
-        meta(){
-            return [
-                {
-                    tag : 'link',
-                    rel  : 'canonical',
-                    href : this.canonicalOriginal
-                },
-                {
-                    name    : 'robots',
-                    content : 'noindex,nofollow'
-                },
-                {
-                    name    : 'description',
-                    content : this.$route.meta.description,
-                },
-                {
-                    name    : 'subject',
-                    content : 'Trang đăng xuất để bảo vệ thông tin cá nhân của bạn',
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                {
-                    property : 'og:title',
-                    content  : this.$route.meta.title,
-                },
-                {
-                    property : 'og:type',
-                    content  : this.$route.meta.type,
-                },
-                {
-                    property : 'og:url',
-                    content  : this.canonicalOriginal,
-                },
-                {
-                    property : 'og:image',
-                    content  : '',
-                },
-                {
-                    property : 'og:site_name',
-                    content  : this.$route.meta.site_name,
-                },
-                {
-                    property : 'og:description',
-                    content  : this.$route.meta.description,
-                },
-            ]
-        }
     }
 </script>

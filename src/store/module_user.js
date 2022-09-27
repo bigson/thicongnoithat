@@ -19,9 +19,9 @@ export const useUserStore = defineStore('user', {
         return {
             user            : {},
             login_status    : {},
-            forgot_pass     : [],
-            change_password : [],
-            create_account  : [],
+            forgot_pass     : {},
+            change_password : {},
+            create_account  : {},
         }
     },
     getters : {
@@ -54,7 +54,7 @@ export const useUserStore = defineStore('user', {
                     Cookie: c.join('; ')
                 },
                 withCredentials: true
-            }).then(function(response) {
+            }).then((response) => {
                     if(response.data.data){
                         this.user = response.data.data
                     }else{
@@ -65,13 +65,13 @@ export const useUserStore = defineStore('user', {
 
         async [USER_ACTION_POST_FORGOT_PASSWORD] (options) {
             return await apiAuthen(options)
-                            .then(function (response) {
+                            .then((response) => {
                                 this.forgot_pass = response.data
                             })
         },
         async [USER_ACTION_POST_LOGIN] (options) {
             return await apiAuthen(options)
-                            .then(function (response) {
+                            .then((response) => {
                                 this.login_status = response.data
                                 if(response.data.code == 1){
                                     this.user = response.data.data
@@ -80,13 +80,13 @@ export const useUserStore = defineStore('user', {
           },
         async [USER_ACTION_POST_CHANGE_PASSWORD] (options) {
             return await apiAuthen(options)
-                            .then(function (response) {
+                            .then((response) => {
                                 this.change_password = response.data
                             })
         },
         async [USER_ACTION_POST_CREATE_ACCOUNT] (options) {
             return await apiAuthen(options)
-                            .then(function (response) {
+                            .then((response) => {
                                 this.create_account = response.data
                             })
         }

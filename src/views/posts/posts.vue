@@ -57,6 +57,7 @@
     </div>
 </template>
 <script>
+    import { mapState, mapActions } from 'pinia'
     import {
                 CATEGORIES_GETTER_PARENT_CHILDS,
                 useCategoriesStore
@@ -104,8 +105,15 @@
             uploadImages
         },
         computed: {
+            ...mapState(useCategoriesStore, [CATEGORIES_GETTER_PARENT_CHILDS]),
+            ...mapState(usePagePSStore, [
+                    PAGE_POSTS_SERVICE_GETTER_CITY,
+                    PAGE_POSTS_SERVICE_GETTER_DISTRICT,
+                    PAGE_POSTS_SERVICE_GETTER_ADDRESS,
+                    PAGE_POSTS_SERVICE_GETTER_SERVICE,
+                ]),
             category(){
-                return this.$store.getters[CATEGORIES_GETTER_PARENT_CHILDS]
+                return this[CATEGORIES_GETTER_PARENT_CHILDS]
             },
             gallery(){
                 let g = this.$ref.images.images
@@ -118,7 +126,7 @@
                         return this.c
                     }
 
-                    this.c = [...this.$store.getters[PAGE_POSTS_SERVICE_GETTER_CITY]]
+                    this.c = [...this[PAGE_POSTS_SERVICE_GETTER_CITY]]
                     return this.c
                 },
                 set(newValue){
@@ -130,6 +138,58 @@
             },
             citiesSelected(){
                 return this.cities.filter(x => x.selected)
+            },
+            title () {
+                return this.$route.meta.title;
+            },
+            meta(){
+
+                let title = this.$route.meta.title,
+                description = this.$route.meta.description
+
+                return [
+                    {
+                        name    : 'description',
+                        content : description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : title,
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    {
+                        property : 'og:title',
+                        content  : title,
+                    },
+                    {
+                        property : 'og:type',
+                        content  : this.$route.meta.type,
+                    },
+                    {
+                        property : 'og:url',
+                        content  : this.$router.resolve({name:'posts'}).href,
+                    },
+                    {
+                        property : 'og:image',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:site_name',
+                        content  : this.$route.meta.site_name,
+                    },
+                    {
+                        property : 'og:description',
+                        content  : description,
+                    },
+                ]
             }
         },
 
@@ -137,6 +197,12 @@
         },
 
         methods: {
+            ...mapActions(usePagePSStore, [
+                    PAGE_POSTS_SERVICE_ACTION_GET_CITY,
+                    PAGE_POSTS_SERVICE_ACTION_GET_DISTRICT,
+                    PAGE_POSTS_SERVICE_ACTION_SEARCH_ADDRESS,
+                    PAGE_POSTS_SERVICE_ACTION_POST_SERVICE,
+                ]),
             fetch(){
             },
             editable(text){
@@ -152,7 +218,7 @@
 
                 console.log(catId,address,districts,title,description)
 
-
+                alert('Dịch vụ không sẵn sàng')
                 // apiServices.
             },
             changeParent(e){
@@ -206,7 +272,7 @@
 
                 this.cities.find(x => x.id == this.modelCity).selected = true
 
-                console.log(this.cities === this.$store.getters[PAGE_POSTS_SERVICE_GETTER_CITY])
+                console.log(this.cities === this[PAGE_POSTS_SERVICE_GETTER_CITY])
 
                 // this.$store.commit(PAGE_POSTS_SERVICE_SET_CITY_SELECTED, this.modelCity)
 
@@ -224,69 +290,18 @@
                             })
             },
             async getCities(){
-                return await this.$store.dispatch(PAGE_POSTS_SERVICE_ACTION_GET_CITY, {params : {limit: 70}})
+                return await this[PAGE_POSTS_SERVICE_ACTION_GET_CITY]({params : {limit: 70}})
             },
         },
 
-        async asyncData ({ store, route }) {
-            return await store.dispatch(PAGE_POSTS_SERVICE_ACTION_GET_CITY, {limit: 70})
-        },
+        // async asyncData ({ store, route }) {
+        //     return await store.dispatch(PAGE_POSTS_SERVICE_ACTION_GET_CITY, {limit: 70})
+        // },
 
         beforeMount(){
             this.fetchData();
         },
 
-        title () {
-            return this.$route.meta.title;
-        },
-        meta(){
 
-            let title = this.$route.meta.title,
-                description = this.$route.meta.description
-
-            return [
-                {
-                    name    : 'description',
-                    content : description,
-                },
-                {
-                    name    : 'subject',
-                    content : title,
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                {
-                    property : 'og:title',
-                    content  : title,
-                },
-                {
-                    property : 'og:type',
-                    content  : this.$route.meta.type,
-                },
-                {
-                    property : 'og:url',
-                    content  : this.$router.resolve({name:'posts'}).href,
-                },
-                {
-                    property : 'og:image',
-                    content  : '',
-                },
-                {
-                    property : 'og:site_name',
-                    content  : this.$route.meta.site_name,
-                },
-                {
-                    property : 'og:description',
-                    content  : description,
-                },
-            ]
-        }
     }
 </script>

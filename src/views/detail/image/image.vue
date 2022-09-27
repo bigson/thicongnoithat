@@ -140,6 +140,54 @@
                 }
 
                 return tags;
+            },
+            title () {
+                return this.$route.meta.title
+            },
+            meta(){
+                return [
+                    {
+                        name    : 'description',
+                        content : this.$route.meta.description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : this.$route.meta.title,
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    {
+                        name    : 'og:title',
+                        content : this.$route.meta.title,
+                    },
+                    {
+                        name    : 'og:type',
+                        content : this.$route.meta.type,
+                    },
+                    {
+                        name    : 'og:url',
+                        content : '',
+                    },
+                    {
+                        name    : 'og:image',
+                        content : '',
+                    },
+                    {
+                        name    : 'og:site_name',
+                        content : this.$route.meta.site_name,
+                    },
+                    {
+                        name    : 'og:description',
+                        content : this.$route.meta.description,
+                    },
+                ]
             }
         },
         watch:{
@@ -259,53 +307,5 @@
                 this.$refs.popupDetailImages.show()
             }
         },
-        title () {
-            return this.$route.meta.title
-        },
-        meta(){
-            return [
-                {
-                    name    : 'description',
-                    content : this.$route.meta.description,
-                },
-                {
-                    name    : 'subject',
-                    content : this.$route.meta.title,
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                {
-                    name    : 'og:title',
-                    content : this.$route.meta.title,
-                },
-                {
-                    name    : 'og:type',
-                    content : this.$route.meta.type,
-                },
-                {
-                    name    : 'og:url',
-                    content : '',
-                },
-                {
-                    name    : 'og:image',
-                    content : '',
-                },
-                {
-                    name    : 'og:site_name',
-                    content : this.$route.meta.site_name,
-                },
-                {
-                    name    : 'og:description',
-                    content : this.$route.meta.description,
-                },
-            ]
-        }
     }
 </script>

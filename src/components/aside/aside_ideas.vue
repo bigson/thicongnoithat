@@ -19,6 +19,7 @@
     </div>
 </template>
 <script>
+    import { mapState, mapActions } from 'pinia'
     import {
         IDEAS_GETTER_ALL,
         IDEAS_GETTER_PARENT_CHILDS,
@@ -29,11 +30,15 @@
     export default {
         name : 'AsideIdeas',
         computed :{
+            ...mapState(useIdeasStore,[
+                    IDEAS_GETTER_ALL,
+                    IDEAS_GETTER_PARENT_CHILDS,
+                ]),
             ideasPc(){
-                return this.$store.getters[IDEAS_GETTER_PARENT_CHILDS];
+                return this[IDEAS_GETTER_PARENT_CHILDS];
             },
             ideasAll(){
-                return this.$store.getters[IDEAS_GETTER_ALL];
+                return this[IDEAS_GETTER_ALL];
             },
             properties(){
                 return this.$route.query.properties;
@@ -42,7 +47,7 @@
                 if(!Object.keys(this.ideasPc).length){
                     return {};
                 }
-                // console.log('this.ideasPc', this.ideasPc);
+
                 let ideas = Object.assign({}, this.ideasPc);
 
                 // giới hạn 3 thuộc tính này
@@ -57,6 +62,7 @@
             }
         },
         methods:{
+            ...mapActions(useIdeasStore, [IDEAS_ACTION_API_ALL]),
             updateProperties(ideasPc){
                 let properties  = this.properties;
 
@@ -84,8 +90,8 @@
                 let pc;
                 console.log('start fetch aside ideas');
                 if(Object.keys(this.ideasAll).length == 0){
-                    await this.$store.dispatch(IDEAS_ACTION_API_ALL).then((...a) => {
-                        console.log('done fetch aside ideas', this.$store.getters[IDEAS_GETTER_PARENT_CHILDS], this.$store.getters[IDEAS_GET_ALL], a);
+                    await this[IDEAS_ACTION_API_ALL]().then((...a) => {
+                        console.log('done fetch aside ideas', this[IDEAS_GETTER_PARENT_CHILDS], a);
                     });
                 }
             }

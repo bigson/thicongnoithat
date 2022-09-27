@@ -24,7 +24,7 @@ export const useServicesStore = defineStore('services', {
             }
     },
     getters : {
-        [SERVICES_GETTER_TYPE]() {
+        [SERVICES_GETTER_TYPE](state) {
             return state.TYPE;
         }
     },

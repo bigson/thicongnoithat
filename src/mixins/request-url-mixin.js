@@ -10,7 +10,8 @@ const serverRequestUrl = {
             canonical     = /[^?|#]+/.exec(fullUrl)
 
         return {
-            urlOriginal       : fullUrl,
+            fullUrl           : fullUrl,
+            originalUrl       : ssrContext.req.originalUrl,
             domainOriginal    : domain[0],
             canonicalOriginal : canonical[0],
         }
@@ -19,12 +20,15 @@ const serverRequestUrl = {
 
 const clientRequestUrl = {
     data() {
-        let originalUrl = window.location.href,
-            domain      = /http(s)?\:\/\/[^\/]+/.exec(originalUrl),
+        let fullUrl     = window.location.href,
+            exec        = /http(s)?\:\/\/(?<domain>[^\/]+)(?<url>.*)/.exec(fullUrl),
+            domain      = exec.groups.domain,
+            originalUrl = exec.groups.url,
             canonical   = /[^?|#]+/.exec(originalUrl)
 
         return {
-            urlOriginal       : originalUrl,
+            fullUrl           : fullUrl,
+            originalUrl       : originalUrl,
             domainOriginal    : domain[0],
             canonicalOriginal : canonical[0],
         }

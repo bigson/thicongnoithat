@@ -8,8 +8,9 @@ const serverRedirect = {
 
 const clientRedirect = {
     methods :  {
-        redirect({url}){
-            window.location = url
+        redirect(obj){
+            // window.location = url
+            this.$router.push(obj)
         }
     }
 }
