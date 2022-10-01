@@ -1,5 +1,6 @@
 <script>
     import { h } from 'vue'
+    import { mapActions } from 'pinia'
     import {colorFromText, niceColor} from '@/utils/index'
     import {LAZYLOAD_ACTION_ADD_IMAGE, useLazyloadStore} from '@/store/module_lazyload.js'
 
@@ -23,6 +24,7 @@
             },
         },
         methods : {
+            ...mapActions(useLazyloadStore, [LAZYLOAD_ACTION_ADD_IMAGE]),
             getStyleAvatarHolder(name){
                 let clr = '#' + colorFromText(name)
                 let a = {
@@ -40,13 +42,13 @@
         mounted(){
             // console.log('mouted', this.$refs.img)
             if(this.$refs.img && this.$refs.img.dataset.src){
-                this.$store.commit(LAZYLOAD_ACTION_ADD_IMAGE, this.$refs.img)
+                this[LAZYLOAD_ACTION_ADD_IMAGE](this.$refs.img)
             }
         },
         updated(){
             // trường hợp click vào trang chi tiết lần 2 thì component này chỉ update
             if(this.$refs.img && this.$refs.img.dataset.src){
-                this.$store.commit(LAZYLOAD_ACTION_ADD_IMAGE, this.$refs.img)
+                this[LAZYLOAD_ACTION_ADD_IMAGE](this.$refs.img)
             }
         },
         render: function () {

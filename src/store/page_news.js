@@ -60,26 +60,26 @@ export const usePageNewsStore = defineStore('pageNews', {
     actions : {
         async [PAGE_NEWS_ACTION_GET_NEWS](options) {
             return await apiNews(options)
-                    .then(function(response) {
+                    .then((response) => {
                         const news = response.data.data
-                        const [teaser, tOC, description] = generateNewsContent(news.description)
-                        news.description         = news.description
-                        news.teaser              = news.teaser
-
+                        // const [teaser, tOC, description] = generateNewsContent(news.description)
+                        // news.description         = news.description
+                        // news.teaser              = news.teaser
                         this.news               = news
-                        this.news_table_content = news.tOC
+                        this.news_table_content = news.tOC || news.toc
                     })
         },
         async [PAGE_NEWS_ACTION_GET_PAGE](options) {
+            const that = this
             return Promise.all([
-                    apiNews(options.news_related).then(function(response) {
-                        this.news_related = response.data.data
+                    apiNews(options.news_related).then((response) => {
+                        that.news_related = response.data.data
                     }),
-                    apiNews(options.news_recommend).then(function(response) {
-                        this.news_recommend = response.data.data
+                    apiNews(options.news_recommend).then((response) => {
+                        that.news_recommend = response.data.data
                     }),
-                    apiServices(options.services_category).then(function(response){
-                        this.services_category = response.data.data
+                    apiServices(options.services_category).then((response)=> {
+                        that.services_category = response.data.data
                     })
                 ])
         },

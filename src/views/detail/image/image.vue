@@ -78,7 +78,7 @@
                 optionsDetailImage : {
                                 api    : 'id',
                                 params : {
-                                    includes : 'images,images.properties,images.tags',
+                                    includes : 'images,images.properties,images.tags,vendor',
                                 }
                             }
             }
@@ -106,7 +106,7 @@
                 return this.$route.query.page;
             },
             refferLink(){
-                let pp  = this.properties.map(x => x.id)
+                let pp  = this.properties
 
                 if(pp.length){
                     return this.$router.resolve({
@@ -244,36 +244,39 @@
 
             }
         },
-        async asyncData ({ store, route }) {
-            console.log(route.name)
-            let properties = route.query.properties,
-                page       = route.query.page,
-                routeName  = route.name
+        async serverPrefetch() {
+            // console.log('serverPrefetch HOME', this)
+            const pageIdeasStore = usePageIdeasStore(this.$pinia)
+            const ideasStore     = useIdeasStore(this.$pinia)
+
+            let properties = this.$route.query.properties,
+                page       = this.$route.query.page,
+                routeName  = this.$route.name,
+                imgId      = this.$route.params.id
 
             // if(routeName == 'detail_image'){
-                let imgId = route.params.id
 
-                await store.dispatch(PAGE_IDEAS_ACTION_GET_IMAGE, {
+                await pageIdeasStore[PAGE_IDEAS_ACTION_GET_IMAGE]({
                                 api    : imgId,
                                 params : {
                                     includes : 'images,images.properties,images.tags,vendor',
                                 }
                             })
 
-                let detailImage = Object.assign({}, store.getters[PAGE_IDEAS_GETTER_IMAGE])
+                let detailImage = Object.assign({}, pageIdeasStore[PAGE_IDEAS_GETTER_IMAGE])
 
                 detailImage = Object.assign(detailImage, detailImage.images.find(x => x.id == detailImage.id))
 
-                store.commit(PAGE_IDEAS_MUTATION_SET_IMAGE, detailImage)
+                pageIdeasStore[PAGE_IDEAS_ACTION_SET_IMAGE](detailImage)
 
                 properties = detailImage.properties.map(x => x.id).join(',')
 
-                route.query.properties = properties
+                this.$route.query.properties = properties
             // }
 
             return Promise.all([
-                        store.dispatch(IDEAS_ACTION_API_ALL),
-                        store.dispatch(PAGE_IDEAS_ACTION_GET_IMAGES, {
+                        ideasStore[IDEAS_ACTION_API_ALL](),
+                        ideasStore[PAGE_IDEAS_ACTION_GET_IMAGES]({
                                 params: {
                                     includes   : 'vendor,album',
                                     search     : 'album',

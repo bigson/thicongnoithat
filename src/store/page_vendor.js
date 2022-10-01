@@ -18,29 +18,6 @@ export const PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS = 'PAGE_VENDOR_ACTION_GET_VE
 export const PAGE_VENDOR_ACTION_GET_VENDOR_RATING   = 'PAGE_VENDOR_ACTION_GET_VENDOR_RATING'
 
 
-// // mutations
-// const mutations = {
-//     [MUTATION_SET_VENDOR](state, vendor) {
-//         state.vendor  = vendor;
-//     },
-//     [MUTATION_SET_VENDOR_SERVICES](state, vendor_services) {
-//         state.vendor_services  = vendor_services;
-//     },
-//     [MUTATION_SET_VENDOR_NEWS](state, vendor_news) {
-//         state.vendor_news  = vendor_news;
-//     },
-//     [MUTATION_SET_VENDOR_GALLERY](state, vendor_gallery) {
-//         state.vendor_gallery  = vendor_gallery;
-//     },
-//     [MUTATION_SET_VENDOR_PROJECTS](state, vendor_projects) {
-//         state.vendor_projects  = vendor_projects;
-//     },
-//     [MUTATION_SET_VENDOR_RATING](state, vendor_rating) {
-//         state.vendor_rating  = vendor_rating;
-//     },
-// }
-
-
 export const usePageVendorStore = defineStore('pageVendor', {
     state : () => {
         return {
@@ -73,54 +50,54 @@ export const usePageVendorStore = defineStore('pageVendor', {
         },
     },
     actions : {
-        async [PAGE_VENDOR_ACTION_GET_VENDOR]({ commit, state }, options) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR](options) {
             this.vendor = {}
-            return await apiVendors(options).then(function(response) {
+            return await apiVendors(options).then((response) => {
                     this.vendor = response.data.data
                 })
         },
-        async [PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES]() {
             this.vendor_services = {data : [], meta : {}}
             return await apiVendors({
-                    api    : state.vendor.id + '/services',
+                    api    : this.vendor.id + '/services',
                     params : {includes : 'category', meta : 1}
-                }).then(function(response) {
+                }).then((response) => {
                     this.vendor_services = response.data
                 })
         },
-        async [PAGE_VENDOR_ACTION_GET_VENDOR_NEWS]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_NEWS]() {
             this.vendor_news = {data : [], meta : {}}
             return await apiVendors({
-                    api    : state.vendor.id + '/news',
+                    api    : this.vendor.id + '/news',
                     params : {meta : 1},
-                }).then(function(response) {
+                }).then((response) => {
                     this.vendor_news = response.data
                 })
         },
-        async [PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY]() {
             this.vendor_gallery = {data : [], meta : {}}
             return await apiVendors({
-                    api    : state.vendor.id + '/gallery',
+                    api    : this.vendor.id + '/gallery',
                     params : {meta : 1},
-                }).then(function(response) {
+                }).then((response) => {
                     this.vendor_gallery = response.data
                 })
         },
-        async [PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS]() {
             this.vendor_projects = {data : [], meta : {}}
             return await apiVendors({
-                    api    : state.vendor.id + '/projects',
+                    api    : this.vendor.id + '/projects',
                     params : {meta : 1},
-                }).then(function(response) {
+                }).then((response) => {
                     this.vendor_projects = response.data
                 })
         },
-        async [PAGE_VENDOR_ACTION_GET_VENDOR_RATING]({ commit, state }) {
+        async [PAGE_VENDOR_ACTION_GET_VENDOR_RATING]() {
             this.vendor_rating = {data : [], meta : {}}
             return await apiRating({
-                    api    : 'vendor/' + state.vendor.id,
+                    api    : 'vendor/' + this.vendor.id,
                     params : {meta : 1},
-                }).then(function(response) {
+                }).then((response) => {
                     this.vendor_rating = response.data
                 })
         },

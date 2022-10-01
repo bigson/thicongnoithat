@@ -107,7 +107,8 @@
                     bc      = cat ? cat.breadcrumbs.filter(_ => _) : [],
                     title   = cat ? cat.meta.title + ' tại ' : ''
 
-                this.service.cities.forEach((e,i) => {
+                for(let i in this.service.cities){
+                    let c = this.service.cities[i]
                     bc.push({
                             link    : this.$router.resolve({
                                                 name   : 'category_location_' + this.category.id,
@@ -116,9 +117,110 @@
                             name    : e.name,
                             title   : title + e.name,
                         })
-                })
+                }
 
                 return bc
+            },
+            title(){
+                // console.log(this.service)
+                if(Object.keys(this.service).length){
+                    return this.service.meta.title
+                }
+
+                return ''
+            },
+            meta(){
+                let image = '',
+                    url     = this.domainOriginal + this.service.url
+
+                if(this.service.gallery.length){
+                    image = this.service.gallery[0]
+                }else if(this.service.category.pictures.length){
+                    image = this.service.category.pictures[0]
+                }
+                return [
+                    {
+                        tag : 'link',
+                        rel  : 'canonical',
+                        href : url
+                    },
+                    {
+                        name    : 'description',
+                        content : this.service.meta.description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : this.service.meta.title,
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    // info
+                    {
+                        property : 'og:title',
+                        content  : this.service.meta.title,
+                    },
+                    {
+                        property : 'og:type',
+                        content  : this.$route.meta.type,
+                    },
+                    {
+                        property : 'og:url',
+                        content  : url,
+                    },
+                    {
+                        property : 'og:image',
+                        content  : image,
+                    },
+                    {
+                        property : 'og:site_name',
+                        content  : this.$route.meta.site_name,
+                    },
+                    {
+                        property : 'og:description',
+                        content  : this.service.meta.description,
+                    },
+                    {
+                        property : 'og:locale',
+                        content  : this.$route.meta.locale,
+                    },
+
+                    // facebook
+                    {
+                        property : 'fb:page_id',
+                        content  : '',
+                    },
+                    // info
+
+                    {
+                        property : 'og:email',
+                        content  : this.service.emails.join(','),
+                    },
+                    {
+                        property : 'og:phone_number',
+                        content  : this.service.phones.join(','),
+                    },
+                    // location
+
+                    {
+                        property : 'og:latitude',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:longitude',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:street-address',
+                        content  : this.service.address,
+                    },
+                ]
             },
         },
 
@@ -163,131 +265,31 @@
                 this.progressFinish()
             }
         },
-        async asyncData ({ store, route, context : {urlOriginal} }) {
-            let id = route.params.id
+        async serverPrefetch() {
+            let id = this.$route.params.id,
+                pgeService = usePageService(this.$pinia)
 
             optionsService.api = id
 
-            await store.dispatch(PAGE_SERVICE_ACTION_GET_SERVICE, optionsService)
+            await pgeService[PAGE_SERVICE_ACTION_GET_SERVICE](optionsService)
 
-            let service = store.getters[PAGE_SERVICE_GETTER_SERVICE]
+            let service = pgeService[PAGE_SERVICE_GETTER_SERVICE]
 
             if(service.status != 1){
                 throw {code : 410}
             }
-            if(service.url != route.path){
+            if(service.url != this.$route.path){
                 // console.log(service.url , route.path, route)
                 throw {code : 301, url : service.url}
             }
 
             return Promise.all([
-                    store.dispatch(PAGE_SERVICE_ACTION_GET_VENDOR_SERVICES),
-                    store.dispatch(PAGE_SERVICE_ACTION_GET_VENDOR_NEWS),
-                    store.dispatch(PAGE_SERVICE_ACTION_GET_VENDOR_GALLERY),
-                    store.dispatch(PAGE_SERVICE_ACTION_GET_VENDOR_PROJECTS),
-                    store.dispatch(PAGE_SERVICE_ACTION_GET_VENDOR_RATING),
+                    pgeService[PAGE_SERVICE_ACTION_GET_VENDOR_SERVICES](),
+                    pgeService[PAGE_SERVICE_ACTION_GET_VENDOR_NEWS](),
+                    pgeService[PAGE_SERVICE_ACTION_GET_VENDOR_GALLERY](),
+                    pgeService[PAGE_SERVICE_ACTION_GET_VENDOR_PROJECTS](),
+                    pgeService[PAGE_SERVICE_ACTION_GET_VENDOR_RATING](),
                 ])
-        },
-        title(){
-            // console.log(this.service)
-            if(Object.keys(this.service).length){
-                return this.service.meta.title
-            }
-
-            return ''
-        },
-        meta(){
-            let image = '',
-                url     = this.domainOriginal + this.service.url
-
-            if(this.service.gallery.length){
-                image = this.service.gallery[0]
-            }else if(this.service.category.pictures.length){
-                image = this.service.category.pictures[0]
-            }
-            return [
-                {
-                    tag : 'link',
-                    rel  : 'canonical',
-                    href : url
-                },
-                {
-                    name    : 'description',
-                    content : this.service.meta.description,
-                },
-                {
-                    name    : 'subject',
-                    content : this.service.meta.title,
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                // info
-                {
-                    property : 'og:title',
-                    content  : this.service.meta.title,
-                },
-                {
-                    property : 'og:type',
-                    content  : this.$route.meta.type,
-                },
-                {
-                    property : 'og:url',
-                    content  : url,
-                },
-                {
-                    property : 'og:image',
-                    content  : image,
-                },
-                {
-                    property : 'og:site_name',
-                    content  : this.$route.meta.site_name,
-                },
-                {
-                    property : 'og:description',
-                    content  : this.service.meta.description,
-                },
-                {
-                    property : 'og:locale',
-                    content  : this.$route.meta.locale,
-                },
-
-                // facebook
-                {
-                    property : 'fb:page_id',
-                    content  : '',
-                },
-                // info
-
-                {
-                    property : 'og:email',
-                    content  : this.service.emails.join(','),
-                },
-                {
-                    property : 'og:phone_number',
-                    content  : this.service.phones.join(','),
-                },
-                // location
-
-                {
-                    property : 'og:latitude',
-                    content  : '',
-                },
-                {
-                    property : 'og:longitude',
-                    content  : '',
-                },
-                {
-                    property : 'og:street-address',
-                    content  : this.service.address,
-                },
-            ]
         },
     }
 </script>

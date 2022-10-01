@@ -43,7 +43,7 @@ export const usePagePSStore = defineStore('pagePostsService', {
     actions : {
         async [PAGE_POSTS_SERVICE_ACTION_GET_CITY](options) {
             return await apiLOCATIONS(options)
-                .then(function(response) {
+                .then((response) => {
                     this.city  = response.data.data.map(c => {
                                                                 c.checked  = true;
                                                                 c.selected = false;
@@ -55,7 +55,7 @@ export const usePagePSStore = defineStore('pagePostsService', {
         async [PAGE_POSTS_SERVICE_ACTION_GET_DISTRICT](citId) {
             return await apiLOCATIONS({
                     api : '/api/v1/locations/' + citId,
-                }).then(function(response) {
+                }).then((response) => {
                     const city = response.data.data
                     let c = state.city.filter(x => x.id == city.id)
 
@@ -66,12 +66,12 @@ export const usePagePSStore = defineStore('pagePostsService', {
                 })
         },
         async [PAGE_POSTS_SERVICE_ACTION_SEARCH_ADDRESS](options) {
-            return await apiLOCATIONS(options).then(function(response) {
+            return await apiLOCATIONS(options).then((response) => {
                     this.address = response.data.data
                 })
         },
         async [PAGE_POSTS_SERVICE_ACTION_POST_SERVICE](options) {
-            return await apiSERVICES(options).then(function(response) {
+            return await apiSERVICES(options).then((response) => {
                     this.service = response.data.data
                 })
         },

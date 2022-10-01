@@ -2,8 +2,8 @@
     <div class="page-news">
         <div class="header-news">
             <template v-if="Object.keys(news).length">
-            <img :src="this.pictureSource(news.gallery[0])" :alt="news.meta.title" :title="news.meta.title" class="blur background">
-            <img :src="this.pictureSource(news.gallery[0])" :alt="news.meta.title" :title="news.meta.title">
+            <img :src="pictureSource(news.gallery[0])" :alt="news.meta.title" :title="news.meta.title" class="blur background">
+            <img :src="pictureSource(news.gallery[0])" :alt="news.meta.title" :title="news.meta.title">
             <div class="header-info">
                 <div class="main">
                     <h1>{{news.title}}</h1>
@@ -35,7 +35,7 @@
                     <div class="more-news" v-if="newsRecommend.length > 0">
                         <h2>Có thể bạn quan tâm</h2>
                         <ul class="list-news">
-                            <li v-for="n in newsRecommend"><router-link :to="n.url" :title="n.title">{{n.title}}</router-link></li>
+                            <li v-for="n in newsRecommend"><router-link :to="{path : n.url}" :title="n.title">{{n.title}}</router-link></li>
                         </ul>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
 
                 <news-services :services="servicesCategory.slice(3,6)" />
 
-                <div class="news-keywords" v-if="news.keywords.length">
+                <div class="news-keywords" v-if="news.keywords && news.keywords.length">
                     <span v-for="n in news.keywords">{{n.name}}</span>
                 </div>
 
@@ -155,6 +155,74 @@
             name(){
                 return this.$route.params.name
             },
+            title () {
+                console.log(this.news)
+                return this.news.meta.title || ''
+            },
+            meta(){
+                let image = '',
+                    url   = this.domainOriginal + this.news.url,
+                    meta = [
+                    {
+                        tag : 'link',
+                        rel  : 'canonical',
+                        href : url
+                    },
+                    {
+                        name    : 'description',
+                        content : this.news.meta.description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : this.news.meta.title,
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    {
+                        property : 'og:title',
+                        content  : this.news.meta.title,
+                    },
+                    {
+                        property : 'og:type',
+                        content  : this.$route.meta.type,
+                    },
+                    {
+                        property : 'og:url',
+                        content  : url,
+                    },
+                    // {
+                    //     property : 'og:image',
+                    //     content  : img,
+                    // },
+                    {
+                        property : 'og:site_name',
+                        content  : this.$route.meta.site_name,
+                    },
+                    {
+                        property : 'og:description',
+                        content  : this.news.meta.description,
+                    },
+                ]
+
+                if(this.news.gallery.length > 0){
+                    this.news.gallery.forEach(i => {
+                        meta.push({
+                            property : 'og:image',
+                            content  : this.pictureSource(i),
+                        })
+                    })
+
+                }
+
+                return meta
+            }
         },
         watch :{
             id : async function(){
@@ -163,12 +231,17 @@
             },
         },
         methods:{
+            ...mapActions(usePageNewsStore, [
+                    PAGE_NEWS_ACTION_GET_NEWS,
+                    PAGE_NEWS_ACTION_GET_PAGE
+            ]),
             async fetchData(){
 
                 let that = this
 
                 optionsNewsDetail.api = this.id
-                await this.$store.dispatch(PAGE_NEWS_ACTION_GET_NEWS, optionsNewsDetail)
+                await this[PAGE_NEWS_ACTION_GET_NEWS](optionsNewsDetail)
+                console.log('after featch data news', this.id)
 
                 if(this.news.status != 1 || this.news.author.type != 4){
                     // không phải admin hoặc bài này k active thì thông báo lỗi
@@ -180,32 +253,35 @@
 
                 options.services_category.params.cat_id = this.news.category.id
 
-                return this.$store.dispatch(PAGE_NEWS_ACTION_GET_PAGE, options).then(function(){
+                return this[PAGE_NEWS_ACTION_GET_PAGE](options)
+                                .then(function(){
                                     that.progressFinish()
                                 }).catch(function(err){
                                     that.progressFail(err)
                                 })
             },
         },
-        async asyncData ({ store, route }) {
-            let id = route.params.id
+        async serverPrefetch() {
+        // console.log('serverPrefetch HOME', this)
+            const pageNewsStore = usePageNewsStore(this.$pinia)
+            let id = this.$route.params.id
 
             optionsNewsDetail.api = id
-            await store.dispatch(PAGE_NEWS_ACTION_GET_NEWS, optionsNewsDetail)
+            await pageNewsStore[PAGE_NEWS_ACTION_GET_NEWS](optionsNewsDetail)
 
-            let news = store.getters[PAGE_NEWS_GETTER_NEWS]
+            let news = pageNewsStore[PAGE_NEWS_GETTER_NEWS]
 
             if(news.status != 1 || news.author.type != 4){
                 // console.log(news)
                 // không phải admin hoặc bài này k active thì thông báo lỗi
                 throw {code : 410}
             }
-            if(news.url != route.path){
+            if(news.url != this.$route.path){
                 throw {code : 301, url : news.url}
             }
 
             options.services_category.params.cat_id = news.category.id
-            return store.dispatch(PAGE_NEWS_ACTION_GET_PAGE, options)
+            return pageNewsStore[PAGE_NEWS_ACTION_GET_PAGE](options)
         },
         async beforeMount (){
             if(!Object.keys(this.news).length
@@ -218,73 +294,5 @@
         mounted(){
             // console.log(lazyload)
         },
-        title () {
-            if(Object.keys(this.news).length)
-            return this.news.meta.title
-        },
-        meta(){
-            let image = '',
-                url   = this.domainOriginal + this.news.url,
-                meta = [
-                {
-                    tag : 'link',
-                    rel  : 'canonical',
-                    href : url
-                },
-                {
-                    name    : 'description',
-                    content : this.news.meta.description,
-                },
-                {
-                    name    : 'subject',
-                    content : this.news.meta.title,
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                {
-                    property : 'og:title',
-                    content  : this.news.meta.title,
-                },
-                {
-                    property : 'og:type',
-                    content  : this.$route.meta.type,
-                },
-                {
-                    property : 'og:url',
-                    content  : url,
-                },
-                // {
-                //     property : 'og:image',
-                //     content  : img,
-                // },
-                {
-                    property : 'og:site_name',
-                    content  : this.$route.meta.site_name,
-                },
-                {
-                    property : 'og:description',
-                    content  : this.news.meta.description,
-                },
-            ]
-
-            if(this.news.gallery.length > 0){
-                this.news.gallery.forEach(i => {
-                    meta.push({
-                        property : 'og:image',
-                        content  : this.pictureSource(i),
-                    })
-                })
-
-            }
-
-            return meta
-        }
     }
 </script>

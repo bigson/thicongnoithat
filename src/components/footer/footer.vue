@@ -7,13 +7,13 @@
                         <img src="/public/images/logo-white.svg" alt="Tự do kết nối những nền tảng - thicongtot.com">
                     </li>
                     <li class="address">
-                        <span>Tầng 3, tòa nhà Hà Thành Plaza, 102 Thái Thịnh, Đống Đa, Hà Nội</span>
+                        <span>----------------<!-- Tầng 3, tòa nhà Hà Thành Plaza, 102 Thái Thịnh, Đống Đa, Hà Nội --></span>
                     </li>
                     <li class="phones">
 
                     </li>
                     <li class="email">
-                        <a href="mailto:contact-us@thicongtot.info" title="Gửi email đến contact-us@thicongtot.info">contact-us@thicongtot.info</a>
+                        <a href="mailto:contact-us@thicongtot.info" title="Gửi email đến contact-us@thicongtot.info">contact-us@--------</a>
                     </li>
                 </ul>
             </div>
@@ -42,7 +42,7 @@
                 </ul>
             </div>
         </div>
-        <div class="copyright">Copyright 2019 © Design by <a href="#">VNP Group</a></div>
+        <div class="copyright">Copyright 2019 © Design by <a href="#">---------<!-- VNP Group --></a></div>
     </footer>
 </template>
 <script>

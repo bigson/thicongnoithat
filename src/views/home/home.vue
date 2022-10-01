@@ -359,7 +359,7 @@ export default {
         }
     },
     async serverPrefetch() {
-        console.log('serverPrefetch HOME', this)
+        // console.log('serverPrefetch HOME', this)
         const homeStore = usePageHomeStore(this.$pinia)
 
         await homeStore[PAGE_HOME_ACTION_GET_PAGE](

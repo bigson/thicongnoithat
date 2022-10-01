@@ -138,7 +138,104 @@
                 }
 
                 return false
-            }
+            },
+            title(){
+                // console.log(this.service)
+                if(Object.keys(this.vendor).length){
+                    return this.vendor.meta.title
+                }
+
+                return ''
+            },
+            meta(){
+                let image = '',
+                    url   = this.domainOriginal + this.vendor.url,
+                    meta  = this.vendor.meta || {}
+
+                return [
+                    {
+                        tag : 'link',
+                        rel  : 'canonical',
+                        href : url
+                    },
+                    {
+                        name    : 'description',
+                        content : meta.description,
+                    },
+                    {
+                        name    : 'subject',
+                        content : 'Trang web của công ty ' + this.vendor.name + ' trong lĩnh vực thi công, nội thất',
+                    },
+                    {
+                        name    : 'copyright',
+                        content : this.$route.meta.copyright,
+                    },
+                    {
+                        name    : 'language',
+                        content : this.$route.meta.language,
+                    },
+
+                    // info
+                    {
+                        property : 'og:title',
+                        content  : meta.title,
+                    },
+                    {
+                        property : 'og:type',
+                        content  : this.$route.meta.type,
+                    },
+                    {
+                        property : 'og:url',
+                        content  : url,
+                    },
+                    {
+                        property : 'og:image',
+                        content  : image,
+                    },
+                    {
+                        property : 'og:site_name',
+                        content  : this.$route.meta.site_name,
+                    },
+                    {
+                        property : 'og:description',
+                        content  : meta.description,
+                    },
+                    {
+                        property : 'og:locale',
+                        content  : this.$route.meta.locale,
+                    },
+
+                    // facebook
+                    {
+                        property : 'fb:page_id',
+                        content  : '',
+                    },
+                    // info
+
+                    {
+                        property : 'og:email',
+                        content  : this.vendor.email,
+                    },
+                    {
+                        property : 'og:phone_number',
+                        content  : this.vendor.phones.join(','),
+                    },
+                    // location
+
+                    {
+                        property : 'og:latitude',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:longitude',
+                        content  : '',
+                    },
+                    {
+                        property : 'og:street-address',
+                        content  : this.vendor.address,
+                    },
+                ]
+            },
         },
         watch : {
             type : function(){
@@ -185,15 +282,17 @@
                 this.progressFinish()
             }
         },
-        async asyncData ({ store, route, context : {urlOriginal} }) {
-            let id   = route.params.id,
-                type = route.params.type
+        async serverPrefetch() {
+            let route = this.$route,
+                id   = route.params.id,
+                type = route.params.type,
+                pageVendorStore = usePageVendorStore(this.$pinia)
 
             optionsVendor.api = id
 
-            await store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR, optionsVendor)
+            await pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR](optionsVendor)
 
-            let vendor = store.getters[PAGE_VENDOR_GETTER_VENDOR]
+            let vendor = pageVendorStore[PAGE_VENDOR_GETTER_VENDOR]
 
             if(vendor.status != 1){
                 throw {code : 410}
@@ -208,11 +307,11 @@
                 // console.log(service)
 
                 return Promise.all([
-                        store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES),
-                        store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_NEWS),
-                        store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY),
-                        store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS),
-                        store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_RATING),
+                        pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES](),
+                        pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_NEWS](),
+                        pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY](),
+                        pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS](),
+                        pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_RATING](),
                     ])
             }else{
                 let urlType = vendor.url + '/' + type
@@ -223,118 +322,23 @@
 
                 switch(type){
                     case 'dich-vu':
-                        return store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES)
+                        return pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_SERVICES]()
                         break
                     case 'tin-tuc':
-                        return store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_NEWS)
+                        return pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_NEWS]()
                         break
                     case 'bo-suu-tap':
-                        return store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY)
+                        return pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_GALLERY]()
                         break
                     case 'du-an':
-                        return store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS)
+                        return pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_PROJECTS]()
                         break
                     case 'danh-gia':
-                        return store.dispatch(PAGE_VENDOR_ACTION_GET_VENDOR_RATING)
+                        return pageVendorStore[PAGE_VENDOR_ACTION_GET_VENDOR_RATING]()
                         break
                 }
             }
         },
-        title(){
-            // console.log(this.service)
-            if(Object.keys(this.vendor).length){
-                return this.vendor.meta.title
-            }
 
-            return ''
-        },
-        meta(){
-            let image = '',
-                url   = this.domainOriginal + this.vendor.url
-
-            return [
-                {
-                    tag : 'link',
-                    rel  : 'canonical',
-                    href : url
-                },
-                {
-                    name    : 'description',
-                    content : this.vendor.meta.description,
-                },
-                {
-                    name    : 'subject',
-                    content : 'Trang web của công ty ' + this.vendor.name + ' trong lĩnh vực thi công, nội thất',
-                },
-                {
-                    name    : 'copyright',
-                    content : this.$route.meta.copyright,
-                },
-                {
-                    name    : 'language',
-                    content : this.$route.meta.language,
-                },
-
-                // info
-                {
-                    property : 'og:title',
-                    content  : this.vendor.meta.title,
-                },
-                {
-                    property : 'og:type',
-                    content  : this.$route.meta.type,
-                },
-                {
-                    property : 'og:url',
-                    content  : url,
-                },
-                {
-                    property : 'og:image',
-                    content  : image,
-                },
-                {
-                    property : 'og:site_name',
-                    content  : this.$route.meta.site_name,
-                },
-                {
-                    property : 'og:description',
-                    content  : this.vendor.meta.description,
-                },
-                {
-                    property : 'og:locale',
-                    content  : this.$route.meta.locale,
-                },
-
-                // facebook
-                {
-                    property : 'fb:page_id',
-                    content  : '',
-                },
-                // info
-
-                {
-                    property : 'og:email',
-                    content  : this.vendor.email,
-                },
-                {
-                    property : 'og:phone_number',
-                    content  : this.vendor.phones.join(','),
-                },
-                // location
-
-                {
-                    property : 'og:latitude',
-                    content  : '',
-                },
-                {
-                    property : 'og:longitude',
-                    content  : '',
-                },
-                {
-                    property : 'og:street-address',
-                    content  : this.vendor.address,
-                },
-            ]
-        },
     }
 </script>
