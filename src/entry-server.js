@@ -3,6 +3,9 @@ import { renderToString } from 'vue/server-renderer'
 import serialize from 'serialize-javascript'
 import { USER_ACT_DETAIL, useUserStore } from '@/store/module_user.js'
 
+// import rawCssHead from '@/assets/head.scss?raw'
+// import urlCssStyle from '@/assets/style.scss?url'
+
 export async function render (context = {}){
 
     const { app, router, piniaStore } = await createApp(context)
@@ -19,6 +22,11 @@ export async function render (context = {}){
         .catch(err => console.error(err))
 
     context.pinia = serialize(piniaStore.state.value, {isJSON: true})
+
+    // context.style = {
+    //     head  : rawCssHead,
+    //     style : urlCssStyle
+    // }
 
     return await renderToString(app, context)
 

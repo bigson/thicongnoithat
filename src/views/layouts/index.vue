@@ -17,12 +17,16 @@
     </svg>
 </template>
 <script>
-    import '@/assets/head.scss'
-    import '@/assets/style.scss'
+    // import '@/assets/head.scss'
+    // import '@/assets/style.scss'
+    import rawCssHead from '@/assets/head.scss?raw'
+    import rawCssStyle from '@/assets/style.scss?url'
 
     import ProgressBar from '@/components/html/progress_bar.vue'
     import HeaderPage from '@/components/header/header.vue'
     import FooterPage from '@/components/footer/footer.vue'
+
+    const SSR = import.meta.env.SSR
 
     export default {
         name     : 'Layout',

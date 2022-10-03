@@ -7,7 +7,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import glob from 'glob'
 import fs from 'fs'
-import htmlPlugin from './build/htmlPlugin'
+// import htmlPlugin from './build/htmlPlugin'
 
 var all = glob.sync('./src/{views,components}/**/*.scss'),
     style = [],
@@ -36,13 +36,13 @@ await fs.appendFile('./src/assets/style.scss', style.map(e => {
 
 // // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [vue(), htmlPlugin(), createHtmlPlugin ()],
+    plugins: [vue(), createHtmlPlugin ()], //htmlPlugin()
     resolve: {
         alias: {
-            '@': resolve(__dirname, 'src')
+            '@': fileURLToPath(new URL("./src", import.meta.url))//resolve(__dirname, 'src')
         }
     },
-    // publicDir : './public',
+    // publicDir : false,
     build: {
         // manifest: true,
         // lib:{
@@ -55,13 +55,19 @@ export default defineConfig({
         //     fileName : 'style_css'
         //   }
         // },
-        // rollupOptions: {
-        //     input:{
-        //         main: path.resolve(__dirname, 'index.html'),
-        //         head_css: path.resolve(__dirname, "src/assets/head.scss"),
-        //         style_css: path.resolve(__dirname, "src/assets/style.scss"),
-        //     }
-        // }
+        rollupOptions: {
+            input:{
+                main: path.resolve(__dirname, 'index.html'),
+                head_css: path.resolve(__dirname, "src/assets/head.scss"),
+                style_css: path.resolve(__dirname, "src/assets/style.scss"),
+            },
+            output : {
+                assetFileNames: 'assets/[name].[ext]'
+            }
+        },
+        // rollupOutputOptions: {
+        //     entryFileNames: '[name].[ext]',
+        // },
     },
     css: {
         preprocessorOptions: {

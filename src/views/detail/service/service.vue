@@ -133,7 +133,7 @@
                 let image = '',
                     url     = this.domainOriginal + this.service.url
 
-                if(this.service.gallery.length){
+                if(this.service.gallery && this.service.gallery.length){
                     image = this.service.gallery[0]
                 }else if(this.service.category.pictures.length){
                     image = this.service.category.pictures[0]

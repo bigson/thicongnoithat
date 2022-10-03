@@ -3,10 +3,8 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
 import { renderToString } from 'vue/server-renderer'
-// import { createPageRenderer } from 'vite-plugin-ssr'
 import * as vite from 'vite'
 import vue from '@vitejs/plugin-vue'
-// import htmlEntryServer from './src/entry-server.js'
 
 const server = express();
 const PORT   = 3000
@@ -14,6 +12,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD;
 const isProduction = process.env.NODE_ENV === 'production'
+const indexProd = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
+const manifest = (await import('./dist/client/ssr-manifest.json')).default
 
 let root = process.cwd(),
     viteDevServer = await vite.createServer({
@@ -42,7 +42,7 @@ server.use(viteDevServer.middlewares)
 server.use('/public', express.static(path.resolve(__dirname, './public')));
 server.use('/favicon.svg', express.static(path.resolve(__dirname, './public/favicon.svg')));
 
-server.use('*', async (req, res) => {
+server.use('*', async (req, res, next) => {
     try {
         const url = req.originalUrl
         // always read fresh template in dev
@@ -70,7 +70,15 @@ server.use('*', async (req, res) => {
         }
 
         if(context.meta){
-            html = html.replace('<!--meta-->', context.meta)
+            html = html.replace('{{meta}}', context.meta)
+        }
+
+        if(context.style.head){
+            html = html.replace('{{style_head}}', '<style>' + context.style.head + '</style>')
+        }
+
+        if(context.style.style){
+            html = html.replace('{{style}}', `<link rel="stylesheet" href="${context.style.style}">`)
         }
 
         res.status(200).set({ 'Content-Type': 'text/html' }).end(html)

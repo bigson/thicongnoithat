@@ -5,7 +5,6 @@ import express from 'express'
 import { renderToString } from 'vue/server-renderer'
 // import { createPageRenderer } from 'vite-plugin-ssr'
 import * as vite from 'vite'
-import htmlEntryServer from './src/entry-server.js'
 
 const server = express();
 const PORT   = 3000
@@ -13,104 +12,77 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const isTest = process.env.NODE_ENV === 'test' || !!process.env.VITE_TEST_BUILD;
 const isProduction = process.env.NODE_ENV === 'production'
+const port = process.env.PORT || 3000
 
-let root = process.cwd(),
-    indexProd = isProd ? fs.readFileSync(resolve('dist/client/index.html'), 'utf-8') : '',
-    manifest = isProd ? /*// @ts-ignore*/ (await import('./dist/client/ssr-manifest.json')).default : {}
-    viteDevServer = await vite.createServer({
-            // base: '/test/',
-            resolve: {
-                alias: {
-                    '@': path.resolve(__dirname, '/src'),
-                },
-            },
-            root,
-            logLevel: isTest ? 'error' : 'info',
-            server: {
-                middlewareMode: 'ssr',
-                watch: {
-                    // During tests we edit the files too fast and sometimes chokidar
-                    // misses change events, so enforce polling for consistency
-                    usePolling: true,
-                    interval: 100
-                },
-                // hmr: {
-                //     port: hmrPort
-                // }
-            },
-            appType: 'custom'
-        })
+export async function createServer(
+    root = process.cwd(),
+    isProd = process.env.NODE_ENV === 'production',
+    hmrPort
+) {
+    const __dirname = path.dirname(fileURLToPath(import.meta.url))
+    const resolve = (p) => path.resolve(__dirname, p)
 
-/**
- * @type {import('vite').ViteDevServer}
- */
-    let vite
-    if (!isProd) {
-        vite = await (
-            await import('vite')
-        ).createServer({
-            root,
-            logLevel: isTest ? 'error' : 'info',
-            server: {
-                middlewareMode: true,
-                watch: {
-                // During tests we edit the files too fast and sometimes chokidar
-                // misses change events, so enforce polling for consistency
-                usePolling: true,
-                interval: 100
-                },
-                // hmr: {
-                //     port: hmrPort
-                // }
-            },
-            appType: 'custom'
-        })
-        // use vite's connect instance as middleware
-        app.use(vite.middlewares)
-    } else {
-        app.use((await import('compression')).default())
-        app.use(
-            (await import('serve-static'))
-                .default(resolve('dist/client'), {
-                                                    index: false
-                                                })
-        )
-    }
+    const indexProd = fs.readFileSync(resolve('dist/client/index.html'), 'utf-8')
+    // const manifest = (await import('./dist/client/ssr-manifest.json')).default
+    const cssHead = fs.readFileSync(resolve('dist/client/assets/head.css'), 'utf-8')
+    // const cssStyle = fs.readFileSync(resolve('dist/client/assets/style.css'), 'utf-8')
+    const styleUrl = '/assets/style.css'
 
-server.get('*', async (req, res) => {
-try {
-      const url = req.originalUrl.replace('/test/', '/')
+    const app = express()
 
-      let template, render
-      if (!isProd) {
-        // always read fresh template in dev
-        template = fs.readFileSync(resolve('index.html'), 'utf-8')
-        template = await vite.transformIndexHtml(url, template)
-        render = (await vite.ssrLoadModule('/src/entry-server.js')).render
-      } else {
-        template = indexProd
-        // @ts-ignore
-        render = (await import('./dist/server/entry-server.js')).render
-      }
+    server.use('/public', express.static(resolve('dist/client')));
+    server.use('/favicon.svg', express.static(resolve('dist/favicon.svg')));
+    app.use((await import('compression')).default())
+    app.use(
+      '/',
+      (await import('serve-static')).default(resolve('dist/client'), {
+        index: false
+      })
+    )
 
-      const [appHtml, preloadLinks] = await render(url, manifest)
+    app.use('*', async (req, res, next) => {
+        try {
+            let url      = req.originalUrl,
+                template = indexProd,
+                context  = {
+                            req,
+                            url   : `${req.protocol}://${req.get('host')}${req.originalUrl}`,
+                            title : '',
+                            meta  : ''
+                        },
+                render = (await import('./dist/server/entry-server.js')).render,
+                appHtml = await render(context)
 
-      const html = template
-        .replace(`<!--preload-links-->`, preloadLinks)
-        .replace(`<!--app-html-->`, appHtml)
+            let html = template.replace(`<!--app-html-->`, appHtml)
 
-      res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
-    } catch (e) {
-      vite && vite.ssrFixStacktrace(e)
-      console.log(e.stack)
-      res.status(500).end(e.stack)
-    }
-});
+            if(context.pinia){
+                html = html.replace('</body>', `<script>window.__pinia=${context.pinia}</script>`)
+            }
 
-// use vite's connect instance as middleware
-server.use(vite.middlewares)
-server.use('/static', express.static(path.resolve(__dirname, './public')));
+            if(context.title){
+                html = html.replace('{{ title }}', context.title)
+            }
 
-server.listen(3000, () => {
-  console.log('ready');
-});
+            if(context.meta){
+                html = html.replace('{{meta}}', context.meta)
+            }
+
+            html = html.replace('{{style_head}}', '<style>' + cssHead + '</style>')
+            html = html.replace('{{style}}', `<link rel="stylesheet" href="${styleUrl}">`)
+
+            res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
+        } catch (e) {
+            vite && vite.ssrFixStacktrace(e)
+            console.log(e.stack)
+            res.status(500).end(e.stack)
+        }
+    })
+
+    return { app, vite }
+}
+
+createServer().then(({ app }) =>
+    app.listen(port, () => {
+      console.log(`http://localhost:${port}`)
+    })
+)

@@ -1,7 +1,7 @@
 import config      from '@/config'
 import {mergeDeep}       from './index.js'
 import axios       from 'axios'
-import querystring from 'querystring'
+// import querystring from 'querystring'
 
 export default async function (data, callback){
     let defaultConfig = {

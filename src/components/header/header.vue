@@ -202,7 +202,6 @@
             },
             focusInput(){
                 this.$nextTick(function () {
-                    console.log('abc')
                     this.$refs.inputSearchPopup.focus()
                 })
                 // console.log(this.$refs.inputSearchPopup, this.$refs.inputSearchPopup.focus())
