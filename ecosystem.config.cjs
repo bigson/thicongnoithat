@@ -4,7 +4,8 @@ module.exports = {
     script: 'server.js',
     instances: 2, // default 1
     autorestart: true,
-    exec_mode: 'cluster'
+    exec_mode: 'cluster',
+    log_file: './logs/web.log'
   }],
   deploy : {
     production : {
