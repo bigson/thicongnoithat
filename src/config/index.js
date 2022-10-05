@@ -10,15 +10,15 @@ let config = {
             path_forgot_password    : '/auth/forgot-password',
         },
         development        : {
-            host : 'http://thicongnoithat.bs'
+            host : 'http://sonbn.wiki'
         },
         production    : {
-            host : 'https://thicongtot.com',
+            host : 'https://sonbn.wiki',
         }
     },
     env = 'production'
 
-env = 'development'
+env = 'production'
 // if(process.env.NODE_ENV){
 //     env = process.env.NODE_ENV
 // }
