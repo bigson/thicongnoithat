@@ -60,7 +60,7 @@
 
                     data.append('typepicture', 'product')
                     data.append('photo0', f)
-                    console.log(f, data)
+                    // console.log(f, data)
                     axios.post('http://upload.vatgia.vn/thicongtot.php'
                                 , data
                                 ,{

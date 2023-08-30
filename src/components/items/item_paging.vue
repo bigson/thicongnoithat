@@ -154,7 +154,7 @@
                     list        = [],
                     currentPage = this.currentPage ? parseInt(this.currentPage) : 1,
                     queryFirst  = Object.assign({page: 0}, query);
-                console.log(currentPage);
+                // console.log(currentPage);
                 delete(queryFirst.page);
 
                 if(query.page && query.page > 1){
@@ -179,7 +179,7 @@
                 // add first nếu từ trang 2 trở đi
                 if(currentPage > 2){
                     let pre = currentPage - 1;
-                    console.log(pre, currentPage, Object.assign(query, {page: pre}));
+                    // console.log(pre, currentPage, Object.assign(query, {page: pre}));
                     list.push({
                         page  : '❮❮',
                         query : queryFirst,
@@ -190,7 +190,7 @@
                         query : Object.assign(query, {page: pre}),
                         title : 'Trang trước',
                     });
-                    console.log('list', list, query);
+                    // console.log('list', list, query);
                 }else{
                     list.push({
                         page  : '❮',
@@ -209,7 +209,7 @@
                 });
                 // add right
                 list = list.concat(_list.slice(currentPage, right));
-                console.log('pre end', currentPage);
+                // console.log('pre end', currentPage);
                 // add next
                 if(currentPage + 1 <= this.meta.total_page){
                     list.push({
@@ -218,12 +218,12 @@
                         title : 'Trang tiếp theo',
                     });
                 }
-                console.log('end', currentPage)
+                // console.log('end', currentPage)
                 this.list = list;
             }
         },
         created(){
-            console.log('created pai');
+            // console.log('created pai');
             // chạy khi f5 trang
             // this.processPaging();
         },

@@ -345,7 +345,7 @@ export default {
         },
     },
     async beforeMount (){
-        // console.log('beforeMount')
+        console.log('beforeMount',import.meta.env)
         if(!this.services.length){
             let that = this
             await this.fetchData()

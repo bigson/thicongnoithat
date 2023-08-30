@@ -10,7 +10,7 @@ let config = {
             path_forgot_password    : '/auth/forgot-password',
         },
         development        : {
-            host : 'http://sonbn.wiki'
+            host : 'http://thicongnoithat.bs'
         },
         production    : {
             host : 'https://sonbn.wiki',

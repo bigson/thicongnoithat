@@ -156,7 +156,7 @@
                 return this.$route.params.name
             },
             title () {
-                console.log(this.news)
+                // console.log(this.news)
                 return this.news.meta.title || ''
             },
             meta(){
@@ -241,7 +241,7 @@
 
                 optionsNewsDetail.api = this.id
                 await this[PAGE_NEWS_ACTION_GET_NEWS](optionsNewsDetail)
-                console.log('after featch data news', this.id)
+                // console.log('after featch data news', this.id)
 
                 if(this.news.status != 1 || this.news.author.type != 4){
                     // không phải admin hoặc bài này k active thì thông báo lỗi

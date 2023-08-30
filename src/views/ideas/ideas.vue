@@ -244,7 +244,7 @@
                 return await this.getPictures(options)
             },
             imageClick(image){
-                console.log(image)
+                // console.log(image)
                 this.mutationSetImage(image)
                 this.getDetailImage({
                                 api    : image.id,

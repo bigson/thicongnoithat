@@ -88,10 +88,10 @@
             },
             async fetch(){
                 let pc;
-                console.log('start fetch aside ideas');
+                // console.log('start fetch aside ideas');
                 if(Object.keys(this.ideasAll).length == 0){
                     await this[IDEAS_ACTION_API_ALL]().then((...a) => {
-                        console.log('done fetch aside ideas', this[IDEAS_GETTER_PARENT_CHILDS], a);
+                        // console.log('done fetch aside ideas', this[IDEAS_GETTER_PARENT_CHILDS], a);
                     });
                 }
             }

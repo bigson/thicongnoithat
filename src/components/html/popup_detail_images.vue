@@ -177,7 +177,7 @@
                 this.currentImage = this.info.images[index]
             },
             redirectTag(){
-                console.log('redirectTag')
+                // console.log('redirectTag')
                 this.classes = this.classes.filter(x => x != 'active')
                 this.bodyRemoveClass('overflow-hidden')
             }

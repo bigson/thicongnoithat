@@ -42,19 +42,19 @@
         },
         methods : {
             updateShow(show){
-                console.log('layout updateShow')
+                // console.log('layout updateShow')
                 this.show = show
             },
             start(){
-                console.log('layout start')
+                // console.log('layout start')
                 this.$refs.progress && this.$refs.progress.start()
             },
             finish(){
-                console.log('layout finish')
+                // console.log('layout finish')
                 this.$refs.progress && this.$refs.progress.finish()
             },
             fail(){
-                console.log('layout fail')
+                // console.log('layout fail')
                 this.$refs.progress && this.$refs.progress.fail()
             }
         },

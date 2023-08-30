@@ -21,9 +21,9 @@ function deserialize(serializedJavascript){
 
 async function getUser(cookies){
     if(cookies && cookies.uid && cookies.pas){
-        console.log('start getUser', cookies)
+        // console.log('start getUser', cookies)
         const userStore = useUserStore()
         await userStore[USER_ACT_DETAIL](cookies)
-        console.log('end getUser')
+        // console.log('end getUser')
     }
 }

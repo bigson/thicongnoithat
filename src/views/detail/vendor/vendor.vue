@@ -239,7 +239,7 @@
         },
         watch : {
             type : function(){
-                console.log('----- change type');
+                // console.log('----- change type');
                 // document.title = this.$route.meta.title;
                 this.fetchData();
             },

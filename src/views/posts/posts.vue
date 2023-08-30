@@ -216,7 +216,7 @@
                     title       = this.modelTitle,
                     description = this.$refs.edit.getHtml()
 
-                console.log(catId,address,districts,title,description)
+                // console.log(catId,address,districts,title,description)
 
                 alert('Dịch vụ không sẵn sàng')
                 // apiServices.
@@ -226,7 +226,7 @@
                     let key = e.target.options[e.target.options.selectedIndex].value,
                         parent = e.target.options[e.target.options.selectedIndex].dataset.parent
 
-                    console.log(key,parent, this.category[10000].childs, this.category[10000].childs[parent])
+                    // console.log(key,parent, this.category[10000].childs, this.category[10000].childs[parent])
                     this.childCats = this.category[10000].childs[parent].childs[key]
                 }
             },

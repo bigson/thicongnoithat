@@ -289,7 +289,7 @@
                     ])
         },
         async beforeMount (){
-            console.log(this.images.length, Object.keys(this.detailImage))
+            // console.log(this.images.length, Object.keys(this.detailImage))
             if(!this.images.length){
                 return await this.fetchData()
             }
@@ -305,7 +305,7 @@
             next()
         },
         mounted(){
-            console.log('mounted', Object.keys(this.detailImage).length)
+            // console.log('mounted', Object.keys(this.detailImage).length)
             if(Object.keys(this.detailImage).length){
                 this.$refs.popupDetailImages.show()
             }

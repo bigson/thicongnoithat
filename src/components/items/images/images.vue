@@ -50,9 +50,9 @@
                         'imageClick' : {
                             type : Function,
                             default : function(){
-                                console.log('defaful image')
+                                // console.log('defaful image')
                                 return () => {
-                                    console.log('default image click')
+                                    // console.log('default image click')
                                 }
                             }
                         }

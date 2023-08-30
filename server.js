@@ -59,16 +59,10 @@ export async function createServer(
                 html = html.replace('</body>', `<script>window.__pinia=${context.pinia}</script>`)
             }
 
-            if(context.title){
-                html = html.replace('{{ title }}', context.title)
-            }
-
-            if(context.meta){
-                html = html.replace('{{meta}}', context.meta)
-            }
-
-            html = html.replace('{{style_head}}', '<style>' + cssHead + '</style>')
-            html = html.replace('{{style}}', `<link rel="stylesheet" href="${styleUrl}">`)
+            html = html.replace('{{ title }}', context.title || '')
+                        .replace('{{meta}}', context.meta || '')
+                        .replace('{{style_head}}', '<style>' + cssHead + '</style>')
+                        .replace('{{style}}', `<link rel="stylesheet" href="${styleUrl}">`)
 
             res.status(200).set({ 'Content-Type': 'text/html' }).end(html)
         } catch (e) {
